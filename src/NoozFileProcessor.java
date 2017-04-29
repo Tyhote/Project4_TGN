@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,21 +13,30 @@ class NoozFileProcessor {
 	private NewsStoryListModel newsStories;
 	private NewsDataBaseModel newsDataBase;
 
-
 	public static NewsMakerListModel readNoozFile(String fileName, Map<String, String> sourceMap,
 			Map<String, String> topicMap, Map<String, String> subjectMap) throws IOException {
 		// TODO Handle possible I/O errors (Eventually)
-		FileReader fr = new FileReader(fileName);
-		BufferedReader br = new BufferedReader(fr);
-		String nextLine = br.readLine(); // First line is header info. Ignore.
-		nextLine = br.readLine();
-		while (nextLine != null) {
-			processLine(nextLine, sourceMap, topicMap, subjectMap);
-			nextLine = br.readLine();
+		FileReader fr = null;
+		try {
+			fr = new FileReader(fileName);
+		} catch (FileNotFoundException f) {
 		}
-		br.close();
-
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(fr);
+			String nextLine = br.readLine(); // First line is header info.
+												// Ignore.
+			nextLine = br.readLine();
+			while (nextLine != null) {
+				processLine(nextLine, sourceMap, topicMap, subjectMap);
+				nextLine = br.readLine();
+			}
+			br.close();
+		} catch (IOException e) {// TODO CHange this
+			System.err.println("Input output error");
+		}
 		return newsMakers;
+
 	}
 
 	public static void writeNewsTextFile(String outputFileName, String listOfStories) throws IOException {

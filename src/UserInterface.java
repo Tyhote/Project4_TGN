@@ -1,29 +1,17 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 class UserInterface {
 
-	public String convertToOutputFormat(NewsStory newsStory, String mediaType) {
+	public String convertToOutputFormat(NewsStory newsStory, List<NewsMedia> newsMedia) {
 
-		// TODO: Append each line with subject and (for TV and online) part of
-		// day.
 		String storyString = "";
 		LocalDate date = newsStory.getDate();
 
 		// If the type doesn't include TV, use words
-		if (!mediaType.contains("t")) {
+		if (!newsMedia.contains(NewsMedia.TV)) {
 			if (newsStory instanceof NewspaperStory) {
 				storyString += date.getMonth().getDisplayName(TextStyle.FULL, Locale.US) + " " + date.getDayOfMonth()
 						+ ", " + date.getYear() + "; " + newsStory.getSource() + "; " + newsStory.getLength()
@@ -36,7 +24,7 @@ class UserInterface {
 			}
 		}
 		// If the type is TV news, use seconds (from length)
-		else if (mediaType.equals("t")) {
+		else if (newsMedia.contains(NewsMedia.TV) && newsMedia.size() == 1) {
 			storyString += date.getMonth().getDisplayName(TextStyle.FULL, Locale.US) + " " + date.getDayOfMonth() + ", "
 					+ date.getYear() + "; " + newsStory.getSource() + "; " + newsStory.getLength() + " seconds; "
 					+ newsStory.getTopic() + "; " + newsStory.getSubject() + "; "

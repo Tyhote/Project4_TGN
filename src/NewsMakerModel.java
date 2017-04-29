@@ -4,24 +4,99 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
-	
+
 	private long serialVersionUID;
 	private ArrayList<ActionListener> actionListenerList;
 	private String name;
 	private NewsStoryListModel newsStoryListModel;
-	public NewsMakerModel() {}
-	public NewsMakerModel(String name) {}
-	public String getName() {return null;}
-	public NewsStoryListModel getNewsStoryListModel() {return null;}
-	public void addNewsStory(NewsStory newsStory) {}
-	public void setName(String name) {}
-	public void setNewsStoryListModel(NewsStoryListModel newsStoryListModel) {}
-	public void removeNewsStory(NewsStory newsStory) {}
-	public boolean equals(Object o) {return true;}
-	public int compareTo(NewsMakerModel newsMakerModel) {return 0;}
-	public String toString() {return null;}
-	public void addActionListener(ActionListener l) {}
-	public void removeActionListener(ActionListener l) {}
-	private void processEvent(ActionEvent e) {}
+
+	
+	
+	public NewsMakerModel() {
+		
+		actionListenerList = new ArrayList<ActionListener>();
+	}
+
+	
+	public NewsMakerModel(String name) {
+		
+		this.name = name;
+		actionListenerList = new ArrayList<ActionListener>();
+	}
+
+	
+	public String getName() {
+		
+		return name;
+	}
+
+	
+	public NewsStoryListModel getNewsStoryListModel() {
+		
+		return newsStoryListModel;
+	}
+
+	
+	public void addNewsStory(NewsStory newsStory) {
+		
+		newsStoryListModel.add(newsStory);
+	}
+
+	
+	public void setName(String name) {
+		
+		this.name = name;
+	}
+
+	
+	public void setNewsStoryListModel(NewsStoryListModel newsStoryListModel) {
+		
+		this.newsStoryListModel = newsStoryListModel;
+	}
+
+	
+	public void removeNewsStory(NewsStory newsStory) {
+		
+		newsStoryListModel.remove(newsStory);
+	}
+
+	
+	public boolean equals(Object o) {
+		
+		NewsMakerModel m = (NewsMakerModel) o;
+		if (name.equals(m.getName())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
+	public int compareTo(NewsMakerModel newsMakerModel) {
+		
+		return newsMakerModel.getName().compareTo(newsMakerModel.getName());
+	}
+
+	
+	//TODO
+	public String toString() {
+		
+		return null;
+	}
+
+	
+	//TODO
+	public void addActionListener(ActionListener l) {
+	}
+
+	
+	//TODO
+	public void removeActionListener(ActionListener l) {
+	}
+
+	
+	//TODO
+	private void processEvent(ActionEvent e) {
+	}
 
 }

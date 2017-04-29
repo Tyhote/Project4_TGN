@@ -21,9 +21,11 @@ public class PieChart {
 	}
 
 	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setWedges(List<Wedge> wedges) {
+		this.wedges = wedges;
 	}
 
 	private class PieChartPanel extends JPanel {

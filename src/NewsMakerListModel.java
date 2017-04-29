@@ -6,21 +6,34 @@ public class NewsMakerListModel {
 	private DefaultListModel<NewsMakerModel> newsMakerDefaultListModel;
 
 	public NewsMakerListModel() {
+
+		this.newsMakerDefaultListModel = new DefaultListModel<NewsMakerModel>();
 	}
 
 	public NewsMakerListModel(NewsMakerListModel newsMakerListModel) {
+
+		this.newsMakerDefaultListModel = newsMakerListModel.getNewsMakers();
 	}
 
 	public boolean isEmpty() {
-		return true;
+
+		if (newsMakerDefaultListModel.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public int size() {
-		return 0;
+		return newsMakerDefaultListModel.size();
 	}
 
 	public boolean contains(NewsMakerModel newsMakerModel) {
-		return true;
+		if (newsMakerDefaultListModel.contains(newsMakerModel)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public NewsMakerModel get(NewsMakerModel newsMakerModel) {
