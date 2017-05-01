@@ -26,7 +26,7 @@ public class TextView {
 		this.newsMedia = newsMedia;
 		this.sortCriteria = sortCriteria;
 		
-		constructTitle();
+		
 		jfText = new JFrame(summaryLine);
 		jfText.setSize(1000, 500);
 		constructNewsStoriesAndSummary();
@@ -82,7 +82,9 @@ public class TextView {
 	}
 
 	private void constructTitle() {
+		
 		summaryLine = "TextDisplay";
+		jfText.setTitle(summaryLine);
 	}
 
 	@Override

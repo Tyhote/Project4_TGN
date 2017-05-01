@@ -10,9 +10,9 @@ public enum NewsMedia {
 	public String toString() {
 		
 		switch (this) {
-			case NEWSPAPER: 	return "NewspaperStory";
-			case ONLINE: 			return "OnlineNewsStory";
-			case TV: 						return "TVNewsStory";
+			case NEWSPAPER: 	return "Newspaper";
+			case ONLINE: 			return "Online";
+			case TV: 						return "TV";
 			default:						throw new IllegalArgumentException();
 		}
 	}
