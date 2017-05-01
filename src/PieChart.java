@@ -1,10 +1,10 @@
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.lang.Math;
 
 public class PieChart {
@@ -16,8 +16,20 @@ public class PieChart {
 		this.title = title;
 		this.wedges = wedges;
 
+		// Create a general heavy-weight container.
+		JFrame frame = new JFrame(this.title);
+
+		// Set its size.
+		frame.setSize(1000, 500);
+
 		// Create a specialized light-weight container.
 		JPanel panel = new PieChartPanel();
+
+		// Add the specialized container to the general container.
+		frame.add(panel);
+
+		// Make the GUI visible on the screen.
+		frame.setVisible(true);
 	}
 
 	public void setTitle(String title) {
