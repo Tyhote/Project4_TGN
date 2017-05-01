@@ -1,8 +1,10 @@
+import java.io.Serializable;
+
 import javax.swing.DefaultListModel;
 
-public class NewsMakerListModel {
+public class NewsMakerListModel implements Serializable{
 
-	private long serialVersionUID;
+	private static final long serialVersionUID = -7876369843726837770L;
 	private DefaultListModel<NewsMakerModel> newsMakerDefaultListModel;
 
 	public NewsMakerListModel() {

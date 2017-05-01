@@ -1,26 +1,36 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.DefaultListModel;
 
-public class NewsDataBaseModel {
-	private long serialVersionUID;
-	private ArrayList<ActionListener> actionListenerList;
-	private Map<String, String> newsSourceMap;
-	private Map<String, String> newsTopicMap;
-	private Map<String, String> newsSubjectMap;
+public class NewsDataBaseModel implements Serializable{
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6305823792028405117L;
+	private ArrayList<ActionListener> actionListenerList = new ArrayList<ActionListener>();
+	private Map<String, String> newsSourceMap = new HashMap<String,String>();
+	private Map<String, String> newsTopicMap = new HashMap<String,String>();
+	private Map<String, String> newsSubjectMap = new HashMap<String,String>();
 	NewsMakerModel none;
 	private NewsMakerListModel newsMakerListModel;
 	private NewsStoryListModel newsStoryListModel;
 
-	public void NewsDataBaseModel() {
-
+	public NewsDataBaseModel() {
+		newsStoryListModel = new NewsStoryListModel();
+		newsMakerListModel = new NewsMakerListModel();
+		newsMakerListModel.add(none = new NewsMakerModel("none"));
 	}
 
-	public void NewsDataBaseModel(NewsMakerListModel newsMakerListModel, NewsStoryListModel newsStoryListModel) {
-
+	public NewsDataBaseModel(NewsMakerListModel newsMakerListModel, NewsStoryListModel newsStoryListModel) {
+		this.newsStoryListModel = newsStoryListModel;
+		this.newsMakerListModel = newsMakerListModel;
 	}
 
 	public Map<String, String> getNewsSourceMap() {

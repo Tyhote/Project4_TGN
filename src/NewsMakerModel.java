@@ -5,64 +5,57 @@ import java.util.ArrayList;
 
 class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 
-	private long serialVersionUID;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7042093619925230030L;
 	private ArrayList<ActionListener> actionListenerList;
 	private String name;
 	private NewsStoryListModel newsStoryListModel;
 
-	
-	
 	public NewsMakerModel() {
-		
+
 		actionListenerList = new ArrayList<ActionListener>();
 	}
 
-	
 	public NewsMakerModel(String name) {
-		
+
 		this.name = name;
 		actionListenerList = new ArrayList<ActionListener>();
 	}
 
-	
 	public String getName() {
-		
+
 		return name;
 	}
 
-	
 	public NewsStoryListModel getNewsStoryListModel() {
-		
+
 		return newsStoryListModel;
 	}
 
-	
 	public void addNewsStory(NewsStory newsStory) {
-		
+
 		newsStoryListModel.add(newsStory);
 	}
 
-	
 	public void setName(String name) {
-		
+
 		this.name = name;
 	}
 
-	
 	public void setNewsStoryListModel(NewsStoryListModel newsStoryListModel) {
-		
+
 		this.newsStoryListModel = newsStoryListModel;
 	}
 
-	
 	public void removeNewsStory(NewsStory newsStory) {
-		
+
 		newsStoryListModel.remove(newsStory);
 	}
 
-	
 	public boolean equals(Object o) {
-		
+
 		NewsMakerModel m = (NewsMakerModel) o;
 		if (name.equals(m.getName())) {
 			return true;
@@ -71,31 +64,26 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 		}
 	}
 
-	
 	public int compareTo(NewsMakerModel newsMakerModel) {
-		
+
 		return newsMakerModel.getName().compareTo(newsMakerModel.getName());
 	}
 
-	
-	//TODO
+	// TODO
 	public String toString() {
-		
+
 		return null;
 	}
 
-	
-	//TODO
+	// TODO
 	public void addActionListener(ActionListener l) {
 	}
 
-	
-	//TODO
+	// TODO
 	public void removeActionListener(ActionListener l) {
 	}
 
-	
-	//TODO
+	// TODO
 	private void processEvent(ActionEvent e) {
 	}
 
