@@ -1,4 +1,5 @@
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -8,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class EditNewsMakerView {
+public class EditNewsMakerView extends JPanel implements ActionListener {
 
 	private long serialVersionUID; 
 	NewsMakerModel newsMakerModel; 

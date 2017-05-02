@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-public class SelectionView extends JFrame{
+public class SelectionView extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
