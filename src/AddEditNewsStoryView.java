@@ -51,7 +51,7 @@ public class AddEditNewsStoryView extends JPanel {
 	private JPanel jplNewsStoryYear = new JPanel(); 
 	
 	private JLabel jlbNewsStoryMonth = new JLabel("Month: "); 
-	JComboBox<Month> jcbNewsStoryMonth; 
+	JComboBox<Month> jcbNewsStoryMonth = new JComboBox<Month>(Month.values()); 
 	private JPanel jplNewsStoryMonth; 
 	
 	private JLabel jlbNewsStoryDay = new JLabel("Day: "); 
@@ -60,7 +60,7 @@ public class AddEditNewsStoryView extends JPanel {
 	private JPanel jplNewsStoryDay = new JPanel();
 	
 	private JLabel jlbNewsStoryPartOfDay = new JLabel("Part of Day: "); 
-	JComboBox<PartOfDay> jcbNewsStoryPartOfDay; 
+	JComboBox<PartOfDay> jcbNewsStoryPartOfDay = new JComboBox<PartOfDay>(PartOfDay.values()); 
 	private JPanel jplNewsStoryPartOfDay; 
 	
 	private JPanel jplNewsStoryWhen = new JPanel();
