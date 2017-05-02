@@ -1,11 +1,12 @@
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PieChartView {
+public class PieChartView implements ActionListener {
 
 	private PieChart pieChart;
 	private NewsMakerModel newsMakerModel;

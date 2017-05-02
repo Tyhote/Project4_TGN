@@ -1,4 +1,5 @@
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import java.lang.reflect.*;
@@ -8,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class TextView {
+public class TextView implements ActionListener {
 
 	private NewsMakerModel newsMakerModel;
 	private List<NewsMedia> newsMedia;
@@ -86,7 +87,7 @@ public class TextView {
 	}
 
 	@Override
-	private void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Text Display")) {
 			jspNewsStoryList = new JScrollPane();
 			jfText.add(jspNewsStoryList);

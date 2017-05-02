@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 import java.lang.Math;
 
-public class PieChart {
+public class PieChart extends JFrame {
 
 	private List<Wedge> wedges;
 	private String title;
