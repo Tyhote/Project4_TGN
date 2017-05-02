@@ -51,7 +51,7 @@ public class AddEditNewsStoryView extends JPanel {
 	private JPanel jplNewsStoryYear = new JPanel(); 
 	
 	private JLabel jlbNewsStoryMonth = new JLabel("Month: "); 
-	JComboBox<Month> jcbNewsStoryMonth = new JComboBox<Month>(Month.values()); 
+	JComboBox<Month> jcbNewsStoryMonth; 
 	private JPanel jplNewsStoryMonth; 
 	
 	private JLabel jlbNewsStoryDay = new JLabel("Day: "); 
@@ -60,7 +60,7 @@ public class AddEditNewsStoryView extends JPanel {
 	private JPanel jplNewsStoryDay = new JPanel();
 	
 	private JLabel jlbNewsStoryPartOfDay = new JLabel("Part of Day: "); 
-	JComboBox<PartOfDay> jcbNewsStoryPartOfDay = new JComboBox<PartOfDay>(PartOfDay.values()); 
+	JComboBox<PartOfDay> jcbNewsStoryPartOfDay; 
 	private JPanel jplNewsStoryPartOfDay; 
 	
 	private JPanel jplNewsStoryWhen = new JPanel();
@@ -74,7 +74,7 @@ public class AddEditNewsStoryView extends JPanel {
 		this.newsDataBaseModel = newsDataBaseModel;
 		this.newsStory = newsStory;
 		
-		//Initialize the JComboBoxes for the year and day fields with the proper arrays
+		//Initialize the JComboBoxes for the year, month, day, and part of day
 		
 		//Array of Integer values for years (2000-2017 inclusive). (see Dr. Hougen's javadoc)
 		years = new Integer[18];
@@ -84,6 +84,8 @@ public class AddEditNewsStoryView extends JPanel {
 		}
 		jcbNewsStoryYear = new JComboBox<Integer>(years);
 		
+		jcbNewsStoryMonth = new JComboBox<Month>(Month.values());
+		
 		//Array of Integer values for day of the month (1-31 inclusive). (see Dr. Hougen's javadoc)
 		days = new Integer[31];
 		for (int day = 1; day <= 31; ++day) //Fill the array
@@ -92,8 +94,8 @@ public class AddEditNewsStoryView extends JPanel {
 		}
 		jcbNewsStoryDay = new JComboBox<Integer>(days);
 		
+		jcbNewsStoryPartOfDay = new JComboBox<PartOfDay>(PartOfDay.values()); 
 		
-		//Use the newsStory's values to initialize or set the proper fields
 		
 		//Initialize jcbNewsStoryType and set the selected option to the proper NewsMedia
 		//Create an array to hold the NewsMedia to be used to make the JComboBox for holding NewsMedia options
@@ -113,10 +115,22 @@ public class AddEditNewsStoryView extends JPanel {
 			jcbNewsStoryType.setSelectedItem(NewsMedia.ONLINE);
 		}
 		
-		//TODO: Somehow do the same for jcbNewsStorySource, jcbNewsStoryTopic, and jcbNewsStorySubject,
-		//		as well as for jcbNewsStoryNewsMaker1 and jcbNewsStoryNewsMaker2.
-		//		It seems that the JComboBoxes for those will have to be initialized with master list arrays of all the different
-		//		sources, topics, subjects, and newsmakers.
+		//Finish initializing the rest of the JComboBoxes using the arrays passed by newsDataBaseModel's methods
+		//and setting the selected values to the corresponding values
+		jcbNewsStorySource = new JComboBox<String>(newsDataBaseModel.getNewsSources());
+		jcbNewsStorySource.setSelectedItem(newsStory.getSource());
+		
+		jcbNewsStoryTopic = new JComboBox<String>(newsDataBaseModel.getNewsTopics());
+		jcbNewsStoryTopic.setSelectedItem(newsStory.getTopic());
+		
+		jcbNewsStorySubject = new JComboBox<String>(newsDataBaseModel.getNewsSubjects());
+		jcbNewsStorySubject.setSelectedItem(newsStory.getSubject());
+		
+		jcbNewsStoryNewsMaker1 = new JComboBox<String>(newsDataBaseModel.getNewsMakerNames());
+		jcbNewsStoryNewsMaker1.setSelectedItem(newsStory.getNewsMaker1().getName());
+		
+		jcbNewsStoryNewsMaker2 = new JComboBox<String>(newsDataBaseModel.getNewsMakerNames());
+		jcbNewsStoryNewsMaker2.setSelectedItem(newsStory.getNewsMaker2().getName());
 		
 		//Set values and selected items for the rest of the newsStory's info
 		jftfNewsStoryLength.setValue(newsStory.getLength());
