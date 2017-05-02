@@ -163,7 +163,12 @@ public class PieChartView implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		//TODO
+		// Redraw the pie chart to reflect any changes to the model data being represented.
+		try {
+			pieChart = new PieChart(constructTitle(), constructWedges());
+		} catch (IOException exception) {
+			System.err.println("Illegal Input found in pie chart");
+		}
 	}
 }
 
