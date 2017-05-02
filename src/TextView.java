@@ -27,13 +27,16 @@ public class TextView implements ActionListener {
 		this.newsMedia = newsMedia;
 		this.sortCriteria = sortCriteria;
 		
+		jfText = new JFrame();
 		constructTitle();
-		jfText = new JFrame(summaryLine);
 		jfText.setSize(1000, 500);
+		
 		constructNewsStoriesAndSummary();
 		jtaNewsStoryList = new JTextArea(listOfStories);
 		jfText.add(jtaSummaryLine);
 		jfText.add(jtaNewsStoryList);
+		
+		
 		
 	}
 
@@ -83,7 +86,9 @@ public class TextView implements ActionListener {
 	}
 
 	private void constructTitle() {
-		summaryLine = "TextDisplay";
+		
+		String title = "TextDisplay";
+		jfText.setTitle(title);
 	}
 
 	@Override
