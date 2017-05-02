@@ -11,11 +11,13 @@ public class CodeFileProcessor {
 	public static Map<String, String> readCodeFile(String fileName) throws IOException {
 		// Need to clear map of old data before reading new.
 		codeMap.clear();
-		
+
 		FileReader fr;
-		try{
-		fr = new FileReader(fileName);}
-		catch(FileNotFoundException f){throw new FileNotFoundException();}
+		try {
+			fr = new FileReader(fileName);
+		} catch (FileNotFoundException f) {
+			throw new FileNotFoundException();
+		}
 		BufferedReader br = new BufferedReader(fr);
 		String nextLine = br.readLine();
 		while (nextLine != null) {

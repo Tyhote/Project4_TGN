@@ -1,137 +1,190 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.DefaultListModel;
 
-public class NewsDataBaseModel {
-	private long serialVersionUID;
-	private ArrayList<ActionListener> actionListenerList;
-	private Map<String, String> newsSourceMap;
-	private Map<String, String> newsTopicMap;
-	private Map<String, String> newsSubjectMap;
-	NewsMakerModel none;
+public class NewsDataBaseModel implements Serializable{
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6305823792028405117L;
+	private ArrayList<ActionListener> actionListenerList = new ArrayList<ActionListener>();
+	private Map<String, String> newsSourceMap = new HashMap<String,String>();
+	private Map<String, String> newsTopicMap = new HashMap<String,String>();
+	private Map<String, String> newsSubjectMap = new HashMap<String,String>();
+	NewsMakerModel none = new NewsMakerModel("none");
 	private NewsMakerListModel newsMakerListModel;
 	private NewsStoryListModel newsStoryListModel;
 
-	public void NewsDataBaseModel() {
-
+	public NewsDataBaseModel() {
+		newsStoryListModel = new NewsStoryListModel();
+		newsMakerListModel = new NewsMakerListModel();
+		newsMakerListModel.add(none);
 	}
 
-	public void NewsDataBaseModel(NewsMakerListModel newsMakerListModel, NewsStoryListModel newsStoryListModel) {
-
+	public NewsDataBaseModel(NewsMakerListModel newsMakerListModel, NewsStoryListModel newsStoryListModel) {
+		this.newsStoryListModel = newsStoryListModel;
+		this.newsMakerListModel = newsMakerListModel;
 	}
 
 	public Map<String, String> getNewsSourceMap() {
-		return null;
+		return new HashMap<String, String>(newsSourceMap);
 	}
 
 	public String[] getNewsSources() {
-		return null;
+		return (String[]) newsSourceMap.values().toArray();
 	}
 
 	public void setNewsSourceMap(Map<String, String> newsSourceMap) {
+		this.newsSourceMap = newsSourceMap;
 	}
 
 	public Map<String, String> getNewsTopicMap() {
-		return null;
+		return new HashMap<String,String>(newsTopicMap);
 	}
 
 	public String[] getNewsTopics() {
-		return null;
+		return (String[]) newsSourceMap.values().toArray();
 	}
 
 	public void setNewsTopicMap(Map<String, String> newsTopicMap) {
+		this.newsTopicMap = newsTopicMap;
 	}
 
 	public Map<String, String> getNewsSubjectMap() {
-		return null;
+		return new HashMap<String,String>(newsSubjectMap);
 	}
 
 	public String[] getNewsSubjects() {
-		return null;
+		return (String[]) newsSubjectMap.values().toArray();
 	}
 
 	public void setNewsSubjectMap(Map<String, String> newsSubjectMap) {
+		this.newsSubjectMap = newsSubjectMap;
 	}
 
 	public boolean newsMakerListIsEmpty() {
-		return true;
+		return newsMakerListModel.isEmpty();
 	}
 
 	public boolean containsNewsMakerModel(NewsMakerModel newsMakerModel) {
-		return true;
+		return this.newsMakerListModel.contains(newsMakerModel);
 	}
 
 	public NewsMakerListModel getNewsMakerListModel() {
-		return null;
+		return newsMakerListModel;
 	}
 
 	public String[] getNewsMakerNames() {
-		return null;
+		String[] result = new String[newsMakerListModel.size()];
+		for(int i = 0; i < newsMakerListModel.size(); ++i){
+			result[i] = newsMakerListModel.get(i).getName();
+		}
+		return result;
 	}
 
 	public DefaultListModel<NewsMakerModel> getNewsMakers() {
-		return null;
+		return newsMakerListModel.getNewsMakers();
 	}
 
 	public void setNewsMakerListModel(NewsMakerListModel newsMakerListModel) {
+		this.newsMakerListModel = newsMakerListModel;
+		processEvent(new ActionEvent(this.newsMakerListModel, ActionEvent.ACTION_PERFORMED, "Modified News Maker List"));
 	}
 
 	public void addNewsMakerModel(NewsMakerModel newsMakerModel) {
+		newsMakerListModel.add(newsMakerModel);
+		processEvent(new ActionEvent(this.newsMakerListModel, ActionEvent.ACTION_PERFORMED, "Modified News Maker List"));
 	}
 
 	public void replaceNewsMakerModel(NewsMakerModel newsMakerModel) {
+		if(newsMakerListModel.contains(newsMakerModel)){
+			newsMakerListModel.remove(newsMakerModel);
+			newsMakerListModel.add(newsMakerModel);
+		}
+		processEvent(new ActionEvent(this.newsMakerListModel, ActionEvent.ACTION_PERFORMED, "Modified News Maker List"));
 	}
 
 	public void removeNewsMakers(DefaultListModel<NewsMakerModel> newsMakers) {
+		for(int i = 0; i < newsMakers.getSize(); ++i){
+			newsMakerListModel.remove(newsMakers.get(i));
+		}
+		processEvent(new ActionEvent(this.newsMakerListModel, ActionEvent.ACTION_PERFORMED, "Modified News Maker List"));
 	}
 
 	public void removeAllNewsMakers() {
+		newsMakerListModel.removeAllNewsMakers();
+		processEvent(new ActionEvent(this.newsMakerListModel, ActionEvent.ACTION_PERFORMED, "Modified News Maker List"));
 	}
 
 	public void sortNewsMakerListModel() {
+		newsMakerListModel.sort();
+		processEvent(new ActionEvent(this.newsMakerListModel, ActionEvent.ACTION_PERFORMED, "Modified News Maker List"));
 	}
 
 	public boolean newsStoryListIsEmpty() {
-		return true;
+		return newsStoryListModel.isEmpty();
 	}
 
 	public boolean containsNewsStory(NewsStory newsStory) {
-		return true;
+		return newsStoryListModel.isEmpty();
 	}
 
 	public NewsStoryListModel getNewsStoryListModel() {
-		return null;
+		NewsStoryListModel result = new NewsStoryListModel();
+		for(int i = 0; i < newsStoryListModel.size(); ++i){
+			result.add(newsStoryListModel.get(i));
+		}
+		return result;
 	}
 
 	public DefaultListModel<NewsStory> getNewsStories() {
-		return null;
+		return newsStoryListModel.getNewsStories();
 	}
 
 	public void setNewsStoryListModel(NewsStoryListModel newsStoryListModel) {
+		this.newsStoryListModel = newsStoryListModel;
+		processEvent(new ActionEvent(this.newsStoryListModel, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	public void setNewsStoryListModelFromArray(NewsStory[] newsStoryArray) {
+		newsStoryListModel.setNewsStoriesFromArray(newsStoryArray);
+		processEvent(new ActionEvent(this.newsStoryListModel, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	public void addNewsStory(NewsStory newsStory) {
+		newsStoryListModel.add(newsStory);
+		processEvent(new ActionEvent(this.newsStoryListModel, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	public void removeNewsStories(DefaultListModel<NewsStory> newsStories) {
+		newsStoryListModel.removeListOfNewsStories(newsStories);
+		processEvent(new ActionEvent(this.newsStoryListModel, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	public void removeAllNewsStories() {
+		newsStoryListModel = new NewsStoryListModel();
+		processEvent(new ActionEvent(this.newsStoryListModel, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	public void addActionListener(ActionListener l) {
+		actionListenerList.add(l);
 	}
 
 	public void removeActionListener(ActionListener l) {
+		actionListenerList.remove(l);
 	}
 
 	private void processEvent(ActionEvent e) {
+		for(int i = 0; i < actionListenerList.size(); ++i){
+			actionListenerList.get(i).actionPerformed(e);
+		}
 	}
 
 }

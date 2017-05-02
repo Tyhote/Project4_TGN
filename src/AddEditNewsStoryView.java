@@ -12,7 +12,7 @@ public class AddEditNewsStoryView {
 	}
 	
 	
-	private long serialVersionUID;
+	private static long serialVersionUID;
 	private NewsDataBaseModel newsDataBaseModel; 
 	private NewsStory newsStory; 
 	private JLabel jlbNewsStoryType; 
