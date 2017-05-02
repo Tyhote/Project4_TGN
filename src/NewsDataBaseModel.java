@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.swing.DefaultListModel;
 
-public class NewsDataBaseModel implements Serializable{
+public class NewsDataBaseModel implements Serializable {
 	
 	
 	/**

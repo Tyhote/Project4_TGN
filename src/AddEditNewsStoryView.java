@@ -6,7 +6,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class AddEditNewsStoryView {
+public class AddEditNewsStoryView extends JPanel {
 	public AddEditNewsStoryView() {
 		
 	}

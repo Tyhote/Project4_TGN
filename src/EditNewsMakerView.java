@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class EditNewsMakerView implements ActionListener {
+public class EditNewsMakerView extends JPanel implements ActionListener {
 
 	private long serialVersionUID; 
 	NewsMakerModel newsMakerModel; 
