@@ -87,8 +87,8 @@ public class PieChartView implements ActionListener {
 		for (int i = 0; i < newsStoryListModel.size(); i++) {
 			NewsStory newsStory = newsStoryListModel.get(i);
 			if ((media.contains(NewsMedia.NEWSPAPER) && newsStory instanceof NewspaperStory)
-					|| (media.contains(NewsMedia.NEWSPAPER) && newsStory instanceof TVNewsStory)
-					|| (media.contains(NewsMedia.NEWSPAPER) && newsStory instanceof OnlineNewsStory)) {
+					|| (media.contains(NewsMedia.TV) && newsStory instanceof TVNewsStory)
+					|| (media.contains(NewsMedia.ONLINE) && newsStory instanceof OnlineNewsStory)) {
 				selectedNewsStories.add(newsStory);
 			}
 		}
@@ -174,5 +174,6 @@ public class PieChartView implements ActionListener {
 		} catch (IOException exception) {
 			System.err.println("Illegal Input found in pie chart");
 		}
+
 	}
 }

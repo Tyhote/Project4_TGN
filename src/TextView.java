@@ -46,6 +46,7 @@ public class TextView implements ActionListener {
 		this.sortCriteria = sortCriteria;
 
 		jfText = new JFrame();
+		jfText.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		constructTitle();
 		jfText.setSize(1000, 500);
 
