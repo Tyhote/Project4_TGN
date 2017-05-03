@@ -9,6 +9,10 @@ import java.lang.Math;
 
 public class PieChart extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2179231458361939222L;
 	private List<Wedge> wedges;
 	private String title;
 

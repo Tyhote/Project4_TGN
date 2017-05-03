@@ -5,10 +5,10 @@ public class OnlineNewsStory extends NewsStory {
 	private static final long serialVersionUID = 1L;
 	private PartOfDay partOfDay;
 
-	public OnlineNewsStory(LocalDate date, String source, int length, String topic, String subject,
-			PartOfDay partOfDay, NewsMakerModel newsMaker1, NewsMakerModel newsMaker2) {
+	public OnlineNewsStory(LocalDate date, String source, int length, String topic, String subject, PartOfDay partOfDay,
+			NewsMakerModel newsMaker1, NewsMakerModel newsMaker2) {
 		super(date, source, length, topic, subject, newsMaker1, newsMaker2);
-		
+
 		// TODO: Check to ensure the part of day is valid.
 		this.partOfDay = partOfDay;
 	}

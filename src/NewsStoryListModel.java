@@ -28,11 +28,7 @@ class NewsStoryListModel implements Serializable {
 	}
 
 	public boolean contains(NewsStory newsStory) {
-		if (newsStories.contains(newsStory)) {
-			return true;
-		} else {
-			return false;
-		}
+		return newsStories.contains(newsStory);
 	}
 
 	public NewsStory get(int index) {
@@ -50,7 +46,9 @@ class NewsStoryListModel implements Serializable {
 	public void add(NewsStory newsStory) {
 		if (!newsStories.contains(newsStory)) {
 			this.newsStories.addElement(newsStory);
+			return;
 		}
+		throw new IllegalArgumentException("Story already in list");
 	}
 
 	public void remove(NewsStory newsStory) {
@@ -66,8 +64,9 @@ class NewsStoryListModel implements Serializable {
 	}
 
 	public void setNewsStoriesFromArray(NewsStory[] newsStoryArray) {
-		for(int i = 0; i < newsStoryArray.length; i++){
-			newsStories.addElement(newsStoryArray[i]);
+		newsStories.removeAllElements();
+		for (NewsStory newsStory : newsStoryArray) {
+			newsStories.addElement(newsStory);
 		}
 	}
 }

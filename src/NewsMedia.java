@@ -5,7 +5,7 @@ import java.util.List;
 public enum NewsMedia {
 
 	NEWSPAPER, ONLINE, TV;
-	
+
 	public static final List<NewsMedia> VALUES_LIST = new ArrayList<NewsMedia>(Arrays.asList(NEWSPAPER, ONLINE, TV));
 
 	public String toString() {

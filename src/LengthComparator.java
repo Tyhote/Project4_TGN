@@ -1,7 +1,7 @@
 import java.util.Comparator;
 
 public class LengthComparator implements Comparator<NewsStory> {
-	
+
 	public static final LengthComparator LENGTH_COMPARATOR = new LengthComparator();
 
 	@Override

@@ -10,17 +10,17 @@ public class PieChartView implements ActionListener {
 
 	private PieChart pieChart;
 	private NewsMakerModel newsMakerModel;
-	private String media;
+	private List<NewsMedia> media;
 	private String content;
 	private String measure;
 
-	public PieChartView(NewsMakerModel newsMakerModel, String media, String content, String measure) {
-		
+	public PieChartView(NewsMakerModel newsMakerModel, List<NewsMedia> media, String content, String measure) {
+
 		this.newsMakerModel = newsMakerModel;
 		this.media = media;
 		this.content = content;
 		this.measure = measure;
-		
+
 		// Create the actual pie chart.
 		try {
 			pieChart = new PieChart(constructTitle(), constructWedges());
@@ -30,29 +30,30 @@ public class PieChartView implements ActionListener {
 	}
 
 	private String constructTitle() {
-		
+
 		// The title always starts with the news maker's name.
 		String titleString = newsMakerModel.getName() + " - ";
 
 		// If not all media types are selected, specify those that are.
-		if (media.length() < 3) {
-			if (media.contains("n")) {
+		// Fixed to represent new data type for media
+		if (media.size() < 3) {
+			if (media.contains(NewsMedia.NEWSPAPER)) {
 				titleString += "Newspaper";
-				if (media.length() > 1) {
+				if (media.size() > 1) {
 					titleString += "/";
 				} else {
 					titleString += " ";
 				}
 			}
-			if (media.contains("t")) {
+			if (media.contains(NewsMedia.TV)) {
 				titleString += "TV News";
-				if (media.length() > 2) {
+				if (media.size() > 2) {
 					titleString += "/";
 				} else {
 					titleString += " ";
 				}
 			}
-			if (media.contains("o")) {
+			if (media.contains(NewsMedia.ONLINE)) {
 				titleString += "Online ";
 			}
 		}
@@ -76,22 +77,22 @@ public class PieChartView implements ActionListener {
 	}
 
 	private List<Wedge> constructWedges() throws IOException {
-		
+
 		NewsStoryListModel newsStoryListModel = newsMakerModel.getNewsStoryListModel();
-		
+
 		/* List to hold a copy of the relevant data. */
 		List<NewsStory> selectedNewsStories = new ArrayList<NewsStory>();
 
 		// Select the news stories of the media type(s) requested.
 		for (int i = 0; i < newsStoryListModel.size(); i++) {
 			NewsStory newsStory = newsStoryListModel.get(i);
-			if ((media.contains("n") && newsStory instanceof NewspaperStory)
-					|| (media.contains("t") && newsStory instanceof TVNewsStory)
-					|| (media.contains("o") && newsStory instanceof OnlineNewsStory)) {
+			if ((media.contains(NewsMedia.NEWSPAPER) && newsStory instanceof NewspaperStory)
+					|| (media.contains(NewsMedia.NEWSPAPER) && newsStory instanceof TVNewsStory)
+					|| (media.contains(NewsMedia.NEWSPAPER) && newsStory instanceof OnlineNewsStory)) {
 				selectedNewsStories.add(newsStory);
 			}
 		}
-		
+
 		/*
 		 * Map to keep track of the items found and the quantity for each (for
 		 * the pie chart wedges). Note that the items could be sources, topics,
@@ -113,7 +114,9 @@ public class PieChartView implements ActionListener {
 				itemName = newsStory.getTopic();
 			} else if ("b".equals(content)) {
 				itemName = newsStory.getSubject();
-			} else {throw new IOException();}
+			} else {
+				throw new IOException();
+			}
 
 			/*
 			 * Need variable to hold quantity of item. If this item has not been
@@ -141,7 +144,9 @@ public class PieChartView implements ActionListener {
 					itemNameQuantityMap.put(itemName, itemQuantity + addedQuantity);
 				}
 				totalQuantity += addedQuantity;
-			} else {throw new IOException();}
+			} else {
+				throw new IOException();
+			}
 		}
 
 		/* List of pie wedges to put in the chart. */
@@ -157,24 +162,17 @@ public class PieChartView implements ActionListener {
 		for (Map.Entry<String, Integer> entry : itemNameQuantityMap.entrySet()) {
 			wedges.add(new Wedge(entry.getValue() / scale, entry.getKey()));
 		}
-		
+
 		return wedges;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		//TODO
+		// Redraw the pie chart to reflect any changes to the model data being
+		// represented.
+		try {
+			pieChart = new PieChart(constructTitle(), constructWedges());
+		} catch (IOException exception) {
+			System.err.println("Illegal Input found in pie chart");
+		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

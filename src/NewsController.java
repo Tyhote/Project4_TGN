@@ -190,11 +190,10 @@ public class NewsController {
 				if (null == selectedNewsMetric) {
 					continue;
 				}
-				
-				
-				// Create the pie chart.				
-				PieChartView pieChartView = new PieChartView(newsMakerModel, selectedMediaTypes, selectedNewsContent.toString(),
-						selectedNewsMetric.toString());
+
+				// Create the pie chart.
+				PieChartView pieChartView = new PieChartView(newsMakerModel, selectedMediaTypes,
+						selectedNewsContent.toString(), selectedNewsMetric.toString());
 
 				// Make sure the pie chart listens for model changes so that it
 				// can update itself.

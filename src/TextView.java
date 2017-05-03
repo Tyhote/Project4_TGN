@@ -195,24 +195,23 @@ public class TextView implements ActionListener {
 		jfText.setTitle(title);
 	}
 
-	
 	/**
 	 * This method acts on an action event and with code
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		//Check to see if the action event is for text display
+
+		// Check to see if the action event is for text display
 		if (e.getActionCommand().equals("Text Display")) {
-			
-			//Create a new scroll pane for the text display and add
+
+			// Create a new scroll pane for the text display and add
 			jspNewsStoryList = new JScrollPane();
 			jfText.add(jspNewsStoryList);
-			
-			//Pack the text display
+
+			// Pack the text display
 			jfText.pack();
-			
-			//Set the frame to visible
+
+			// Set the frame to visible
 			jfText.setVisible(true);
 		}
 	}
