@@ -1,10 +1,10 @@
 
 public class NoozDriver {
 
-	private NewsDataBaseModel newsDataBaseModel;
-	private SelectionView selectionView;
-	private NewsController newsController;
+	static private NewsDataBaseModel newsDataBaseModel;
+	static private SelectionView selectionView;
+	static private NewsController newsController;
 
-	public void main(String[] args) {
+	public static void main(String[] args) {
 	}
 }

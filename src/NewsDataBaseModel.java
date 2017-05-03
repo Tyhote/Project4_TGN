@@ -18,7 +18,7 @@ public class NewsDataBaseModel implements Serializable {
 	private Map<String, String> newsSourceMap = new HashMap<String,String>();
 	private Map<String, String> newsTopicMap = new HashMap<String,String>();
 	private Map<String, String> newsSubjectMap = new HashMap<String,String>();
-	NewsMakerModel none = new NewsMakerModel("none");
+	NewsMakerModel none = new NewsMakerModel("None");
 	private NewsMakerListModel newsMakerListModel;
 	private NewsStoryListModel newsStoryListModel;
 
