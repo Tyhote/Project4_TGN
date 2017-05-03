@@ -19,7 +19,7 @@ class UserInterface {
 	 * @param newsMedia
 	 * @return storyString
 	 */
-	public String convertToOutputFormat(NewsStory newsStory, List<NewsMedia> newsMedia) {
+	public static String convertToOutputFormat(NewsStory newsStory, List<NewsMedia> newsMedia) {
 
 		String storyString = "";
 		LocalDate date = newsStory.getDate();

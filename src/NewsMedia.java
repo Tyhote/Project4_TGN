@@ -13,7 +13,7 @@ public enum NewsMedia {
 		switch (this) {
 			case NEWSPAPER: 	{return "Newspaper";}
 			case ONLINE: 			{return "Online";}
-			case TV: 					{return "TV";}
+			case TV: 					{return "TV News";}
 			default:					{throw new IllegalArgumentException();}
 		}
 	}
