@@ -1,8 +1,10 @@
 import java.text.NumberFormat;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -52,7 +54,7 @@ public class AddEditNewsStoryView extends JPanel {
 	
 	private JLabel jlbNewsStoryMonth = new JLabel("Month: "); 
 	JComboBox<Month> jcbNewsStoryMonth; 
-	private JPanel jplNewsStoryMonth; 
+	private JPanel jplNewsStoryMonth = new JPanel(); 
 	
 	private JLabel jlbNewsStoryDay = new JLabel("Day: "); 
 	private Integer[] days; 
@@ -61,7 +63,7 @@ public class AddEditNewsStoryView extends JPanel {
 	
 	private JLabel jlbNewsStoryPartOfDay = new JLabel("Part of Day: "); 
 	JComboBox<PartOfDay> jcbNewsStoryPartOfDay; 
-	private JPanel jplNewsStoryPartOfDay; 
+	private JPanel jplNewsStoryPartOfDay = new JPanel(); 
 	
 	private JPanel jplNewsStoryWhen = new JPanel();
 	
@@ -98,10 +100,7 @@ public class AddEditNewsStoryView extends JPanel {
 		
 		
 		//Initialize jcbNewsStoryType and set the selected option to the proper NewsMedia
-		//Create an array to hold the NewsMedia to be used to make the JComboBox for holding NewsMedia options
-		NewsMedia[] newsMediaArray = new NewsMedia[3];
-		jcbNewsStoryType = new JComboBox<NewsMedia>(NewsMedia.VALUES_LIST.toArray(newsMediaArray));
-		//Set the selected option to the proper NewsMedia
+		jcbNewsStoryType = new JComboBox<NewsMedia>(NewsMedia.values());
 		if (this.newsStory instanceof NewspaperStory)
 		{
 			jcbNewsStoryType.setSelectedItem(NewsMedia.NEWSPAPER);
@@ -116,7 +115,7 @@ public class AddEditNewsStoryView extends JPanel {
 		}
 		
 		//Finish initializing the rest of the JComboBoxes using the arrays passed by newsDataBaseModel's methods
-		//and setting the selected values to the corresponding values
+		//and setting the selected values to the corresponding fields from the newsStory
 		jcbNewsStorySource = new JComboBox<String>(newsDataBaseModel.getNewsSources());
 		jcbNewsStorySource.setSelectedItem(newsStory.getSource());
 		
@@ -134,6 +133,7 @@ public class AddEditNewsStoryView extends JPanel {
 		
 		//Set values and selected items for the rest of the newsStory's info
 		jftfNewsStoryLength.setValue(newsStory.getLength());
+		jftfNewsStoryLength.setColumns(10); //Makes the text field a certain width for aesthetic
 		jcbNewsStoryYear.setSelectedItem(newsStory.getDate().getYear());
 		jcbNewsStoryMonth.setSelectedItem(newsStory.getDate().getMonth());
 		jcbNewsStoryDay.setSelectedItem(newsStory.getDate().getDayOfMonth());
@@ -174,7 +174,7 @@ public class AddEditNewsStoryView extends JPanel {
 		jplNewsStoryLength.add(jftfNewsStoryLength);
 		
 		jplNewsStoryYear.add(jlbNewsStoryYear);
-		jplNewsStoryLength.add(jcbNewsStoryYear);
+		jplNewsStoryYear.add(jcbNewsStoryYear);
 
 		jplNewsStoryMonth.add(jlbNewsStoryMonth);
 		jplNewsStoryMonth.add(jcbNewsStoryMonth);
@@ -182,8 +182,8 @@ public class AddEditNewsStoryView extends JPanel {
 		jplNewsStoryDay.add(jlbNewsStoryDay);
 		jplNewsStoryDay.add(jcbNewsStoryDay);
 		
-		jlbNewsStoryPartOfDay.add(jlbNewsStoryPartOfDay);
-		jlbNewsStoryPartOfDay.add(jcbNewsStoryPartOfDay);
+		jplNewsStoryPartOfDay.add(jlbNewsStoryPartOfDay);
+		jplNewsStoryPartOfDay.add(jcbNewsStoryPartOfDay);
 		
 		//Add all of the "when" related panels to the jplNewsStoryWhen panel
 		jplNewsStoryWhen.add(jplNewsStoryYear);
@@ -194,17 +194,26 @@ public class AddEditNewsStoryView extends JPanel {
 		jplAddEditNewsStory.add(jbtAddEditNewsStory);
 		
 		
-		//Add all of the panels to this container
-		this.add(jpNewsStoryType);
-		this.add(jpNewsStorySource);
-		this.add(jpNewsStorySubject);
-		this.add(jpNewsStoryNewsMaker1);
-		this.add(jpNewsStoryNewsMaker2);
-		this.add(jplNewsStoryLength);
-		this.add(jplNewsStoryWhen);
-		this.add(jplAddEditNewsStory);
+		//Add components to a box for formatting and add the box to this AddEditNewsStoryView
+		Box box = Box.createVerticalBox();
+		box.add(jpNewsStoryType);
+		box.add(Box.createVerticalGlue());
+		box.add(jpNewsStorySource);
+		box.add(Box.createVerticalGlue());
+		box.add(jpNewsStoryTopic);
+		box.add(Box.createVerticalGlue());
+		box.add(jpNewsStorySubject);
+		box.add(Box.createVerticalGlue());
+		box.add(jpNewsStoryNewsMaker1);
+		box.add(Box.createVerticalGlue());
+		box.add(jpNewsStoryNewsMaker2);
+		box.add(Box.createVerticalGlue());
+		box.add(jplNewsStoryLength);
+		box.add(Box.createVerticalGlue());
+		box.add(jplNewsStoryWhen);
+		box.add(Box.createVerticalGlue());
+		box.add(jplAddEditNewsStory);
 		
-		//TODO: Make proper formatting for this panel (FlowLayout, BorderLayout, Box, etc.)
-		
+		this.add(box);		
 	}
 }
