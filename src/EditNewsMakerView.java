@@ -11,32 +11,31 @@ import javax.swing.JTextField;
 
 public class EditNewsMakerView extends JPanel implements ActionListener {
 
-	private long serialVersionUID; 
-	NewsMakerModel newsMakerModel; 
-	private NewsDataBaseModel newsDataBaseModel; 
-	private DefaultListModel<String> newsStoryStringList; 
-	private JList<String> jlNewsStoryList; 
-	private JScrollPane jspNewsStoryList; 
-	private JPanel jpNewsStoryList; 
-	JTextField jtfName; 
-	private JLabel jlbName; 
-	JButton jbtRemoveFromStory; 
-	private JPanel jplName; 
-	
-	
-	public EditNewsMakerView(NewsMakerModel newsMakerModel , NewsDataBaseModel newsDataBaseModel) {
-		
+	private long serialVersionUID;
+	NewsMakerModel newsMakerModel;
+	private NewsDataBaseModel newsDataBaseModel;
+	private DefaultListModel<String> newsStoryStringList;
+	private JList<String> jlNewsStoryList;
+	private JScrollPane jspNewsStoryList;
+	private JPanel jpNewsStoryList;
+	JTextField jtfName;
+	private JLabel jlbName;
+	JButton jbtRemoveFromStory;
+	private JPanel jplName;
+
+	public EditNewsMakerView(NewsMakerModel newsMakerModel, NewsDataBaseModel newsDataBaseModel) {
+
 	}
-	
+
 	public int[] getSelectedNewsStoryIndices() {
 		return null;
 	}
-	
-	private void populateNewsStoryJList(){
-		
+
+	private void populateNewsStoryJList() {
+
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
-		
+
 	}
 }

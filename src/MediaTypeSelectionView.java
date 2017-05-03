@@ -36,7 +36,7 @@ public class MediaTypeSelectionView extends JPanel {
 		this.jpMediaType.add(this.jcbOnline);
 		this.jpMediaType.add(this.jpCompletionButtons);
 		this.jpMediaType.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		
+
 		this.add(this.jpMediaType);
 	}
 }

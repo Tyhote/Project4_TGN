@@ -24,8 +24,8 @@ class UserInterface {
 		String storyString = "";
 		LocalDate date = newsStory.getDate();
 
-		//Dr.Hougen's Code
-		
+		// Dr.Hougen's Code
+
 		// If the type doesn't include TV, use words
 		if (!newsMedia.contains(NewsMedia.TV)) {
 			if (newsStory instanceof NewspaperStory) {

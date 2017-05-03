@@ -66,7 +66,7 @@ class NewsStoryListModel implements Serializable {
 	}
 
 	public void setNewsStoriesFromArray(NewsStory[] newsStoryArray) {
-		for(int i = 0; i < newsStoryArray.length; i++){
+		for (int i = 0; i < newsStoryArray.length; i++) {
 			newsStories.addElement(newsStoryArray[i]);
 		}
 	}

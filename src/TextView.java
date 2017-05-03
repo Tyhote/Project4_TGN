@@ -26,28 +26,26 @@ public class TextView implements ActionListener {
 		this.newsMakerModel = newsMakerModel;
 		this.newsMedia = newsMedia;
 		this.sortCriteria = sortCriteria;
-		
+
 		jfText = new JFrame();
 		constructTitle();
 		jfText.setSize(1000, 500);
-		
+
 		constructNewsStoriesAndSummary();
 		jtaNewsStoryList = new JTextArea(listOfStories);
 		jfText.add(jtaSummaryLine);
 		jfText.add(jtaNewsStoryList);
-		
-		
-		
+
 	}
 
 	private void constructNewsStoriesAndSummary() {
-		
-		//Create summaryLine
-		//for tv
-		//for newspaper
-		//for online
-		
-		//Create list of stories
+
+		// Create summaryLine
+		// for tv
+		// for newspaper
+		// for online
+
+		// Create list of stories
 		listOfStories = "";
 		Method m = null;
 		try {
@@ -60,22 +58,19 @@ public class TextView implements ActionListener {
 		for (Object n : newsMakerModel.getNewsStoryListModel().getNewsStories().toArray()) {
 			for (NewsMedia nm : newsMedia) {
 				try {
-					if(nm.toString().equals("TVNewsStory")){
-						if(n instanceof TVNewsStory){
+					if (nm.toString().equals("TVNewsStory")) {
+						if (n instanceof TVNewsStory) {
 							listOfStories += m.invoke(new UserInterface(), (TVNewsStory) n, newsMedia.toString());
 						}
-					}
-					else if(nm.toString().equals("OnlineNewsStory")){
-						if(n instanceof OnlineNewsStory){
+					} else if (nm.toString().equals("OnlineNewsStory")) {
+						if (n instanceof OnlineNewsStory) {
 							listOfStories += m.invoke(new UserInterface(), (OnlineNewsStory) n, newsMedia.toString());
 						}
-					}
-					else if(nm.toString().equals("NewspaperStory")){
-						if(n instanceof NewspaperStory){
+					} else if (nm.toString().equals("NewspaperStory")) {
+						if (n instanceof NewspaperStory) {
 							listOfStories += m.invoke(new UserInterface(), (NewspaperStory) n, newsMedia.toString());
 						}
-					}
-					else{
+					} else {
 						throw new IllegalArgumentException();
 					}
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -86,7 +81,7 @@ public class TextView implements ActionListener {
 	}
 
 	private void constructTitle() {
-		
+
 		String title = "TextDisplay";
 		jfText.setTitle(title);
 	}

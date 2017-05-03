@@ -15,12 +15,12 @@ public class PieChartView implements ActionListener {
 	private String measure;
 
 	public PieChartView(NewsMakerModel newsMakerModel, List<NewsMedia> media, String content, String measure) {
-		
+
 		this.newsMakerModel = newsMakerModel;
 		this.media = media;
 		this.content = content;
 		this.measure = measure;
-		
+
 		// Create the actual pie chart.
 		try {
 			pieChart = new PieChart(constructTitle(), constructWedges());
@@ -30,7 +30,7 @@ public class PieChartView implements ActionListener {
 	}
 
 	private String constructTitle() {
-		
+
 		// The title always starts with the news maker's name.
 		String titleString = newsMakerModel.getName() + " - ";
 
@@ -77,9 +77,9 @@ public class PieChartView implements ActionListener {
 	}
 
 	private List<Wedge> constructWedges() throws IOException {
-		
+
 		NewsStoryListModel newsStoryListModel = newsMakerModel.getNewsStoryListModel();
-		
+
 		/* List to hold a copy of the relevant data. */
 		List<NewsStory> selectedNewsStories = new ArrayList<NewsStory>();
 
@@ -92,7 +92,7 @@ public class PieChartView implements ActionListener {
 				selectedNewsStories.add(newsStory);
 			}
 		}
-		
+
 		/*
 		 * Map to keep track of the items found and the quantity for each (for
 		 * the pie chart wedges). Note that the items could be sources, topics,
@@ -114,7 +114,9 @@ public class PieChartView implements ActionListener {
 				itemName = newsStory.getTopic();
 			} else if ("b".equals(content)) {
 				itemName = newsStory.getSubject();
-			} else {throw new IOException();}
+			} else {
+				throw new IOException();
+			}
 
 			/*
 			 * Need variable to hold quantity of item. If this item has not been
@@ -142,7 +144,9 @@ public class PieChartView implements ActionListener {
 					itemNameQuantityMap.put(itemName, itemQuantity + addedQuantity);
 				}
 				totalQuantity += addedQuantity;
-			} else {throw new IOException();}
+			} else {
+				throw new IOException();
+			}
 		}
 
 		/* List of pie wedges to put in the chart. */
@@ -158,12 +162,13 @@ public class PieChartView implements ActionListener {
 		for (Map.Entry<String, Integer> entry : itemNameQuantityMap.entrySet()) {
 			wedges.add(new Wedge(entry.getValue() / scale, entry.getKey()));
 		}
-		
+
 		return wedges;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// Redraw the pie chart to reflect any changes to the model data being represented.
+		// Redraw the pie chart to reflect any changes to the model data being
+		// represented.
 		try {
 			pieChart = new PieChart(constructTitle(), constructWedges());
 		} catch (IOException exception) {
@@ -171,16 +176,3 @@ public class PieChartView implements ActionListener {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
