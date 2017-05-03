@@ -35,23 +35,28 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 	}
 
 	public void addNewsStory(NewsStory newsStory) {
+		if (newsStory.getNewsMaker1().equals(this) || newsStory.getNewsMaker2().equals(this)) {
+			newsStoryListModel.add(newsStory);
+			processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Maker"));
+		} else {
+			throw new IllegalArgumentException("Story Not Relevant");
+		}
 
-		newsStoryListModel.add(newsStory);
 	}
 
 	public void setName(String name) {
-
 		this.name = name;
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Maker"));
 	}
 
 	public void setNewsStoryListModel(NewsStoryListModel newsStoryListModel) {
-
 		this.newsStoryListModel = newsStoryListModel;
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	public void removeNewsStory(NewsStory newsStory) {
-
 		newsStoryListModel.remove(newsStory);
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Maker"));
 	}
 
 	public boolean equals(Object o) {
@@ -65,26 +70,25 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 	}
 
 	public int compareTo(NewsMakerModel newsMakerModel) {
-
 		return newsMakerModel.getName().compareTo(newsMakerModel.getName());
 	}
 
-	// TODO
 	public String toString() {
-
-		return null;
+		return this.name;
 	}
 
-	// TODO
 	public void addActionListener(ActionListener l) {
+		actionListenerList.add(l);
 	}
 
-	// TODO
 	public void removeActionListener(ActionListener l) {
+		actionListenerList.remove(l);
 	}
 
-	// TODO
 	private void processEvent(ActionEvent e) {
+		for (ActionListener actionListener : actionListenerList) {
+			actionListener.actionPerformed(e);
+		}
 	}
 
 }
