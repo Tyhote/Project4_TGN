@@ -1,3 +1,4 @@
+import java.awt.GridLayout;
 import java.text.NumberFormat;
 
 import javax.swing.Box;
@@ -193,27 +194,16 @@ public class AddEditNewsStoryView extends JPanel {
 		
 		jplAddEditNewsStory.add(jbtAddEditNewsStory);
 		
-		
-		//Add components to a box for formatting and add the box to this AddEditNewsStoryView
-		Box box = Box.createVerticalBox();
-		box.add(jpNewsStoryType);
-		box.add(Box.createVerticalGlue());
-		box.add(jpNewsStorySource);
-		box.add(Box.createVerticalGlue());
-		box.add(jpNewsStoryTopic);
-		box.add(Box.createVerticalGlue());
-		box.add(jpNewsStorySubject);
-		box.add(Box.createVerticalGlue());
-		box.add(jpNewsStoryNewsMaker1);
-		box.add(Box.createVerticalGlue());
-		box.add(jpNewsStoryNewsMaker2);
-		box.add(Box.createVerticalGlue());
-		box.add(jplNewsStoryLength);
-		box.add(Box.createVerticalGlue());
-		box.add(jplNewsStoryWhen);
-		box.add(Box.createVerticalGlue());
-		box.add(jplAddEditNewsStory);
-		
-		this.add(box);		
+		//Set the layout to a GridLayout with 1 column and add the panels to this AddEditNewsStoryView
+		this.setLayout(new GridLayout(0, 1));
+		this.add(jpNewsStoryType);
+		this.add(jpNewsStorySource);
+		this.add(jpNewsStoryTopic);
+		this.add(jpNewsStorySubject);
+		this.add(jpNewsStoryNewsMaker1);
+		this.add(jpNewsStoryNewsMaker2);
+		this.add(jplNewsStoryLength);
+		this.add(jplNewsStoryWhen);
+		this.add(jplAddEditNewsStory);	
 	}
 }
