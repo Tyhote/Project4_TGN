@@ -6,6 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.JFrame;
+
+/**
+ * This class creates a UI for piechart display with a model, list of media,
+ * measure, and content.
+ * 
+ * @author Clayton Glenn, Tristan Dow, Nick Fox
+ *
+ */
 public class PieChartView implements ActionListener {
 
 	private PieChart pieChart;
@@ -14,21 +23,44 @@ public class PieChartView implements ActionListener {
 	private String content;
 	private String measure;
 
+	/**
+	 * Constructor method to create pie chart view with a maker model and to set
+	 * its bounds.
+	 * 
+	 * @param newsMakerModel
+	 *            Model of a news maker that news stories are found.
+	 * @param media
+	 *            Media list to search news stories
+	 * @param content
+	 *            A bound of content from an enum
+	 * @param measure
+	 *            A bound of measure from an enum
+	 */
 	public PieChartView(NewsMakerModel newsMakerModel, List<NewsMedia> media, String content, String measure) {
 
+		// Set the object
 		this.newsMakerModel = newsMakerModel;
 		this.media = media;
 		this.content = content;
 		this.measure = measure;
 
+		// Create new frame and add piechart
+		JFrame jfPieChart = new JFrame();
 		// Create the actual pie chart.
 		try {
 			pieChart = new PieChart(constructTitle(), constructWedges());
 		} catch (IOException e) {
 			System.err.println("Illegal Input found in pie chart");
 		}
+		jfPieChart.add(pieChart);
 	}
 
+	/**
+	 * This helper method constructs a title and sends it back to the
+	 * constructor
+	 * 
+	 * @return Title
+	 */
 	private String constructTitle() {
 
 		// The title always starts with the news maker's name.
@@ -59,23 +91,30 @@ public class PieChartView implements ActionListener {
 		}
 
 		// Specify the content selected.
-		if ("s".equals(content)) {
+		if ("Source".equals(content)) {
 			titleString += "Sources ";
-		} else if ("t".equals(content)) {
+		} else if ("Topic".equals(content)) {
 			titleString += "Topics ";
-		} else if ("b".equals(content)) {
+		} else if ("Subject".equals(content)) {
 			titleString += "Subjects ";
 		}
 
 		// Specify the measure selected.
-		if (measure.equals("l")) {
+		if (measure.equals("Length")) {
 			titleString += "by Length";
-		} else if (measure.equals("c")) {
+		} else if (measure.equals("Count")) {
 			titleString += "by Count";
 		}
 		return titleString;
 	}
 
+	/**
+	 * This method constructs a list of wedges and sends it back to the
+	 * constructor.
+	 * 
+	 * @return Wedges
+	 * @throws IOException
+	 */
 	private List<Wedge> constructWedges() throws IOException {
 
 		NewsStoryListModel newsStoryListModel = newsMakerModel.getNewsStoryListModel();
@@ -89,6 +128,7 @@ public class PieChartView implements ActionListener {
 			if ((media.contains(NewsMedia.NEWSPAPER) && newsStory instanceof NewspaperStory)
 					|| (media.contains(NewsMedia.TV) && newsStory instanceof TVNewsStory)
 					|| (media.contains(NewsMedia.ONLINE) && newsStory instanceof OnlineNewsStory)) {
+
 				selectedNewsStories.add(newsStory);
 			}
 		}
@@ -108,11 +148,11 @@ public class PieChartView implements ActionListener {
 
 			/* Get items of the correct content type. */
 			String itemName = null;
-			if ("s".equals(content)) {
+			if ("Source".equals(content)) {
 				itemName = newsStory.getSource();
-			} else if ("t".equals(content)) {
+			} else if ("Topic".equals(content)) {
 				itemName = newsStory.getTopic();
-			} else if ("b".equals(content)) {
+			} else if ("Subject".equals(content)) {
 				itemName = newsStory.getSubject();
 			} else {
 				throw new IOException();
@@ -127,7 +167,7 @@ public class PieChartView implements ActionListener {
 			Integer itemQuantity = itemNameQuantityMap.get(itemName);
 
 			// If the measure is count, we'll just add one.
-			if ("c".equals(measure)) {
+			if ("Count".equals(measure)) {
 				if (itemQuantity == null) {
 					itemNameQuantityMap.put(itemName, 1);
 				} else {
@@ -136,7 +176,7 @@ public class PieChartView implements ActionListener {
 				totalQuantity++;
 			}
 			// If the measure is length, we'll need to add the length.
-			else if ("l".equals(measure)) {
+			else if ("Length".equals(measure)) {
 				int addedQuantity = newsStory.getLengthInWords();
 				if (itemQuantity == null) {
 					itemNameQuantityMap.put(itemName, addedQuantity);
@@ -166,6 +206,9 @@ public class PieChartView implements ActionListener {
 		return wedges;
 	}
 
+	/**
+	 * This method acts on the object only when the user performs an action
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// Redraw the pie chart to reflect any changes to the model data being
 		// represented.

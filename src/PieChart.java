@@ -7,47 +7,75 @@ import javax.swing.JPanel;
 
 import java.lang.Math;
 
+/**
+ * This class extends a JFrame and creates a piechart object added to the
+ * JFrame.
+ * 
+ * @author Clayton Glenn, Tristan Dow, Nick Fox
+ */
 public class PieChart extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2179231458361939222L;
+	private static final long serialVersionUID = 1L;
 	private List<Wedge> wedges;
 	private String title;
 
+	/**
+	 * Constructor method used to create a piechart with a title and wedges
+	 * 
+	 * @param title
+	 *            Name of the whole piechart
+	 * @param wedges
+	 *            List of wedges used to draw the pie chart
+	 */
 	public PieChart(String title, List<Wedge> wedges) {
 		this.title = title;
 		this.wedges = wedges;
 
-		// Create a general heavy-weight container.
-		JFrame frame = new JFrame(this.title);
-
-		// Set its size.
-		frame.setSize(1000, 500);
-
 		// Create a specialized light-weight container.
 		JPanel panel = new PieChartPanel();
 
+		// Create a general heavy-weight container.
+		setTitle(this.title);
+		// Set its size.
+		setSize(1000, 500);
 		// Add the specialized container to the general container.
-		frame.add(panel);
-
+		add(panel);
 		// Make the GUI visible on the screen.
-		frame.setVisible(true);
+		setVisible(true);
 	}
 
+	/**
+	 * Mutator method used to set the title of the piechart
+	 * 
+	 * @param title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * Mutator method used to set the wedges of the piechart
+	 * 
+	 * @param wedges
+	 */
 	public void setWedges(List<Wedge> wedges) {
 		this.wedges = wedges;
 	}
 
+	/**
+	 * The Pie chart panel used to add to the JFrame
+	 * 
+	 * @author Clayton Glenn, Tristan Dow, Nick Fox, Dean Hougen
+	 */
 	private class PieChartPanel extends JPanel {
+
 		// As a subclass of JPanel, PieChartPanel should be serializable.
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * This overriding method paints the JPanel that is used for the
+		 * Piechart view
+		 */
 		@Override
 		public void paintComponent(Graphics g) {
 			// Should almost always call parent's paintComponent method first,
