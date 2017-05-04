@@ -6,6 +6,7 @@ public class NoozDriver {
 	static private NewsController newsController;
 
 	public static void main(String[] args) {
+		
 		//Create the M, V, and C
 		newsDataBaseModel = new NewsDataBaseModel();
 		selectionView = new SelectionView();
