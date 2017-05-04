@@ -16,12 +16,14 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 	public NewsMakerModel() {
 
 		actionListenerList = new ArrayList<ActionListener>();
+		newsStoryListModel = new NewsStoryListModel();
 	}
 
 	public NewsMakerModel(String name) {
 
 		this.name = name;
 		actionListenerList = new ArrayList<ActionListener>();
+		newsStoryListModel = new NewsStoryListModel();
 	}
 
 	public String getName() {
