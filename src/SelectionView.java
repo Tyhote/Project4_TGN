@@ -79,7 +79,7 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Set title of the frame
 		setTitle("Nooz");
 		
-		// Add action commands to each menuItem
+		// Add action commands for each menuItem
 		jmiLoad.setActionCommand("Load");
 		jmiSave.setActionCommand("Save");
 		jmiImport.setActionCommand("Import");
