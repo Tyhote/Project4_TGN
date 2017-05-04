@@ -20,7 +20,7 @@ public class PieChart extends JFrame {
 	private String title;
 
 	/**
-	 * Constructor method used to create a piechart with a title and wedges
+	 * Constructor method used to create a piechart with a title and wedges.
 	 * 
 	 * @param title
 	 *            Name of the whole piechart
@@ -45,16 +45,16 @@ public class PieChart extends JFrame {
 	}
 
 	/**
-	 * Mutator method used to set the title of the piechart
+	 * Mutator method used to set the title of the piechart.
 	 * 
 	 * @param title
 	 */
 	public void setTitle(String title) {
-		this.title = title;
+		super.setTitle(title);
 	}
 
 	/**
-	 * Mutator method used to set the wedges of the piechart
+	 * Mutator method used to set the wedges of the piechart.
 	 * 
 	 * @param wedges
 	 */
