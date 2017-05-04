@@ -72,10 +72,10 @@ public class SelectionView extends JFrame implements ActionListener {
 	/**
 	 * Constructor for selection view that sets a frame for the UI
 	 */
-	public SelectionView() {
-
+	public SelectionView(NewsDataBaseModel db) {
+		//TODO change
 		// Create new news database model
-		newsDataBaseModel = new NewsDataBaseModel();
+		newsDataBaseModel = db;
 
 		// Set title of the frame
 		setTitle("Nooz");
