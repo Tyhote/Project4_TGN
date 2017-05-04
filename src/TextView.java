@@ -175,9 +175,25 @@ public class TextView implements ActionListener {
 		if (newsMedia.size() < 3) {
 			for (int i = 0; i < newsMedia.size(); i++) {
 				if (i == newsMedia.size() - 1) {
-					title += newsMedia.get(i).toString();
+					if(newsMedia.get(i).equals(NewsMedia.TV)){
+						title += "TV News ";
+					}
+					else if(newsMedia.get(i).equals(NewsMedia.ONLINE)){
+						title += "Online ";
+					}
+					else{
+						title += "Newspaper ";
+					}
 				} else {
-					title += newsMedia.get(i).toString() + "/";
+					if(newsMedia.get(i).equals(NewsMedia.TV)){
+						title += "TV News/";
+					}
+					else if(newsMedia.get(i).equals(NewsMedia.ONLINE)){
+						title += "Online/";
+					}
+					else{
+						title += "Newspaper/";
+					}
 				}
 			}
 		}
