@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -72,14 +71,35 @@ public class SelectionView extends JFrame implements ActionListener {
 	/**
 	 * Constructor for selection view that sets a frame for the UI
 	 */
-	public SelectionView(NewsDataBaseModel db) {
-		//TODO change
+	public SelectionView() {
+		
 		// Create new news database model
-		newsDataBaseModel = db;
+		newsDataBaseModel = new NewsDataBaseModel();
 
 		// Set title of the frame
 		setTitle("Nooz");
-
+		
+		// Add action commands for each menuItem
+		jmiLoad.setActionCommand("Load");
+		jmiSave.setActionCommand("Save");
+		jmiImport.setActionCommand("Import");
+		jmiExport.setActionCommand("Export");
+		
+		jmiAddNewsMaker.setActionCommand("Add NewsMaker");
+		jmiEditNewsMaker.setActionCommand("Edit NewsMaker");
+		jmiDeleteNewsMaker.setActionCommand("Delete NewsMaker");
+		jmiDeleteNewsMakerList.setActionCommand("Delete NewsMaker List");
+		
+		jmiAddNewsStory.setActionCommand("Add News Story");
+		jmiEditNewsStory.setActionCommand("Edit News Story");
+		jmiSortNewsStories.setActionCommand("Sort News Stories");
+		jmiDeleteNewsStory.setActionCommand("Delete News Story");
+		jmiDeleteAllNewsStories.setActionCommand("Delete All News Stories");
+		
+		jmiPieChart.setActionCommand("Pie Chart");
+		jmiText.setActionCommand("Text");
+		
+		
 		// Add item components to file menu
 		jmFile.add(jmiLoad);
 		jmFile.add(jmiSave);
@@ -112,7 +132,7 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Create new jlists and add Newsmakers to it
 		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
 		jspNewsMakerList = new JScrollPane(jlNewsMakerList);
-		jpNewsMakerList.add(new JLabel("Newsmakers     "), BorderLayout.NORTH);
+		jpNewsMakerList.add(new JLabel("Newsmakers               "), BorderLayout.NORTH);
 		jpNewsMakerList.add(jspNewsMakerList, BorderLayout.CENTER);
 
 		// Create new Jlist and add new stories to it
@@ -214,6 +234,7 @@ public class SelectionView extends JFrame implements ActionListener {
 	public void setNewsDataBaseModel(NewsDataBaseModel newsDataBaseModel) {
 
 		this.newsDataBaseModel = newsDataBaseModel;
+		actionPerformed(new ActionEvent(this, 0, "Set the NewsDataBaseModel"));
 	}
 
 	/**
@@ -221,9 +242,9 @@ public class SelectionView extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-
-		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
-		jlNewsStoryList = new JList<NewsStory>(newsDataBaseModel.getNewsStories());
+		
+		jlNewsMakerList = new JList<NewsMakerModel>(this.newsDataBaseModel.getNewsMakers());
+		jlNewsStoryList = new JList<NewsStory>(this.newsDataBaseModel.getNewsStories());
 	}
 
 	/**
