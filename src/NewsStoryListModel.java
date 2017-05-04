@@ -73,7 +73,7 @@ class NewsStoryListModel implements Serializable {
 	public DefaultListModel<String> getStoriesForJList(){
 		DefaultListModel<String> result = new DefaultListModel<String>();
 		for(int i = 0; i < newsStories.size(); ++i){
-			result.addElement(UserInterface.convertToOutputFormat(newsStories.get(i), NewsMedia.VALUES_LIST));
+			result.addElement(newsStories.get(i).toString());
 		}
 		return result;
 	}
