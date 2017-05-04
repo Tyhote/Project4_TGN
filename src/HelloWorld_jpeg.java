@@ -29,11 +29,10 @@ public class HelloWorld_jpeg {
 		String measure = NewsMetric.COUNT.toString();
 
 		TextView tv = new TextView(mm, newsMedia, sortCriteria);
-		//TODO dont do this
-		SelectionView sv = new SelectionView(db);
+		SelectionView sv = new SelectionView();
 		sv.setNewsDataBaseModel(db);
 
-		JFrame mtsf = new JFrame();
+		JFrame mtsf = new JFrame("MEDIA TYPE SELECTION VIEW");
 		MediaTypeSelectionView mt = new MediaTypeSelectionView();
 		mtsf.add(mt);
 		mtsf.pack();

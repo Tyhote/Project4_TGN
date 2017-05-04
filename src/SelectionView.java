@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -72,10 +71,10 @@ public class SelectionView extends JFrame implements ActionListener {
 	/**
 	 * Constructor for selection view that sets a frame for the UI
 	 */
-	public SelectionView(NewsDataBaseModel db) {
-		//TODO change
+	public SelectionView() {
+		
 		// Create new news database model
-		newsDataBaseModel = db;
+		newsDataBaseModel = new NewsDataBaseModel();
 
 		// Set title of the frame
 		setTitle("Nooz");
@@ -112,7 +111,7 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Create new jlists and add Newsmakers to it
 		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
 		jspNewsMakerList = new JScrollPane(jlNewsMakerList);
-		jpNewsMakerList.add(new JLabel("Newsmakers     "), BorderLayout.NORTH);
+		jpNewsMakerList.add(new JLabel("Newsmakers               "), BorderLayout.NORTH);
 		jpNewsMakerList.add(jspNewsMakerList, BorderLayout.CENTER);
 
 		// Create new Jlist and add new stories to it
@@ -214,6 +213,7 @@ public class SelectionView extends JFrame implements ActionListener {
 	public void setNewsDataBaseModel(NewsDataBaseModel newsDataBaseModel) {
 
 		this.newsDataBaseModel = newsDataBaseModel;
+		actionPerformed(new ActionEvent(this, 0, "Set the NewsDataBaseModel"));
 	}
 
 	/**
@@ -221,9 +221,9 @@ public class SelectionView extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-
-		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
-		jlNewsStoryList = new JList<NewsStory>(newsDataBaseModel.getNewsStories());
+		
+		jlNewsMakerList = new JList<NewsMakerModel>(this.newsDataBaseModel.getNewsMakers());
+		jlNewsStoryList = new JList<NewsStory>(this.newsDataBaseModel.getNewsStories());
 	}
 
 	/**
