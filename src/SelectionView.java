@@ -1,3 +1,6 @@
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,7 +60,7 @@ public class SelectionView extends JFrame implements ActionListener {
 	// All components for news maker list
 	private JList<NewsMakerModel> jlNewsMakerList;
 	private JScrollPane jspNewsMakerList;
-	private JPanel jpNewsMakerList;
+	private JPanel jpNewsMakerList = new JPanel();
 
 	// All components for news story list
 	private JList<NewsStory> jlNewsStoryList;
@@ -108,7 +111,6 @@ public class SelectionView extends JFrame implements ActionListener {
 		jmb.add(jmDisplay);
 
 		// Create new jlists and add Newsmakers to it
-		jpNewsMakerList = new JPanel();
 		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
 		jspNewsMakerList = new JScrollPane(jlNewsMakerList);
 		jpNewsMakerList.add(jspNewsMakerList);
@@ -116,20 +118,43 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Create new Jlist and add new stories to it
 		jlNewsStoryList = new JList<NewsStory>(newsDataBaseModel.getNewsStories());
 		jspNewsStoryList = new JScrollPane(jlNewsStoryList);
-		jpNewsStoryList.add(jlNewsStoryList);
 		jpNewsStoryList.add(jspNewsStoryList);
 
 		// Add the lists to the split pane
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splitPane.add(jpNewsMakerList);
 		splitPane.add(jpNewsStoryList);
+		splitPane.setTopComponent(jpNewsMakerList);
+		splitPane.setBottomComponent(jpNewsStoryList);
 
 		// Add components to frame, pack, and set visible
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new GridLayout(0, 1, 5, 5));
-		add(jmb);
+		setSize(500,500);
+		setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        Dimension d = new Dimension(500, 0);
+        jmb.setMinimumSize(d);
+        gbc.gridwidth = gbc.REMAINDER;
+        add(jmb, gbc);
+		
+		// Add the lists to the split pane
+		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitPane.add(jpNewsMakerList);
+		splitPane.add(jpNewsStoryList);
+		splitPane.setTopComponent(jpNewsMakerList);
+		splitPane.setBottomComponent(jpNewsStoryList);
+		gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.CENTER;
+        gbc.gridx = -5;
+        gbc.gridy = -5;
+        //gbc.weightx = 6;
+        add(splitPane, gbc);
+		
 		add(splitPane);
-		pack();
 		setVisible(true);
 	}
 
