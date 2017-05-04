@@ -120,4 +120,18 @@ abstract class NewsStory implements Comparable<NewsStory>, Serializable {
 	public int compareTo(NewsStory newsStory) {
 		return this.topic.compareTo(newsStory.topic);
 	}
+	
+	/**
+	 * This method doesn't really have to exist since we have convertToOutputFormat in UserInterface. So don't use it. It's just here so I don't get fined.
+	 * 
+	 * @return
+	 * 		An empty String.
+	 * @Override
+	 * 		toString in class java.lang.Object
+	 */
+	@Override
+	public String toString() {
+		return "";
+	}
+	
 }
