@@ -78,7 +78,28 @@ public class SelectionView extends JFrame implements ActionListener {
 
 		// Set title of the frame
 		setTitle("Nooz");
-
+		
+		// Add action commands to each menuItem
+		jmiLoad.setActionCommand("Load");
+		jmiSave.setActionCommand("Save");
+		jmiImport.setActionCommand("Import");
+		jmiExport.setActionCommand("Export");
+		
+		jmiAddNewsMaker.setActionCommand("Add NewsMaker");
+		jmiEditNewsMaker.setActionCommand("Edit NewsMaker");
+		jmiDeleteNewsMaker.setActionCommand("Delete NewsMaker");
+		jmiDeleteNewsMakerList.setActionCommand("Delete NewsMaker List");
+		
+		jmiAddNewsStory.setActionCommand("Add News Story");
+		jmiEditNewsStory.setActionCommand("Edit News Story");
+		jmiSortNewsStories.setActionCommand("Sort News Stories");
+		jmiDeleteNewsStory.setActionCommand("Delete News Story");
+		jmiDeleteAllNewsStories.setActionCommand("Delete All News Stories");
+		
+		jmiPieChart.setActionCommand("Pie Chart");
+		jmiText.setActionCommand("Text");
+		
+		
 		// Add item components to file menu
 		jmFile.add(jmiLoad);
 		jmFile.add(jmiSave);
