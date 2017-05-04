@@ -176,6 +176,10 @@ public class HelloWorld_jpeg {
 		letter12 = 'a';
 		makerList.add(one);
 		model.setNewsMakerListModel(makerList);
+		
+		one.addNewsStory(new NewspaperStory(LocalDate.of(1, 1, 1), "TMZZZZZZZ", 12345, "GOOD STUFF AND MORE", "QUALITY THINGS HERE", 
+				one, one));
+		
 		return model;
 	}
 }
