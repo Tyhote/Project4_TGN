@@ -1,19 +1,15 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HelloWorld_jpeg {
 
 	public static void main(String[] args) {
-		 
-		NewsMakerModel model = new NewsMakerModel("Barry");
-		NewsStoryListModel list = new NewsStoryListModel();
-		model.setNewsStoryListModel(list);
-		NewsStory ps = new NewspaperStory(NoozFileProcessor.decodeDate("20120102"), "source1", 3, "bottom", "sub", model, new NewsMakerModel("Jim"));
-		model.addNewsStory(ps);
-		ps = new TVNewsStory(NoozFileProcessor.decodeDate("20120102"), "source2", 1, "top", "Hoagie" , PartOfDay.MORNING, model, new NewsMakerModel("Jim"));
-		model.addNewsStory(ps);
-		ps = new OnlineNewsStory(NoozFileProcessor.decodeDate("20120102"), "source3", 2, "top", "Wheat Bread" , PartOfDay.AFTERNOON, model, new NewsMakerModel("Jim"));
-		model.addNewsStory(ps);
+		
+		NewsDataBaseModel db = getData();
+		NewsMakerListModel ml = db.getNewsMakerListModel();
+		NewsMakerModel mm = ml.getExactMatch("ThisThingy");
+		NewsStory ns = mm.getNewsStoryListModel().get(0);
 		
 		List<NewsMedia> newsMedia = new ArrayList<NewsMedia>();
 		newsMedia.add(NewsMedia.NEWSPAPER);
@@ -26,7 +22,121 @@ public class HelloWorld_jpeg {
 		sortCriteria.add(SortCriterion.SUBJECT);
 		sortCriteria.add(SortCriterion.LENGTH);
 		
-		TextView tv = new TextView(model, newsMedia, sortCriteria);
+		String content = NewsContent.SOURCE.toString();
+		
+		String measure = NewsMetric.COUNT.toString();
+		
+		TextView tv = new TextView(mm, newsMedia, sortCriteria);
+		SelectionView sv = new SelectionView();
+		MediaTypeSelectionView mt = new MediaTypeSelectionView();
+		AddEditNewsStoryView aens = new AddEditNewsStoryView(db, ns);
+		EditNewsMakerView enm = new EditNewsMakerView(mm, db);
+		PieChartView pc = new PieChartView(mm, newsMedia, content, measure);
 	}
 
+	private static NewsDataBaseModel getData(){
+		
+		char letter1 = 'a', letter2 = 'a', letter3 = 'a', letter4 = 'a', letter5 = 'a', letter6 = 'a', letter7 = 'a', letter8 = 'a', letter9 = 'a';
+		char letter10 = 'a', letter11 = 'a', letter12 = 'a';
+		int length = 0;
+		
+		NewsDataBaseModel model = new NewsDataBaseModel();
+		NewsMakerListModel makerList = new NewsMakerListModel();
+		NewsStoryListModel storyList = new NewsStoryListModel();
+		NewsMakerModel one = new NewsMakerModel("ThisThingy");
+		
+		for(int i = 0; i < 50; i++){
+			
+			StringBuilder newsMaker = new StringBuilder("");
+			
+			//NewsMakerModel
+			newsMaker.append(letter1 + letter2 + letter3 + letter4 + letter5 + letter6 + letter7 + letter8 + letter9);
+			if(letter1 != 'z') letter1++;
+			else{
+				if(letter2 != 'z') letter2++;
+				else{
+					if(letter3 != 'z') letter3++;
+					else{
+						if(letter4 != 'z') letter4++;
+						else{
+							if(letter5 != 'z') letter5++;
+							else{
+								if(letter6 != 'z') letter6++;
+								else{
+									if(letter7 != 'z') letter7++;
+									else{
+										if(letter8 != 'z') letter8++;
+										else{
+											if(letter9 != 'z') letter9++;
+											else{
+												throw new IllegalArgumentException();
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			NewsMakerModel two = new NewsMakerModel(newsMaker.toString());
+			makerList.add(two);
+			
+			int year = 1950;
+			int month = 1;
+			int day = 1;
+			for(int j = 0; j < 50; j++){
+				
+				//Date
+				LocalDate date = LocalDate.of(year, month, day);
+				year++;
+				if(month == 12) month = 0;
+				month++;
+				if(day == 25) day = 0;
+				day++;
+				
+				//Source
+				if(j % 10 != 0) letter10++;
+				StringBuilder source = new StringBuilder(letter10);
+				
+				//Length
+				length++;
+				
+				//Topic
+				if(j % 10 != 0) letter11++;
+				StringBuilder topic = new StringBuilder(letter11);
+				
+				//Subject
+				if(j % 10 != 0) letter12++;
+				StringBuilder subject = new StringBuilder(letter12);
+				
+				//Add story to model
+				if(j % 3 == 0) {
+					storyList.add(new NewspaperStory(date, source.toString(), length, topic.toString(), subject.toString(), one, two));}
+				else if (j % 3 == 1){
+					storyList.add(new TVNewsStory(date, source.toString(), length, topic.toString(), subject.toString(), PartOfDay.AFTERNOON, one, two));}
+				else {
+					storyList.add(new OnlineNewsStory(date, source.toString(), length, topic.toString(), subject.toString(), PartOfDay.AFTERNOON, one, two));}
+				try{
+					one.addNewsStory(storyList.get(j));
+				}
+				catch(IllegalArgumentException e) {
+					System.out.println(".");
+				}
+				try{
+				two.addNewsStory(storyList.get(j));}
+				catch(IllegalArgumentException e) {
+					System.out.println(".");
+				}
+			}
+			try{
+			makerList.add(two);}
+			catch(IllegalArgumentException e) {
+				System.out.println(".");
+			}
+		}
+		makerList.add(one);
+		model.setNewsMakerListModel(makerList);
+		return model;
+	}
 }
