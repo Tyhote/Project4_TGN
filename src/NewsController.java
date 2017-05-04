@@ -21,7 +21,7 @@ public class NewsController {
 
 	public NewsController() {
 		newsDataBaseModel = new NewsDataBaseModel();
-		selectionView = new SelectionView(newsDataBaseModel);
+		selectionView = new SelectionView();
 		editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
 		viewDialog = new JDialog();
 		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), null, 0, null, null, null, null);
@@ -32,16 +32,16 @@ public class NewsController {
 
 	private class FileMenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
-			if(actionEvent.getSource().toString().equals("jmiLoad")){
+			if ("Load".equals(actionEvent.getActionCommand())) {
 				loadNewsData();
 			}
-			if(actionEvent.getSource().toString().equals("jmiSave")){
+			if ("Save".equals(actionEvent.getActionCommand())) {
 				saveNewsData();
 			}
-			if(actionEvent.getSource().toString().equals("jmiImport")){
+			if ("Import".equals(actionEvent.getActionCommand())) {
 				importNoozStories();
 			}
-			if(actionEvent.getSource().toString().equals("jmiExport")){
+			if ("Export".equals(actionEvent.getActionCommand())) {
 				exportNewsStories();
 			}
 		}
@@ -49,16 +49,16 @@ public class NewsController {
 
 	private class NewsMakerMenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
-			if(actionEvent.getSource().toString().equals("jmiAddNewsMaker")){
+			if ("Add NewsMaker".equals(actionEvent.getActionCommand())) {
 				addNewsMaker();
 			}
-			if(actionEvent.getSource().toString().equals("jmiEditNewsMaker")){
+			if ("Edit NewsMaker".equals(actionEvent.getActionCommand())) {
 				editNewsMakers();
 			}
-			if(actionEvent.getSource().toString().equals("jmiDeleteNewsMaker")){
+			if ("Delete NewsMaker".equals(actionEvent.getActionCommand())) {
 				deleteNewsMakers();
 			}
-			if(actionEvent.getSource().toString().equals("jmiDeleteNewsMakerList")){
+			if ("Delete NewsMaker List".equals(actionEvent.getActionCommand())) {
 				deleteNewsMakerList();
 			}
 		}
@@ -66,19 +66,19 @@ public class NewsController {
 
 	private class NewsStoryMenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
-			if(actionEvent.getSource().toString().equals("jmiAddNewsStory")){
+			if ("Add News Story".equals(actionEvent.getActionCommand())) {
 				addNewsStory();
 			}
-			if(actionEvent.getSource().toString().equals("jmiEditNewsStory")){
+			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
 				editNewsStories();
 			}
-			if(actionEvent.getSource().toString().equals("jmiSortNewsStories")){
+			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
 			}
-			if(actionEvent.getSource().toString().equals("jmiDeleteNewsStory")){
+			if ("Delete News Story".equals(actionEvent.getActionCommand())) {
 				deleteNewsStories();
 			}
-			if(actionEvent.getSource().toString().equals("jmiDeleteAllNewsStories")){
+			if ("Delete All News Stories".equals(actionEvent.getActionCommand())) {
 				deleteAllNewsStories();
 			}
 		}
@@ -86,10 +86,10 @@ public class NewsController {
 
 	private class DisplayMenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
-			if(actionEvent.getSource().toString().equals("jmiPieChart")){
+			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
 				displayPieCharts();
 			}
-			if(actionEvent.getSource().toString().equals("jmiText")){
+			if ("Text".equals(actionEvent.getActionCommand())) {
 				displayTextViews();
 			}
 			
@@ -98,8 +98,8 @@ public class NewsController {
 
 	public class EditNewsMakerNameListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
-			if(actionEvent.getSource().toString().equals("")){
-				displayTextViews();
+			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
+				displayPieCharts();
 			}
 		}
 	}
