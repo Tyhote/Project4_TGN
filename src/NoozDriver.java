@@ -6,5 +6,15 @@ public class NoozDriver {
 	static private NewsController newsController;
 
 	public static void main(String[] args) {
+		
+		//Create the M, V, and C
+		newsDataBaseModel = new NewsDataBaseModel();
+		selectionView = new SelectionView();
+		newsController = new NewsController();
+		
+		//Make them aware of each other
+		selectionView.setNewsDataBaseModel(newsDataBaseModel);
+		newsController.setNewsDataBaseModel(newsDataBaseModel);
+		newsController.setSelectionView(selectionView);		
 	}
 }

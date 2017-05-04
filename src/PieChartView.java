@@ -44,15 +44,13 @@ public class PieChartView implements ActionListener {
 		this.content = content;
 		this.measure = measure;
 
-		// Create new frame and add piechart
-		JFrame jfPieChart = new JFrame();
 		// Create the actual pie chart.
 		try {
+			System.out.println(constructTitle());
 			pieChart = new PieChart(constructTitle(), constructWedges());
 		} catch (IOException e) {
 			System.err.println("Illegal Input found in pie chart");
 		}
-		jfPieChart.add(pieChart);
 	}
 
 	/**
