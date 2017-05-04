@@ -1,5 +1,7 @@
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 abstract class NewsStory implements Comparable<NewsStory>, Serializable {
 
@@ -120,18 +122,33 @@ abstract class NewsStory implements Comparable<NewsStory>, Serializable {
 	public int compareTo(NewsStory newsStory) {
 		return this.topic.compareTo(newsStory.topic);
 	}
-	
+
 	/**
-	 * This method doesn't really have to exist since we have convertToOutputFormat in UserInterface. So don't use it. It's just here so I don't get fined.
+	 *
+	 * @return String
 	 * 
-	 * @return
-	 * 		An empty String.
-	 * @Override
-	 * 		toString in class java.lang.Object
+	 * @Override toString in class java.lang.Object
 	 */
 	@Override
 	public String toString() {
-		return "";
+		if (this instanceof NewspaperStory) {
+			NewspaperStory story = (NewspaperStory) this;
+			return NewsMedia.NEWSPAPER.toString() + "; " + story.getDate().getMonth().getDisplayName(TextStyle.FULL, Locale.US)
+					+ " " + story.getDate().getDayOfMonth() + ", " + story.getDate().getYear() + "; " + story.getSource() + "; " + story.getLength() + " word equivalents; " + story.getTopic()
+					+ "; " + story.getSubject() + "; " + story.getNewsMaker1().getName() + "; " + story.getNewsMaker2().getName();
+
+		} else if (this instanceof TVNewsStory) {
+			TVNewsStory story = (TVNewsStory) this;
+			return NewsMedia.TV.toString() + "; " + story.getDate().getMonth().getDisplayName(TextStyle.FULL, Locale.US)
+					+ " " + story.getDate().getDayOfMonth() + ", " + story.getDate().getYear() + "; " + story.getSource() + "; " + story.getLengthInWords() + " word equivalents; " + story.getTopic()
+					+ "; " + story.getSubject() + "; " + story.getPartOfDay() + "; " + story.getNewsMaker1().getName() + "; " + story.getNewsMaker2().getName();
+			
+		} else if (this instanceof OnlineNewsStory) {
+			OnlineNewsStory story = (OnlineNewsStory) this;
+			return NewsMedia.ONLINE.toString() + "; " + story.getDate().getMonth().getDisplayName(TextStyle.FULL, Locale.US)
+					+ " " + story.getDate().getDayOfMonth() + ", " + story.getDate().getYear() + "; " + story.getSource() + "; " + story.getLengthInWords() + " word equivalents;" + story.getTopic()
+					+ "; " + story.getSubject() + "; " + story.getPartOfDay() + "; " + story.getNewsMaker1().getName() + "; " + story.getNewsMaker2().getName();
+			
+		} else {throw new IllegalArgumentException();}
 	}
-	
 }

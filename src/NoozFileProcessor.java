@@ -10,12 +10,13 @@ import java.util.Map;
 class NoozFileProcessor {
 
 	private static NewsMakerListModel newsMakers = new NewsMakerListModel();
-	private NewsStoryListModel newsStories;
-	private NewsDataBaseModel newsDataBase;
+	private static NewsStoryListModel newsStories = new NewsStoryListModel();
+	private static NewsDataBaseModel newsDataBase = new NewsDataBaseModel();
 
-	public static NewsMakerListModel readNoozFile(String fileName, Map<String, String> sourceMap,
+	public static NewsDataBaseModel readNoozFile(String fileName, Map<String, String> sourceMap,
 			Map<String, String> topicMap, Map<String, String> subjectMap) throws IOException {
-		// TODO Handle possible I/O errors (Eventually)
+		
+		//Handle possible I/O errors
 		FileReader fr = null;
 		try {
 			fr = new FileReader(fileName);
@@ -32,10 +33,14 @@ class NoozFileProcessor {
 				nextLine = br.readLine();
 			}
 			br.close();
-		} catch (IOException e) {// TODO CHange this
-			System.err.println("Input output error");
+		} catch (IOException e) {
+			return null;
 		}
-		return newsMakers;
+		
+		//Set, sort, and return the database
+		newsDataBase.setNewsMakerListModel(newsMakers);
+		newsDataBase.sortNewsMakerListModel();
+		return newsDataBase;
 
 	}
 
@@ -48,7 +53,8 @@ class NoozFileProcessor {
 	}
 
 	private static void processLine(String line, Map<String, String> sourceMap, Map<String, String> topicMap,
-			Map<String, String> subjectMap) {
+			Map<String, String> subjectMap) throws IOException {
+		
 		/* The parts the line created by splitting the line at each comma. */
 		String[] parts = line.split(",");
 
@@ -153,11 +159,22 @@ class NoozFileProcessor {
 			PartOfDay partOfDay = decodePartOfDay(parts[parts.length - 1]);
 			newsStory = new TVNewsStory(date, source, wordCount, topic, subject, partOfDay, newsMaker1, newsMaker2);
 		}
-		// TODO: Check for invalid source num.
-
-		// The news story is added to each news maker
-		newsMaker1.addNewsStory(newsStory);
-		newsMaker2.addNewsStory(newsStory);
+		else {throw new IllegalArgumentException();}
+		
+		//Get newsMakers stories and add story to list
+		newsStories = newsMaker1.getNewsStoryListModel();
+		newsStories.add(newsStory);
+		newsMaker1.setNewsStoryListModel(newsStories);
+		
+		newsStories = newsMaker2.getNewsStoryListModel();
+		newsStories.add(newsStory);
+		newsMaker2.setNewsStoryListModel(newsStories);
+		
+		
+		//Add newsMakers to list
+		newsMakers.add(newsMaker1);
+		newsMakers.add(newsMaker2);
+		
 	}
 
 	private static LocalDate decodeDate(String dateString) {
