@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,20 +38,21 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		jpNewsStoryList.add(jspNewsStoryList);
 		
 		// Making label and field for the News Maker name and adding to panel
-		jlbName = new JLabel("Name:");
+		jlbName = new JLabel("Name: ");
 		jtfName = new JTextField(newsMakerModel.getName());
-		jplName = new JPanel();
-		jplName.add(jlbName);
-		jplName.add(jtfName);
+		jplName = new JPanel(new BorderLayout());
+		jplName.add(jlbName, BorderLayout.WEST);
+		jplName.add(jtfName, BorderLayout.CENTER);
 		newsDataBaseModel.sortNewsMakerListModel();
 		
 		// Create remove from story button
 		jbtRemoveFromStory = new JButton("Remove from Story");
 		
 		// Add panels to this
-		add(jplName);
-		add(jpNewsStoryList);
-		add(jbtRemoveFromStory);
+		setLayout(new BorderLayout());
+		add(jplName, BorderLayout.NORTH);
+		add(jpNewsStoryList, BorderLayout.CENTER);
+		add(jbtRemoveFromStory, BorderLayout.SOUTH);
 	}
 
 	public int[] getSelectedNewsStoryIndices() {
