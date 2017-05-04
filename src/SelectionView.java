@@ -110,7 +110,6 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Create new jlists and add Newsmakers to it
 		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
 		jspNewsMakerList = new JScrollPane(jlNewsMakerList);
-		jpNewsMakerList.add(jlNewsMakerList);
 		jpNewsMakerList.add(jspNewsMakerList);
 
 		// Create new Jlist and add new stories to it

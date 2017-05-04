@@ -80,11 +80,12 @@ public class NewsController {
 	}
 
 	public void setNewsDataBaseModel(NewsDataBaseModel DBModel) {
+		
 
 	}
 
 	public void setSelectionView(SelectionView SView) {
-
+		
 	}
 
 	private void loadNewsData() {
@@ -104,11 +105,15 @@ public class NewsController {
 	}
 
 	private void addNewsMaker() {
-
+		
+		viewDialog.add();
+		viewDialog.setTitle("Add News Maker");
+		
+		viewDialog.setVisible(true);
 	}
 
 	private void editNewsMakers() {
-
+		
 	}
 
 	private void deleteNewsMakers() {

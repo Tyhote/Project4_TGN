@@ -14,7 +14,6 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 	private long serialVersionUID;
 	NewsMakerModel newsMakerModel;
 	private NewsDataBaseModel newsDataBaseModel;
-	private DefaultListModel<String> newsStoryStringList;
 	private JList<String> jlNewsStoryList;
 	private JScrollPane jspNewsStoryList;
 	private JPanel jpNewsStoryList;
@@ -24,16 +23,23 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 	private JPanel jplName;
 
 	public EditNewsMakerView(NewsMakerModel newsMakerModel, NewsDataBaseModel newsDataBaseModel) {
-
+		this.newsMakerModel = newsMakerModel;
+		this.newsDataBaseModel = newsDataBaseModel;
+		// Making JList, adding it to JScrollPane, then adding that to a newly initialized JPanel
+		jlNewsStoryList = new JList<String>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
+		jspNewsStoryList = new JScrollPane(jlNewsStoryList);
+		jpNewsStoryList = new JPanel();
+		jpNewsStoryList.add(jspNewsStoryList);
+		
+		jlbName = new JLabel(newsMakerModel.getName());
+		
+		
 	}
 
 	public int[] getSelectedNewsStoryIndices() {
 		return null;
 	}
 
-	private void populateNewsStoryJList() {
-
-	}
 
 	public void actionPerformed(ActionEvent e) {
 
