@@ -1,6 +1,5 @@
 import java.awt.GridLayout;
 import java.text.NumberFormat;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;

@@ -1,7 +1,5 @@
-import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.swing.JFrame;
 
