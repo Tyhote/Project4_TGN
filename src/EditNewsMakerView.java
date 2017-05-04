@@ -1,7 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -11,7 +10,10 @@ import javax.swing.JTextField;
 
 public class EditNewsMakerView extends JPanel implements ActionListener {
 
-	private long serialVersionUID;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7654922804023547570L;
 	NewsMakerModel newsMakerModel;
 	private NewsDataBaseModel newsDataBaseModel;
 	private JList<String> jlNewsStoryList;
@@ -24,24 +26,57 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 
 	public EditNewsMakerView(NewsMakerModel newsMakerModel, NewsDataBaseModel newsDataBaseModel) {
 		this.newsMakerModel = newsMakerModel;
+		this.newsMakerModel.addActionListener(this);
 		this.newsDataBaseModel = newsDataBaseModel;
+		
 		// Making JList, adding it to JScrollPane, then adding that to a newly initialized JPanel
 		jlNewsStoryList = new JList<String>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
 		jspNewsStoryList = new JScrollPane(jlNewsStoryList);
 		jpNewsStoryList = new JPanel();
 		jpNewsStoryList.add(jspNewsStoryList);
 		
-		jlbName = new JLabel(newsMakerModel.getName());
+		// Making label and field for the News Maker name and adding to panel
+		jlbName = new JLabel("Name:");
+		jtfName = new JTextField(newsMakerModel.getName());
+		jplName = new JPanel();
+		jplName.add(jlbName);
+		jplName.add(jtfName);
+		newsDataBaseModel.sortNewsMakerListModel();
 		
+		// Create remove from story button
+		jbtRemoveFromStory = new JButton("Remove from Story");
 		
+		// Add panels to this
+		add(jplName);
+		add(jpNewsStoryList);
+		add(jbtRemoveFromStory);
 	}
 
 	public int[] getSelectedNewsStoryIndices() {
-		return null;
+		return jlNewsStoryList.getSelectedIndices();
 	}
 
 
 	public void actionPerformed(ActionEvent e) {
-
+		if(e.getActionCommand().equals("Modified News Story List")){
+			jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
+		}
+		
+		int[] selectedStories = getSelectedNewsStoryIndices();
+		NewsStoryListModel stories = newsMakerModel.getNewsStoryListModel();
+		for(int i : selectedStories){
+			NewsStory story = stories.get(i);
+			if(story.getNewsMaker1().equals(newsMakerModel)){
+				story.setNewsMaker1(newsDataBaseModel.none);
+			}
+			if(story.getNewsMaker2().equals(newsMakerModel)){
+				story.setNewsMaker2(newsDataBaseModel.none);
+			}
+			newsMakerModel.removeNewsStory(story);
+		}
+		
+		
+		
+		jtfName = new JTextField(newsMakerModel.getName());
 	}
 }
