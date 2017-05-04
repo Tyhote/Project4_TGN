@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -5,7 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
 /**
@@ -48,13 +51,25 @@ public class TextView implements ActionListener {
 		jfText = new JFrame();
 		jfText.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		constructTitle();
-		jfText.setSize(1000, 500);
 
 		constructNewsStoriesAndSummary();
-		jtaNewsStoryList = new JTextArea(listOfStories);
-		jtaSummaryLine = new JTextArea(summaryLine);
-		jfText.add(jtaNewsStoryList);
-		jfText.add(jtaSummaryLine);
+		jtaNewsStoryList = new JTextArea();
+		jtaNewsStoryList.setText(listOfStories);
+		jtaSummaryLine = new JTextArea();
+		jtaSummaryLine.setText(summaryLine);
+		JPanel j = new JPanel();
+		j.setBackground(Color.BLACK);
+		j.add(jtaNewsStoryList);
+		JPanel l = new JPanel();
+		l.add(jtaSummaryLine);
+		l.setBackground(Color.BLUE);
+		jfText.add(j);
+		jfText.add(l);
+		jfText.pack();
+		/*jfText.add(jtaNewsStoryList);
+		jfText.add(jtaSummaryLine);*/
+		
+		jfText.setVisible(true);
 	}
 
 	/**
