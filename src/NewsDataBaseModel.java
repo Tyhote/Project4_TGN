@@ -37,7 +37,12 @@ public class NewsDataBaseModel implements Serializable {
 	}
 
 	public String[] getNewsSources() {
-		return (String[]) newsSourceMap.values().toArray();
+		ArrayList<String> sourceList = new ArrayList<String>(newsSourceMap.values());
+		String[] result = new String[sourceList.size()];
+		for(int i = 0; i < result.length; ++i){
+			result[i] = sourceList.get(i);
+		}
+		return result;
 	}
 
 	public void setNewsSourceMap(Map<String, String> newsSourceMap) {
@@ -49,7 +54,12 @@ public class NewsDataBaseModel implements Serializable {
 	}
 
 	public String[] getNewsTopics() {
-		return (String[]) newsSourceMap.values().toArray();
+		ArrayList<String> topicList = new ArrayList<String>(newsTopicMap.values());
+		String[] result = new String[topicList.size()];
+		for(int i = 0; i < result.length; ++i){
+			result[i] = topicList.get(i);
+		}
+		return result;
 	}
 
 	public void setNewsTopicMap(Map<String, String> newsTopicMap) {
@@ -61,7 +71,12 @@ public class NewsDataBaseModel implements Serializable {
 	}
 
 	public String[] getNewsSubjects() {
-		return (String[]) newsSubjectMap.values().toArray();
+		ArrayList<String> subjectList = new ArrayList<String>(newsSubjectMap.values());
+		String[] result = new String[subjectList.size()];
+		for(int i = 0; i < result.length; ++i){
+			result[i] = subjectList.get(i);
+		}
+		return result;
 	}
 
 	public void setNewsSubjectMap(Map<String, String> newsSubjectMap) {
