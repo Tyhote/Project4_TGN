@@ -1,20 +1,17 @@
 import java.awt.GridLayout;
 import java.text.NumberFormat;
-
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class AddEditNewsStoryView extends JPanel {
-	public AddEditNewsStoryView() {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2941348907773307271L;
 
-	}
-
-	private static long serialVersionUID;
 	private NewsDataBaseModel newsDataBaseModel;
 	private NewsStory newsStory;
 
@@ -116,19 +113,19 @@ public class AddEditNewsStoryView extends JPanel {
 		// passed by newsDataBaseModel's methods
 		// and setting the selected values to the corresponding fields from the
 		// newsStory
-		jcbNewsStorySource = new JComboBox<String>(newsDataBaseModel.getNewsSources());
+		jcbNewsStorySource = new JComboBox<String>(this.newsDataBaseModel.getNewsSources());
 		jcbNewsStorySource.setSelectedItem(newsStory.getSource());
 
-		jcbNewsStoryTopic = new JComboBox<String>(newsDataBaseModel.getNewsTopics());
+		jcbNewsStoryTopic = new JComboBox<String>(this.newsDataBaseModel.getNewsTopics());
 		jcbNewsStoryTopic.setSelectedItem(newsStory.getTopic());
 
-		jcbNewsStorySubject = new JComboBox<String>(newsDataBaseModel.getNewsSubjects());
+		jcbNewsStorySubject = new JComboBox<String>(this.newsDataBaseModel.getNewsSubjects());
 		jcbNewsStorySubject.setSelectedItem(newsStory.getSubject());
 
-		jcbNewsStoryNewsMaker1 = new JComboBox<String>(newsDataBaseModel.getNewsMakerNames());
+		jcbNewsStoryNewsMaker1 = new JComboBox<String>(this.newsDataBaseModel.getNewsMakerNames());
 		jcbNewsStoryNewsMaker1.setSelectedItem(newsStory.getNewsMaker1().getName());
 
-		jcbNewsStoryNewsMaker2 = new JComboBox<String>(newsDataBaseModel.getNewsMakerNames());
+		jcbNewsStoryNewsMaker2 = new JComboBox<String>(this.newsDataBaseModel.getNewsMakerNames());
 		jcbNewsStoryNewsMaker2.setSelectedItem(newsStory.getNewsMaker2().getName());
 
 		// Set values and selected items for the rest of the newsStory's info
