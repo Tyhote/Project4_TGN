@@ -4,7 +4,7 @@ import java.util.List;
 public class HelloWorld_jpeg {
 
 	public static void main(String[] args) {
-		
+		 
 		NewsMakerModel model = new NewsMakerModel("Barry");
 		NewsStoryListModel list = new NewsStoryListModel();
 		model.setNewsStoryListModel(list);
