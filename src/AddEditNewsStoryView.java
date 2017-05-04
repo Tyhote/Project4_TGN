@@ -188,7 +188,10 @@ public class AddEditNewsStoryView extends JPanel {
 		jplNewsStoryWhen.add(jplNewsStoryPartOfDay);
 
 		jplAddEditNewsStory.add(jbtAddEditNewsStory);
-
+		
+		// Set the action command for the Add/Edit News Story button
+		jbtAddEditNewsStory.setActionCommand("Add/Edit News Story");
+		
 		// Set the layout to a GridLayout with 1 column and add the panels to
 		// this AddEditNewsStoryView
 		this.setLayout(new GridLayout(0, 1));
