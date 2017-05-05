@@ -93,15 +93,24 @@ public class NewsController {
 				viewDialog.add(addEditNewsStoryView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
-				//addNewsStory();
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
-				viewDialog = new JDialog();
-				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-				viewDialog.add(addEditNewsStoryView);
-				viewDialog.pack();
-				viewDialog.setVisible(true);
-				//editNewsStories();
+				// Get the indices of the news stories selected in the selection view.
+				int[] indices = selectionView.getSelectedNewsStories();
+				if (0 == indices.length) {
+					JOptionPane.showMessageDialog(selectionView, "No news stories selected.", "Invalid Selection",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					// If there are selected news stories, go through the process for each.
+					for (int index : indices) {
+						editedNewsStory = newsDataBaseModel.getNewsStoryListModel().get(index);
+						viewDialog = new JDialog();
+						addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
+						viewDialog.add(addEditNewsStoryView);
+						viewDialog.pack();
+						viewDialog.setVisible(true);
+					}
+				}
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
