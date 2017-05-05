@@ -158,7 +158,7 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Create new jlists and add Newsmakers to it
 		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
 		jspNewsMakerList = new JScrollPane(jlNewsMakerList);
-		jpNewsMakerList.add(new JLabel("Newsmakers               "), BorderLayout.NORTH);
+		jpNewsMakerList.add(new JLabel("Newsmakers                               "), BorderLayout.NORTH);
 		jpNewsMakerList.add(jspNewsMakerList, BorderLayout.CENTER);
 
 		// Create new Jlist and add new stories to it
@@ -176,7 +176,8 @@ public class SelectionView extends JFrame implements ActionListener {
 
 		// Add components to frame, pack, and set visible
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500,500);
+		setSize(500, 500);
+		setLocation(700, 300);
 		
 		BorderLayout bl = new BorderLayout();
 		setLayout(bl);
@@ -268,56 +269,84 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Enable GUI components when appropriate
 
 		// If any data has been entered, enable Save and Export, as well as Pie
-		// Chart and Text
+		// Chart and Text, and set their tool tips to null
 		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals(new NewsMakerModel("None"))
 				|| !newsDataBaseModel.getNewsStoryListModel().isEmpty()) {
 			jmiSave.setEnabled(true);
+			jmiSave.setToolTipText(null);
 			jmiExport.setEnabled(true);
+			jmiExport.setToolTipText(null);
 
 			jmiPieChart.setEnabled(true);
+			jmiPieChart.setToolTipText(null);
 			jmiText.setEnabled(true);
+			jmiText.setToolTipText(null);
 		} else {
 			jmiSave.setEnabled(false);
+			jmiSave.setToolTipText("Cannot save data; no data present.");
 			jmiExport.setEnabled(false);
+			jmiExport.setToolTipText("Cannot export data; no data present.");
 
 			jmiPieChart.setEnabled(false);
 			jmiText.setEnabled(false);
 		}
 
 		// If just NewsMaker data has been entered, enable the NewsMaker related
-		// components
+		// components, and set their tool tips to null
 		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals(new NewsMakerModel("None"))) {
 			jmiEditNewsMaker.setEnabled(true);
+			jmiEditNewsMaker.setToolTipText(null);
 			jmiDeleteNewsMaker.setEnabled(true);
+			jmiDeleteNewsMaker.setToolTipText(null);
 			jmiDeleteNewsMakerList.setEnabled(true);
+			jmiDeleteNewsMakerList.setToolTipText(null);
 
 			jmiPieChart.setEnabled(true);
+			jmiPieChart.setToolTipText(null);
 			jmiText.setEnabled(true);
+			jmiText.setToolTipText(null);
 		} else {
 			jmiEditNewsMaker.setEnabled(false);
+			jmiEditNewsMaker.setToolTipText("Cannot edit newsmakers; no newsmakers present.");
 			jmiDeleteNewsMaker.setEnabled(false);
+			jmiDeleteNewsMaker.setToolTipText("Cannot delete newsmakers; no newsmakers present.");
 			jmiDeleteNewsMakerList.setEnabled(false);
+			jmiDeleteNewsMakerList.setToolTipText("Cannot delete newsmaker list; no newsmakers present.");
 
 			jmiPieChart.setEnabled(false);
+			jmiPieChart.setToolTipText("Cannot display pie chart; no news makers present to display data.");
 			jmiText.setEnabled(false);
+			jmiText.setToolTipText("Cannot display text view; no news makers present to display data.");
 		}
 
 		// If just News Story data has been entered, enable the News Story
-		// related components
+		// related components, and set their tool tips to null
 		if (!newsDataBaseModel.getNewsStoryListModel().isEmpty()) {
 			jmiEditNewsStory.setEnabled(true);
+			jmiEditNewsStory.setToolTipText(null);			
 			jmiSortNewsStories.setEnabled(true);
+			jmiSortNewsStories.setToolTipText(null);
 			jmiDeleteNewsStory.setEnabled(true);
+			jmiDeleteNewsStory.setToolTipText(null);
 			jmiDeleteAllNewsStories.setEnabled(true);
+			jmiDeleteAllNewsStories.setToolTipText(null);
 		} else {
 			jmiEditNewsStory.setEnabled(false);
+			jmiEditNewsStory.setToolTipText("Cannot edit news stories; no news stories present.");
 			jmiSortNewsStories.setEnabled(false);
+			jmiSortNewsStories.setToolTipText("Cannot sort news stories; no news stories present.");
 			jmiDeleteNewsStory.setEnabled(false);
+			jmiDeleteNewsStory.setToolTipText("Cannot delete news stories; no news stories present.");
 			jmiDeleteAllNewsStories.setEnabled(false);
+			jmiDeleteAllNewsStories.setToolTipText("Cannot delete news stories; no news stories present.");
 		}
-
-		this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
-		this.jlNewsStoryList.setModel(this.newsDataBaseModel.getNewsStories());
+		
+		// If a lot of news makers/news stories have been added in via importing/loading, adjust the size of the GUI
+		if (actionEvent.getActionCommand().equals("Imported data") || actionEvent.getActionCommand().equals("Loaded data"))
+		{
+			setSize(1100, 700);
+			setLocation(400, 200);
+		}
 	}
 
 	/**
