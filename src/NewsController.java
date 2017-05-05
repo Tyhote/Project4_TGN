@@ -639,7 +639,13 @@ public class NewsController {
 				}
 
 				List<SortCriterion> sortCriteria = new ArrayList<SortCriterion>();
-				List<SortCriterion> sortCriteriaOptions = Arrays.asList(SortCriterion.values());
+				List<SortCriterion> sortCriteriaOptions = new ArrayList<SortCriterion>();
+				
+				// Add all of the SortCriterion options to the sortCriteriaOptions
+				for (SortCriterion sc : SortCriterion.values())
+				{
+					sortCriteriaOptions.add(sc);
+				}
 
 				for (int sortCriterionIndex = 0; sortCriterionIndex <= 3; ++sortCriterionIndex) {
 					String fancyWord = "";
@@ -663,11 +669,11 @@ public class NewsController {
 					}
 
 					// Get sort criterion using JOptionPane.
-					SortCriterion sortCriterion = sortCriteria.get(sortCriterionIndex);
+					SortCriterion sortCriterion = null;
 					sortCriterion = (SortCriterion) JOptionPane.showInputDialog(selectionView,
 							fancyWord + "criterion to sort news stories?", newsMakerName, JOptionPane.PLAIN_MESSAGE,
 							null, sortCriteriaOptions.toArray(), SortCriterion.SOURCE);
-
+					
 					sortCriteriaOptions.remove(sortCriterion);
 
 					if (null == sortCriterion) {
