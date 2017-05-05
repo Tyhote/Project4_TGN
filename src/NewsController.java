@@ -299,11 +299,9 @@ public class NewsController {
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
 					JOptionPane.WARNING_MESSAGE);
-			importNoozStories();
 		} catch (NullPointerException n) {
 			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
 					JOptionPane.WARNING_MESSAGE);
-			importNoozStories();
 		} catch (StringIndexOutOfBoundsException i) {
 			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
 					JOptionPane.WARNING_MESSAGE);
@@ -324,10 +322,12 @@ public class NewsController {
 				for (int i : selectionView.getSelectedNewsMakers()) {
 					NewsStoryListModel stories = newsDataBaseModel.getNewsMakerListModel().get(i)
 							.getNewsStoryListModel();
+					listOfStories += newsDataBaseModel.getNewsMakerListModel().get(i).getName() + "\n";
 					for (int j = 0; j < stories.size(); j++) {
 						listOfStories += UserInterface.convertToOutputFormat(stories.get(j), NewsMedia.VALUES_LIST)
 								+ "\n";
 					}
+					listOfStories += "\n";
 				}
 				bw.write(listOfStories);
 				bw.newLine();
