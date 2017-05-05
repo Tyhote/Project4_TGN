@@ -32,7 +32,10 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 	}
 
 	public NewsStoryListModel getNewsStoryListModel() {
-
+		if(newsStoryListModel != null){
+			return newsStoryListModel;
+		}
+		newsStoryListModel = new NewsStoryListModel();
 		return newsStoryListModel;
 	}
 
