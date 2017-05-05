@@ -10,7 +10,6 @@ import javax.swing.DefaultListModel;
 public class NewsDataBaseModel implements Serializable {
 
 	/**
-	 * 
 	 */
 	private static final long serialVersionUID = 6305823792028405117L;
 	private ArrayList<ActionListener> actionListenerList = new ArrayList<ActionListener>();
