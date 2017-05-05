@@ -11,10 +11,9 @@ public class NoozDriver {
 		newsDataBaseModel = new NewsDataBaseModel();
 		selectionView = new SelectionView();
 		newsController = new NewsController();
-		newsController.setSelectionView(selectionView);	
-		
 		
 		//Make them aware of each other
+		newsController.setSelectionView(selectionView);	
 		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 		newsController.setNewsDataBaseModel(newsDataBaseModel);
 			
