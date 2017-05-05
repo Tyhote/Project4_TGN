@@ -170,6 +170,7 @@ class NoozFileProcessor {
 		newsStories.add(newsStory);
 		newsMaker2.setNewsStoryListModel(newsStories);
 		
+		newsDataBase.addNewsStory(newsStory);
 		
 		//Add newsMakers to list
 		newsMakers.add(newsMaker1);

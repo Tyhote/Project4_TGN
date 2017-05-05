@@ -69,7 +69,7 @@ public enum Month {
 		}
 	}
 
-	public Month fromInt(int num) {
+	public static Month fromInt(int num) {
 		switch (num) {
 
 		case 12:
