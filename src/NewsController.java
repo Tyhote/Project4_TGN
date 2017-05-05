@@ -124,7 +124,7 @@ public class NewsController {
 				sortNewsStories();
 			}
 			if ("Delete News Story".equals(actionEvent.getActionCommand())) {
-				deleteAllNewsStories();
+				deleteNewsStories();
 			}
 			if ("Delete All News Stories".equals(actionEvent.getActionCommand())) {
 				deleteAllNewsStories();
@@ -136,7 +136,7 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
-
+				displayPieCharts();
 			}
 			if ("Text".equals(actionEvent.getActionCommand())) {
 				displayTextViews();
@@ -372,6 +372,16 @@ public class NewsController {
 		} else {
 			System.err.println("There was an error with the media portion of add news story");
 			System.exit(0);
+		}
+	}
+
+	private void deleteNewsStories() {
+		int[] indices = selectionView.getSelectedNewsMakers();
+		for (int i : indices) {
+			NewsMakerModel model = newsDataBaseModel.getNewsMakerListModel().get(i);
+			for (int j = 0; j < model.getNewsStoryListModel().size(); j++) {
+				model.removeNewsStory(model.getNewsStoryListModel().get(j));
+			}
 		}
 	}
 
