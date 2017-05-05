@@ -1,15 +1,18 @@
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 
 /**
  * This class creates a text view, summary, title, and list of stories from a
@@ -50,25 +53,29 @@ public class TextView implements ActionListener {
 
 		jfText = new JFrame();
 		jfText.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jfText.setSize(500, 500);
 		constructTitle();
 
 		constructNewsStoriesAndSummary();
-		jtaNewsStoryList = new JTextArea();
-		jtaNewsStoryList.setText(listOfStories);
-		jtaSummaryLine = new JTextArea();
-		jtaSummaryLine.setText(summaryLine);
-		JPanel j = new JPanel();
-		j.setBackground(Color.BLACK);
-		j.add(jtaNewsStoryList);
-		JPanel l = new JPanel();
-		l.add(jtaSummaryLine);
-		l.setBackground(Color.BLUE);
-		jfText.add(j);
-		jfText.add(l);
-		jfText.pack();
-		/*jfText.add(jtaNewsStoryList);
-		jfText.add(jtaSummaryLine);*/
+		jtaNewsStoryList = new JTextArea(this.listOfStories);
+		jtaNewsStoryList.setEditable(false);
+		jtaSummaryLine = new JTextArea(this.summaryLine);
+		jtaSummaryLine.setEditable(false);
+		jspNewsStoryList = new JScrollPane(jtaNewsStoryList);
 		
+		
+		JPanel jpNewsStoryList = new JPanel();
+		JPanel jpSummaryLine = new JPanel();
+		jpNewsStoryList.add(jspNewsStoryList);
+		jpSummaryLine.add(jtaSummaryLine);
+		
+		JPanel bigPanel = new JPanel(new GridLayout(0, 1));
+		bigPanel.add(jpNewsStoryList);
+		bigPanel.add(jpSummaryLine);
+		
+		jfText.add(bigPanel);
+		
+		jfText.pack();
 		jfText.setVisible(true);
 	}
 
@@ -164,13 +171,13 @@ public class TextView implements ActionListener {
 		}
 		// If the type is TV news, use seconds (from length)
 		else if (newsMedia.contains(NewsMedia.TV) && newsMedia.size() == 1) {
-			listOfStories += "Number of Stories: " + newsStories.size() + "; Number of Sources: "
+			summaryLine += "Number of Stories: " + newsStories.size() + "; Number of Sources: "
 					+ distinctNewsSourceNames.size() + "; Seconds: " + totalLength + "; Number of Topics: "
 					+ distinctTopics.size() + "; Number of Subjects: " + distinctSubjects.size();
 		}
 		// If the type is mixed, use words as common unit
 		else {
-			listOfStories += "Number of Stories: " + newsStories.size() + "; Number of Sources: "
+			summaryLine += "Number of Stories: " + newsStories.size() + "; Number of Sources: "
 					+ distinctNewsSourceNames.size() + "; Number of Word Equivalents: " + totalLength
 					+ "; Number of Topics: " + distinctTopics.size() + "; Number of Subjects: "
 					+ distinctSubjects.size();
