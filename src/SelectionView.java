@@ -269,7 +269,7 @@ public class SelectionView extends JFrame implements ActionListener {
 
 		// If any data has been entered, enable Save and Export, as well as Pie
 		// Chart and Text
-		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals("None")
+		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals(new NewsMakerModel("None"))
 				|| !newsDataBaseModel.getNewsStoryListModel().isEmpty()) {
 			jmiSave.setEnabled(true);
 			jmiExport.setEnabled(true);

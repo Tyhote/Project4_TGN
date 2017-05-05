@@ -36,7 +36,6 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Load".equals(actionEvent.getActionCommand())) {
-				System.out.println("Hello");
 				loadNewsData();
 			}
 			if ("Save".equals(actionEvent.getActionCommand())) {
@@ -84,36 +83,35 @@ public class NewsController {
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add News Story".equals(actionEvent.getActionCommand())) {
 				viewDialog = new JDialog();
+				viewDialog.setTitle("Add News Story");
 				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
 				viewDialog.add(addEditNewsStoryView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
-				viewDialog = new JDialog();
-				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-				viewDialog.add(addEditNewsStoryView);
-				viewDialog.pack();
-				viewDialog.setVisible(true);
-			}
 
-			// Get the indices of the news stories selected in the selection
-			// view.
-			int[] indices = selectionView.getSelectedNewsStories();
-			if (0 == indices.length) {
-				JOptionPane.showMessageDialog(selectionView, "No news stories selected.", "Invalid Selection",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
-				// If there are selected news stories, go through the process
-				// for each.
-				for (int index : indices) {
-					editedNewsStory = newsDataBaseModel.getNewsStoryListModel().get(index);
-					viewDialog = new JDialog();
-					addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-					viewDialog.add(addEditNewsStoryView);
-					viewDialog.pack();
-					viewDialog.setVisible(true);
+				// Get the indices of the news stories selected in the selection
+				// view.
+				int[] indices = selectionView.getSelectedNewsStories();
+				if (0 == indices.length) {
+					JOptionPane.showMessageDialog(selectionView, "No news stories selected.", "Invalid Selection",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					// If there are selected news stories, go through the
+					// process
+					// for each.
+					for (int index : indices) {
+						editedNewsStory = newsDataBaseModel.getNewsStoryListModel().get(index);
+						viewDialog = new JDialog();
+						viewDialog.setTitle("Edit News Story");
+						addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
+						viewDialog.add(addEditNewsStoryView);
+						viewDialog.pack();
+						viewDialog.setVisible(true);
+					}
 				}
+
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
@@ -217,7 +215,8 @@ public class NewsController {
 				newsDataBaseModel.setNewsMakerListModel((NewsMakerListModel) objectInputStream.readObject());
 				objectInputStream.close();
 			} catch (ClassNotFoundException | IOException i) {
-				System.err.println("Wrong file");
+				JOptionPane.showMessageDialog(selectionView, "File not found", "Invalid Selection",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}
@@ -235,7 +234,8 @@ public class NewsController {
 				objectOutputStream.writeObject(newsDataBaseModel.getNewsMakerListModel());
 				objectOutputStream.close();
 			} catch (IOException i) {
-				System.err.println("Problem occurred in save news data");
+				JOptionPane.showMessageDialog(selectionView, "Problem occurred Loading NewsData", "System Error",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}
@@ -249,7 +249,7 @@ public class NewsController {
 		possibilities.add("Topic File");
 		possibilities.add("Subject File");
 		for (int i = 0; i < 4; i++) {
-			
+
 			JFileChooser fileChooser = new JFileChooser(".");
 			int returnVal = fileChooser.showOpenDialog(selectionView);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -276,8 +276,9 @@ public class NewsController {
 						return;
 					}
 
-				} catch (IOException e) {
-					System.err.println("Wrong file to read from");
+				} catch (IOException | StringIndexOutOfBoundsException s) {
+					JOptionPane.showMessageDialog(selectionView, "Wrong file Selection", "Invalid Selection",
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		}
@@ -289,11 +290,18 @@ public class NewsController {
 			selectionView.setNewsDataBaseModel(newsDataBaseModel);
 			selectionView.enableAllMenus();
 		} catch (IOException e) {
-			System.err.println("Illegal Input. Please try again.");
+			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
+					JOptionPane.WARNING_MESSAGE);
 			importNoozStories();
 		} catch (NullPointerException n) {
-			System.err.println("Illegal Input. Please try again.");
+			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
+					JOptionPane.WARNING_MESSAGE);
+			importNoozStories();
+		} catch (StringIndexOutOfBoundsException i) {
+			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
+					JOptionPane.WARNING_MESSAGE);
 		}
+
 	}
 
 	private void exportNewsStories() {
@@ -318,7 +326,8 @@ public class NewsController {
 				bw.newLine();
 				bw.close();
 			} catch (IOException i) {
-				System.err.println("Problem occurred in export news data");
+				JOptionPane.showMessageDialog(selectionView, "Error Occured in writing file", "System Error",
+						JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

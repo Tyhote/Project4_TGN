@@ -15,8 +15,8 @@ class NoozFileProcessor {
 
 	public static NewsDataBaseModel readNoozFile(String fileName, Map<String, String> sourceMap,
 			Map<String, String> topicMap, Map<String, String> subjectMap) throws IOException {
-		
-		//Handle possible I/O errors
+
+		// Handle possible I/O errors
 		FileReader fr = null;
 		try {
 			fr = new FileReader(fileName);
@@ -35,9 +35,11 @@ class NoozFileProcessor {
 			br.close();
 		} catch (IOException e) {
 			return null;
+		} catch (StringIndexOutOfBoundsException i) {
+			throw new StringIndexOutOfBoundsException();
 		}
-		
-		//Set, sort, and return the database
+
+		// Set, sort, and return the database
 		newsDataBase.setNewsMakerListModel(newsMakers);
 		newsDataBase.sortNewsMakerListModel();
 		return newsDataBase;
@@ -54,7 +56,7 @@ class NoozFileProcessor {
 
 	private static void processLine(String line, Map<String, String> sourceMap, Map<String, String> topicMap,
 			Map<String, String> subjectMap) throws IOException {
-		
+
 		/* The parts the line created by splitting the line at each comma. */
 		String[] parts = line.split(",");
 
@@ -158,69 +160,75 @@ class NoozFileProcessor {
 			// The part of day from the last field (only for TV news stories)
 			PartOfDay partOfDay = decodePartOfDay(parts[parts.length - 1]);
 			newsStory = new TVNewsStory(date, source, wordCount, topic, subject, partOfDay, newsMaker1, newsMaker2);
+		} else {
+			throw new IllegalArgumentException();
 		}
-		else {throw new IllegalArgumentException();}
-		
-		//Get newsMakers stories and add story to list
+
+		// Get newsMakers stories and add story to list
 		newsStories = newsMaker1.getNewsStoryListModel();
 		newsStories.add(newsStory);
 		newsMaker1.setNewsStoryListModel(newsStories);
-		
+
 		newsStories = newsMaker2.getNewsStoryListModel();
 		newsStories.add(newsStory);
 		newsMaker2.setNewsStoryListModel(newsStories);
-		
+
 		newsDataBase.addNewsStory(newsStory);
-		
-		//Add newsMakers to list
+
+		// Add newsMakers to list
 		newsMakers.add(newsMaker1);
 		newsMakers.add(newsMaker2);
-		
+
 	}
 
 	private static LocalDate decodeDate(String dateString) {
 
-		/* The year portion of the date string. */
-		String yearString = dateString.substring(0, 4);
-
-		/* The month portion of the date string. */
-		String monthString = dateString.substring(4, 6);
-
-		/* The day portion of the date string. */
-		String dayOfMonthString = dateString.substring(6, 8);
-
-		/* The year as an integer (hopefully). */
-		int year = 0;
 		try {
-			year = Integer.parseInt(yearString);
-		} catch (NumberFormatException e) {
-			System.err.println("Wrong argument provided. Argument (" + year + ") is not an integer.");
-			return null;
-		}
+			/* The year portion of the date string. */
+			String yearString = dateString.substring(0, 4);
 
-		/* The month as an integer (hopefully). */
-		int month = 0;
-		try {
-			month = Integer.parseInt(monthString);
-		} catch (NumberFormatException e) {
-			System.err.println("Wrong argument provided. Argument (" + month + ") is not an integer.");
-			return null;
-		}
+			/* The month portion of the date string. */
+			String monthString = dateString.substring(4, 6);
 
-		/* The month as an integer (hopefully). */
-		int dayOfMonth = 0;
-		try {
-			dayOfMonth = Integer.parseInt(dayOfMonthString);
-		} catch (NumberFormatException e) {
-			System.err.println("Wrong argument provided. Argument (" + dayOfMonth + ") is not an integer.");
-			return null;
-		}
+			/* The day portion of the date string. */
+			String dayOfMonthString = dateString.substring(6, 8);
 
-		/*
-		 * The date constructed from the year, month, and dayOfMonth integers.
-		 */
-		LocalDate date = LocalDate.of(year, month, dayOfMonth);
-		return date;
+			/* The year as an integer (hopefully). */
+			int year = 0;
+			try {
+				year = Integer.parseInt(yearString);
+			} catch (NumberFormatException e) {
+				System.err.println("Wrong argument provided. Argument (" + year + ") is not an integer.");
+				return null;
+			}
+
+			/* The month as an integer (hopefully). */
+			int month = 0;
+			try {
+				month = Integer.parseInt(monthString);
+			} catch (NumberFormatException e) {
+				System.err.println("Wrong argument provided. Argument (" + month + ") is not an integer.");
+				return null;
+			}
+
+			/* The month as an integer (hopefully). */
+			int dayOfMonth = 0;
+			try {
+				dayOfMonth = Integer.parseInt(dayOfMonthString);
+			} catch (NumberFormatException e) {
+				System.err.println("Wrong argument provided. Argument (" + dayOfMonth + ") is not an integer.");
+				return null;
+			}
+
+			/*
+			 * The date constructed from the year, month, and dayOfMonth
+			 * integers.
+			 */
+			LocalDate date = LocalDate.of(year, month, dayOfMonth);
+			return date;
+		} catch (StringIndexOutOfBoundsException e) {
+			throw new StringIndexOutOfBoundsException();
+		}
 	}
 
 	private static int decodeLength(String lengthString) {
