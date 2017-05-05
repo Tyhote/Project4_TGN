@@ -72,7 +72,7 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 	}
 
 	public int compareTo(NewsMakerModel newsMakerModel) {
-		return newsMakerModel.getName().compareTo(newsMakerModel.getName());
+		return this.getName().compareTo(newsMakerModel.getName());
 	}
 
 	public String toString() {

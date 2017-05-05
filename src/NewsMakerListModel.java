@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.DefaultListModel;
@@ -154,6 +155,15 @@ public class NewsMakerListModel implements Serializable {
 	}
 
 	public void sort() {
-		Collections.sort(Collections.list(newsMakerDefaultListModel.elements()));
+		ArrayList<NewsMakerModel> aux = new ArrayList<NewsMakerModel>();
+		for(int i = 0; i < newsMakerDefaultListModel.size(); ++i){
+			aux.add(newsMakerDefaultListModel.get(i));
+		}
+		Collections.sort(aux);
+		newsMakerDefaultListModel.clear();
+		for(NewsMakerModel newsMaker : aux){
+			newsMakerDefaultListModel.addElement(newsMaker);
+		}
 	}
 }
+
