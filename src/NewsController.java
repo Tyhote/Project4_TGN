@@ -137,7 +137,6 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add/Edit News Story".equals(actionEvent.getActionCommand())) {
-				deleteNewsStories();
 				addNewsStory();
 			}
 		}
@@ -303,6 +302,7 @@ public class NewsController {
 		newsDataBaseModel.removeAllNewsMakers();
 	}
 
+
 	private void addNewsStory() {// TODO maybe a bug in the project
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
 		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
@@ -337,7 +337,36 @@ public class NewsController {
 	}
 
 	private void editNewsStories() {//TODO
+		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
+		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
+		int monthInt = month.toInt();
+		int year = (int) addEditNewsStoryView.jcbNewsStoryYear.getSelectedItem();
 
+		String source = addEditNewsStoryView.jcbNewsStorySource.getSelectedItem().toString();
+		String topic = addEditNewsStoryView.jcbNewsStoryTopic.getSelectedItem().toString();
+		String subject = addEditNewsStoryView.jcbNewsStorySubject.getSelectedItem().toString();
+		int length = Integer.parseInt(addEditNewsStoryView.jftfNewsStoryLength.getText());
+		NewsMakerModel maker1 = new NewsMakerModel(
+				addEditNewsStoryView.jcbNewsStoryNewsMaker1.getSelectedItem().toString());
+		NewsMakerModel maker2 = new NewsMakerModel(
+				addEditNewsStoryView.jcbNewsStoryNewsMaker2.getSelectedItem().toString());
+		NewsMedia media = (NewsMedia) addEditNewsStoryView.jcbNewsStoryType.getSelectedItem();
+
+		if (media == NewsMedia.NEWSPAPER) {
+			editedNewsStory = new NewspaperStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
+					maker1, maker2);
+		} else if (media == NewsMedia.TV) {
+			PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
+			editedNewsStory = new TVNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject, pod,
+					maker1, maker2);
+		} else if (media == NewsMedia.ONLINE) {
+			PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
+			editedNewsStory = new OnlineNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
+					pod, maker1, maker2);
+		} else {
+			System.err.println("There was an error with the media portion of add news story");
+			System.exit(0);
+		}
 	}
 
 	private void sortNewsStories() {

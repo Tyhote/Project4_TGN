@@ -150,7 +150,7 @@ public class NewsDataBaseModel implements Serializable {
 	}
 
 	public boolean containsNewsStory(NewsStory newsStory) {
-		return newsStoryListModel.isEmpty();
+		return newsStoryListModel.contains(newsStory);
 	}
 
 	public NewsStoryListModel getNewsStoryListModel() {
