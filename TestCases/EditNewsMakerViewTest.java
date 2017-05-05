@@ -13,7 +13,7 @@ import javax.swing.JList;
 
 import org.junit.Test;
 
-public class EditNewsMakerViewTest extends TestCase{
+public class EditNewsMakerViewTest{
 	// 1
 	@Test
 	public void getSelectedNewsStoryIndicesTest() {
