@@ -34,17 +34,16 @@ public class NewsController {
 	private List<NewsMedia> selectedMediaTypes;
 
 	public NewsController() {
-		newsDataBaseModel = new NewsDataBaseModel();
-		selectionView = new SelectionView();
-		editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
-		viewDialog = new JDialog();
+		selectionView.registerFileMenuListener(new FileMenuListener());
+		selectionView.registerNewsMakerMenuListener(new NewsMakerMenuListener());
+		selectionView.registerNewsStoryMenuListener(new NewsStoryMenuListener());
+		selectionView.registerDisplayMenuListener(new DisplayMenuListener());
 		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), null, 0, null, null, null, null);
-		addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-		mediaTypeSelectionView = new MediaTypeSelectionView();
 		selectedMediaTypes = new ArrayList<NewsMedia>();
 	}
 
 	private class FileMenuListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Load".equals(actionEvent.getActionCommand())) {
 				loadNewsData();
@@ -62,8 +61,10 @@ public class NewsController {
 	}
 
 	private class NewsMakerMenuListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add NewsMaker".equals(actionEvent.getActionCommand())) {
+				editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
 				addNewsMaker();
 			}
 			if ("Edit NewsMaker".equals(actionEvent.getActionCommand())) {
@@ -79,11 +80,14 @@ public class NewsController {
 	}
 
 	private class NewsStoryMenuListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add News Story".equals(actionEvent.getActionCommand())) {
+				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
 				addNewsStory();
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
+				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
 				editNewsStories();
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
@@ -99,6 +103,7 @@ public class NewsController {
 	}
 
 	private class DisplayMenuListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
 				displayPieCharts();
@@ -112,6 +117,7 @@ public class NewsController {
 
 	// TODO
 	public class EditNewsMakerNameListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
 				displayPieCharts();
@@ -121,11 +127,14 @@ public class NewsController {
 
 	// TODO
 	public class RemoveNewsMakerFromNewStoriesListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
+			
 		}
 	}
 
 	public class AddEditNewsStoryListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add/Edit News Story".equals(actionEvent.getActionCommand())) {
 				deleteNewsStories();
@@ -294,7 +303,7 @@ public class NewsController {
 		newsDataBaseModel.removeAllNewsMakers();
 	}
 
-	private void addNewsStory() {// TODO
+	private void addNewsStory() {// TODO maybe a bug in the project
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
 		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
 		int monthInt = month.toInt();
