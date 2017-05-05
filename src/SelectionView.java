@@ -99,6 +99,32 @@ public class SelectionView extends JFrame implements ActionListener {
 		jmiPieChart.setActionCommand("Pie Chart");
 		jmiText.setActionCommand("Text");
 		
+		// Disable those JMenuItems that should be initially disabled and provide ToolTips explaining why
+		jmiSave.setEnabled(false);
+		jmiSave.setToolTipText("Cannot save data; no data present.");
+		jmiExport.setEnabled(false);
+		jmiExport.setToolTipText("Cannot export data; no data present.");
+		
+		jmiEditNewsMaker.setEnabled(false);
+		jmiEditNewsMaker.setToolTipText("Cannot edit newsmakers; no newsmakers present.");
+		jmiDeleteNewsMaker.setEnabled(false);
+		jmiDeleteNewsMaker.setToolTipText("Cannot delete newsmakers; no newsmakers present.");
+		jmiDeleteNewsMakerList.setEnabled(false);
+		jmiDeleteNewsMakerList.setToolTipText("Cannot delete newsmaker list; no newsmakers present.");
+		
+		jmiEditNewsStory.setEnabled(false);
+		jmiEditNewsStory.setToolTipText("Cannot edit news stories; no news stories present.");
+		jmiSortNewsStories.setEnabled(false);
+		jmiSortNewsStories.setToolTipText("Cannot sort news stories; no news stories present.");
+		jmiDeleteNewsStory.setEnabled(false);
+		jmiDeleteNewsStory.setToolTipText("Cannot delete news stories; no news stories present.");
+		jmiDeleteAllNewsStories.setEnabled(false);
+		jmiDeleteAllNewsStories.setToolTipText("Cannot delete news stories; no news stories present.");
+		
+		jmiPieChart.setEnabled(false);
+		jmiPieChart.setToolTipText("Cannot display pie chart; no news makers present to display data.");
+		jmiText.setEnabled(false);
+		jmiText.setToolTipText("Cannot display text view; no news makers present to display data.");
 		
 		// Add item components to file menu
 		jmFile.add(jmiLoad);
@@ -239,6 +265,57 @@ public class SelectionView extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
+		// Enable GUI components when appropriate
+
+		// If any data has been entered, enable Save and Export, as well as Pie
+		// Chart and Text
+		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals("None")
+				|| !newsDataBaseModel.getNewsStoryListModel().isEmpty()) {
+			jmiSave.setEnabled(true);
+			jmiExport.setEnabled(true);
+
+			jmiPieChart.setEnabled(true);
+			jmiText.setEnabled(true);
+		} else {
+			jmiSave.setEnabled(false);
+			jmiExport.setEnabled(false);
+
+			jmiPieChart.setEnabled(false);
+			jmiText.setEnabled(false);
+		}
+
+		// If just NewsMaker data has been entered, enable the NewsMaker related
+		// components
+		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals("None")) {
+			jmiEditNewsMaker.setEnabled(true);
+			jmiDeleteNewsMaker.setEnabled(true);
+			jmiDeleteNewsMakerList.setEnabled(true);
+
+			jmiPieChart.setEnabled(true);
+			jmiText.setEnabled(true);
+		} else {
+			jmiEditNewsMaker.setEnabled(false);
+			jmiDeleteNewsMaker.setEnabled(false);
+			jmiDeleteNewsMakerList.setEnabled(false);
+
+			jmiPieChart.setEnabled(false);
+			jmiText.setEnabled(false);
+		}
+
+		// If just News Story data has been entered, enable the News Story
+		// related components
+		if (!newsDataBaseModel.getNewsStoryListModel().isEmpty()) {
+			jmiEditNewsStory.setEnabled(true);
+			jmiSortNewsStories.setEnabled(true);
+			jmiDeleteNewsStory.setEnabled(true);
+			jmiDeleteAllNewsStories.setEnabled(true);
+		} else {
+			jmiEditNewsStory.setEnabled(false);
+			jmiSortNewsStories.setEnabled(false);
+			jmiDeleteNewsStory.setEnabled(false);
+			jmiDeleteAllNewsStories.setEnabled(false);
+		}
+
 		this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
 		this.jlNewsStoryList.setModel(this.newsDataBaseModel.getNewsStories());
 	}

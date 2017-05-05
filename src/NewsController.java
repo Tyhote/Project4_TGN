@@ -370,16 +370,6 @@ public class NewsController {
 		}
 	}
 
-	private void deleteNewsStories() {
-		int[] indices = selectionView.getSelectedNewsMakers();
-		for (int i : indices) {
-			NewsMakerModel model = newsDataBaseModel.getNewsMakerListModel().get(i);
-			for (int j = 0; j < model.getNewsStoryListModel().size(); j++) {
-				model.removeNewsStory(model.getNewsStoryListModel().get(j));
-			}
-		}
-	}
-
 	private void editNewsStories() {// TODO
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
 		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
@@ -441,6 +431,16 @@ public class NewsController {
 		}
 
 		newsDataBaseModel.setNewsStoryListModelFromArray(stories);
+	}
+
+	private void deleteNewsStories() {
+		int[] indices = selectionView.getSelectedNewsMakers();
+		for (int i : indices) {
+			NewsMakerModel model = newsDataBaseModel.getNewsMakerListModel().get(i);
+			for (int j = 0; j < model.getNewsStoryListModel().size(); j++) {
+				model.removeNewsStory(model.getNewsStoryListModel().get(j));
+			}
+		}
 	}
 
 	private void deleteAllNewsStories() {
