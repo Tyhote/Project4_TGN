@@ -116,35 +116,40 @@ public class AddEditNewsStoryView extends JPanel {
 		// newsStory
 		jcbNewsStorySource = new JComboBox<String>(this.newsDataBaseModel.getNewsSources());
 		jcbNewsStorySource.setSelectedItem(newsStory.getSource());
-
+		
 		jcbNewsStoryTopic = new JComboBox<String>(this.newsDataBaseModel.getNewsTopics());
 		jcbNewsStoryTopic.setSelectedItem(newsStory.getTopic());
-
+		
 		jcbNewsStorySubject = new JComboBox<String>(this.newsDataBaseModel.getNewsSubjects());
 		jcbNewsStorySubject.setSelectedItem(newsStory.getSubject());
-
+		
 		jcbNewsStoryNewsMaker1 = new JComboBox<String>(this.newsDataBaseModel.getNewsMakerNames());
 		jcbNewsStoryNewsMaker1.setSelectedItem(newsStory.getNewsMaker1().getName());
-
+		
 		jcbNewsStoryNewsMaker2 = new JComboBox<String>(this.newsDataBaseModel.getNewsMakerNames());
 		jcbNewsStoryNewsMaker2.setSelectedItem(newsStory.getNewsMaker2().getName());
-
+		
 		// Set values and selected items for the rest of the newsStory's info
 		jftfNewsStoryLength.setValue(newsStory.getLength());
 		jftfNewsStoryLength.setColumns(10); // Makes the text field a certain
 											// width for aesthetic
 		jcbNewsStoryYear.setSelectedItem(newsStory.getDate().getYear());
-		jcbNewsStoryMonth.setSelectedItem(newsStory.getDate().getMonth());
+		jcbNewsStoryMonth.setSelectedItem(Month.fromInt(newsStory.getDate().getMonthValue()));
 		jcbNewsStoryDay.setSelectedItem(newsStory.getDate().getDayOfMonth());
 		// The following code sets the selected item for the part of day
 		// JComboBox based on the type of media of the NewsStory
 		if (newsStory instanceof NewspaperStory) {
 			// Newspapers are published in the morning
 			jcbNewsStoryPartOfDay.setSelectedItem(PartOfDay.MORNING.toString());
-		} else {
+		} else if (newsStory instanceof TVNewsStory){
 			// Cast to TVNewsStory in order to use the getPartOfDay method,
 			// which isn't defined for NewsStory
 			TVNewsStory newsStoryClone = (TVNewsStory) newsStory;
+			jcbNewsStoryPartOfDay.setSelectedItem(newsStoryClone.getPartOfDay().toString());
+		} else {
+			// Cast to OnlineNewsStory in order to use the getPartOfDay method,
+			// which isn't defined for NewsStory
+			OnlineNewsStory newsStoryClone = (OnlineNewsStory) newsStory;
 			jcbNewsStoryPartOfDay.setSelectedItem(newsStoryClone.getPartOfDay().toString());
 		}
 
