@@ -54,12 +54,7 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add NewsMaker".equals(actionEvent.getActionCommand())) {
-				viewDialog = new JDialog();
-				editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
-				viewDialog.add(editNewsMakerView);
-				viewDialog.pack();
-				viewDialog.setVisible(true);
-				// addNewsMaker();
+				addNewsMaker();
 			}
 			if ("Edit NewsMaker".equals(actionEvent.getActionCommand())) {
 				viewDialog = new JDialog();
@@ -214,8 +209,9 @@ public class NewsController {
 				newsDataBaseModel.none = (NewsMakerModel) objectInputStream.readObject();
 				newsDataBaseModel.setNewsMakerListModel((NewsMakerListModel) objectInputStream.readObject());
 				NewsStoryListModel stories = new NewsStoryListModel();
-				for(int i = 0; i < newsDataBaseModel.getNewsMakerListModel().size(); i++){
-					for(int j = 0; j < newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().size(); j++){
+				for (int i = 0; i < newsDataBaseModel.getNewsMakerListModel().size(); i++) {
+					for (int j = 0; j < newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel()
+							.size(); j++) {
 						stories.add(newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().get(j));
 					}
 				}
@@ -340,7 +336,39 @@ public class NewsController {
 	}
 
 	private void addNewsMaker() {
-		newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
+
+		viewDialog = new JDialog();
+		String name = (String) JOptionPane.showInputDialog(selectionView, "News Maker's name?", "Add News Maker",
+				JOptionPane.PLAIN_MESSAGE, null, null, "");
+
+		// If a string was returned, say so.
+		if ((name != null) && (name.length() > 0)) {
+			if (!newsDataBaseModel.containsNewsMakerModel(new NewsMakerModel(name))) {
+				newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(name));
+			} else {
+				int n = JOptionPane.showConfirmDialog(selectionView, "News Maker already exists.\n Replace News Maker?",
+						"Replace News Maker", JOptionPane.YES_NO_OPTION);
+				if (n == 0) {
+					NewsMakerModel none = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel("None"));
+					NewsMakerModel aux = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel(name));
+					for(int i = 0; i < aux.getNewsStoryListModel().size(); i++){
+						NewsStory story = aux.getNewsStoryListModel().get(i);
+						if(story.getNewsMaker1().equals(aux)){
+							story.setNewsMaker1(none);
+						}
+						if(story.getNewsMaker2().equals(aux)){
+							story.setNewsMaker2(none);
+						}
+						none.addNewsStory(story);
+					}
+					newsDataBaseModel.getNewsMakerListModel()
+							.remove(newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel(name)));
+					newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(name));
+				} else {
+					return;
+				}
+			}
+		}
 	}
 
 	private void editNewsMakers() {
