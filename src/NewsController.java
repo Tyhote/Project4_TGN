@@ -287,6 +287,7 @@ public class NewsController {
 			Map<String, String> subjectMap = CodeFileProcessor.readCodeFile(subjectFile);
 			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, sourceMap, topicMap, subjectMap);
 			selectionView.setNewsDataBaseModel(newsDataBaseModel);
+			selectionView.enableAllMenus();
 		} catch (IOException e) {
 			System.err.println("Illegal Input. Please try again.");
 			importNoozStories();
