@@ -243,29 +243,36 @@ public class NewsController {
 	private void importNoozStories() {
 
 		String sourceFile = null, topicFile = null, subjectFile = null, dataFile = null;
-
+		List<String> possibilities = new ArrayList<String>();
+		possibilities.add("Data File");
+		possibilities.add("Source File");
+		possibilities.add("Topic File");
+		possibilities.add("Subject File");
 		for (int i = 0; i < 4; i++) {
+			
 			JFileChooser fileChooser = new JFileChooser(".");
 			int returnVal = fileChooser.showOpenDialog(selectionView);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				String fileName = null;
 				try {
 					fileName = fileChooser.getSelectedFile().getCanonicalPath();
-					Object[] possibilities = { "Data File", "Source File", "Topic File", "Subject File" };
 					String s = (String) JOptionPane.showInputDialog(viewDialog, "File Type", "File Chooser",
-							JOptionPane.PLAIN_MESSAGE, null, possibilities, "Data File");
+							JOptionPane.PLAIN_MESSAGE, null, possibilities.toArray(), "Data File");
 
 					// Find Which file
 					if ("Data File".equals(s)) {
 						dataFile = fileName;
+						possibilities.remove("Data File");
 					} else if ("Source File".equals(s)) {
 						sourceFile = fileName;
+						possibilities.remove("Source File");
 					} else if ("Topic File".equals(s)) {
 						topicFile = fileName;
+						possibilities.remove("Topic File");
 					} else if ("Subject File".equals(s)) {
 						subjectFile = fileName;
+						possibilities.remove("Subject File");
 					} else {
-						System.out.println("HEY THERE NOW");
 						return;
 					}
 
@@ -279,6 +286,7 @@ public class NewsController {
 			Map<String, String> topicMap = CodeFileProcessor.readCodeFile(topicFile);
 			Map<String, String> subjectMap = CodeFileProcessor.readCodeFile(subjectFile);
 			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, sourceMap, topicMap, subjectMap);
+			selectionView.setNewsDataBaseModel(newsDataBaseModel);
 		} catch (IOException e) {
 			System.err.println("Illegal Input. Please try again.");
 			importNoozStories();

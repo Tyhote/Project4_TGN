@@ -339,4 +339,19 @@ public class SelectionView extends JFrame implements ActionListener {
 
 		return jlNewsStoryList.getSelectedIndices();
 	}
+	
+	public void enableAllMenus(){
+		jmiSave.setEnabled(true);
+		jmiExport.setEnabled(true);
+		jmiEditNewsMaker.setEnabled(true);
+		jmiDeleteNewsMaker.setEnabled(true);
+		jmiDeleteNewsMakerList.setEnabled(true);
+		jmiPieChart.setEnabled(true);
+		jmiText.setEnabled(true);
+		jmiEditNewsStory.setEnabled(true);
+		jmiSortNewsStories.setEnabled(true);
+		jmiDeleteNewsStory.setEnabled(true);
+		jmiDeleteAllNewsStories.setEnabled(true);
+		
+	}
 }

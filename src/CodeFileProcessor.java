@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class CodeFileProcessor {
-	private static Map<String, String> codeMap = new TreeMap<String, String>();
+	private static Map<String, String> codeMap;
 
 	public static Map<String, String> readCodeFile(String fileName) throws IOException {
 		// Need to clear map of old data before reading new.
-		codeMap.clear();
+		codeMap = new TreeMap<String, String>();
 
 		FileReader fr;
 		try {
