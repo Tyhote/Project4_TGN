@@ -341,8 +341,12 @@ public class SelectionView extends JFrame implements ActionListener {
 			jmiDeleteAllNewsStories.setToolTipText("Cannot delete news stories; no news stories present.");
 		}
 		
-		setSize(1100, 700);
-		setLocation(400, 200);
+		// If a lot of news makers/news stories have been added in via importing/loading, adjust the size of the GUI
+		if (actionEvent.getActionCommand().equals("Imported data") || actionEvent.getActionCommand().equals("Loaded data"))
+		{
+			setSize(1100, 700);
+			setLocation(400, 200);
+		}
 	}
 
 	/**
