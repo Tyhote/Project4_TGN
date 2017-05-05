@@ -147,7 +147,9 @@ public class NewsMakerListModel implements Serializable {
 	}
 
 	public void removeAllNewsMakers() {
-		newsMakerDefaultListModel.removeAllElements();
+		for(int i = 0; i < newsMakerDefaultListModel.size(); ++i){
+			remove(newsMakerDefaultListModel.get(i));
+		}
 	}
 
 	public void setNewsMakersFromNewsMakerList(NewsMakerListModel newsMakerListModel) {
