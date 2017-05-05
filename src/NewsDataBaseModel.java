@@ -47,6 +47,7 @@ public class NewsDataBaseModel implements Serializable {
 
 	public void setNewsSourceMap(Map<String, String> newsSourceMap) {
 		this.newsSourceMap = newsSourceMap;
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Set source map"));
 	}
 
 	public Map<String, String> getNewsTopicMap() {
@@ -64,6 +65,7 @@ public class NewsDataBaseModel implements Serializable {
 
 	public void setNewsTopicMap(Map<String, String> newsTopicMap) {
 		this.newsTopicMap = newsTopicMap;
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Set topic map"));
 	}
 
 	public Map<String, String> getNewsSubjectMap() {
@@ -81,6 +83,7 @@ public class NewsDataBaseModel implements Serializable {
 
 	public void setNewsSubjectMap(Map<String, String> newsSubjectMap) {
 		this.newsSubjectMap = newsSubjectMap;
+		processEvent(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Set subject map"));
 	}
 
 	public boolean newsMakerListIsEmpty() {
