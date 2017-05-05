@@ -421,6 +421,8 @@ public class NewsController {
 				}
 			}
 			newsDataBaseModel.getNewsMakerListModel().remove(selectedMaker);
+			newsDataBaseModel.sortNewsMakerListModel();
+			newsDataBaseModel.setNewsMakerListModel(newsDataBaseModel.getNewsMakerListModel());
 		}
 		
 		//Reset the database list model
@@ -436,22 +438,27 @@ public class NewsController {
 
 	private void deleteNewsMakerList() {//TODO
 		
-		newsDataBaseModel.removeAllNewsMakers();
+		NewsMakerModel none = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel("None"));
+		NewsStory story = null;
 		//Set all stories to none
 		for (int i = 0; i < newsDataBaseModel.getNewsStoryListModel().size(); i++) {
-			NewsMakerModel none = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel("None"));
-			NewsStory story = newsDataBaseModel.getNewsStoryListModel().get(i);
+			story = newsDataBaseModel.getNewsStoryListModel().get(i);
 			if (story.getNewsMaker1() != none) {
-				story.setNewsMaker1(new NewsMakerModel("None"));
+				story.setNewsMaker1(none);
+			}
+			if (story.getNewsMaker2() != none) {
+				story.setNewsMaker2(none);
 			}
 			
-			if (story.getNewsMaker2() != none) {
-				story.setNewsMaker2(new NewsMakerModel("None"));
-			}
-			if (!newsDataBaseModel.getNewsMakerListModel().get(none).getNewsStoryListModel().contains(story)){
-				newsDataBaseModel.getNewsMakerListModel().get(none).getNewsStoryListModel().add(story);
+			if (!none.getNewsStoryListModel().contains(story)){
+				none.getNewsStoryListModel().add(story);
 			}
 		}
+		NewsMakerListModel makerList = new NewsMakerListModel();
+		makerList.add(none);
+		newsDataBaseModel.removeAllNewsMakers();
+		newsDataBaseModel.setNewsMakerListModel(makerList);
+		newsDataBaseModel.setNewsStoryListModel(none.getNewsStoryListModel());
 	}
 
 	private void addNewsStory() {// TODO maybe a bug in the project
