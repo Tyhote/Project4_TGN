@@ -20,6 +20,7 @@ import java.util.TreeMap;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class NewsController {
@@ -34,13 +35,13 @@ public class NewsController {
 	private List<NewsMedia> selectedMediaTypes;
 
 	public NewsController() {
-
 	}
 
 	private class FileMenuListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Load".equals(actionEvent.getActionCommand())) {
+				System.out.println("Hello");
 				loadNewsData();
 			}
 			if ("Save".equals(actionEvent.getActionCommand())) {
@@ -59,11 +60,20 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add NewsMaker".equals(actionEvent.getActionCommand())) {
+				viewDialog = new JDialog();
 				editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
-				addNewsMaker();
+				viewDialog.add(editNewsMakerView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
+				//addNewsMaker();
 			}
 			if ("Edit NewsMaker".equals(actionEvent.getActionCommand())) {
-				editNewsMakers();
+				viewDialog = new JDialog();
+				editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
+				viewDialog.add(editNewsMakerView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
+				//editNewsMakers();
 			}
 			if ("Delete NewsMaker".equals(actionEvent.getActionCommand())) {
 				deleteNewsMakers();
@@ -78,12 +88,29 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add News Story".equals(actionEvent.getActionCommand())) {
+				viewDialog = new JDialog();
 				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-				addNewsStory();
+				viewDialog.add(addEditNewsStoryView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
-				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-				editNewsStories();
+				// Get the indices of the news stories selected in the selection view.
+				int[] indices = selectionView.getSelectedNewsStories();
+				if (0 == indices.length) {
+					JOptionPane.showMessageDialog(selectionView, "No news stories selected.", "Invalid Selection",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					// If there are selected news stories, go through the process for each.
+					for (int index : indices) {
+						editedNewsStory = newsDataBaseModel.getNewsStoryListModel().get(index);
+						viewDialog = new JDialog();
+						addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
+						viewDialog.add(addEditNewsStoryView);
+						viewDialog.pack();
+						viewDialog.setVisible(true);
+					}
+				}
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
@@ -304,6 +331,7 @@ public class NewsController {
 	private void deleteNewsMakerList() {
 		newsDataBaseModel.removeAllNewsMakers();
 	}
+
 
 	private void addNewsStory() {// TODO maybe a bug in the project
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
@@ -553,8 +581,9 @@ public class NewsController {
 
 					if (null == sortCriterion) {
 						continue;
-					}
+					}					
 				}
+					
 
 				for (SortCriterion sortCriterion : SortCriterion.values()) {
 					if (!sortCriteria.contains(sortCriterion)) {

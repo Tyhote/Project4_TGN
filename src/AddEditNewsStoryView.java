@@ -1,4 +1,5 @@
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -204,5 +205,9 @@ public class AddEditNewsStoryView extends JPanel {
 		this.add(jplNewsStoryLength);
 		this.add(jplNewsStoryWhen);
 		this.add(jplAddEditNewsStory);
+	}
+	
+	public void registerAddEditNewsStoryListener(ActionListener AddEditNewsStoryListener) {
+		jbtAddEditNewsStory.addActionListener(AddEditNewsStoryListener);
 	}
 }
