@@ -213,6 +213,13 @@ public class NewsController {
 				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 				newsDataBaseModel.none = (NewsMakerModel) objectInputStream.readObject();
 				newsDataBaseModel.setNewsMakerListModel((NewsMakerListModel) objectInputStream.readObject());
+				NewsStoryListModel stories = new NewsStoryListModel();
+				for(int i = 0; i < newsDataBaseModel.getNewsMakerListModel().size(); i++){
+					for(int j = 0; j < newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().size(); j++){
+						stories.add(newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().get(j));
+					}
+				}
+				newsDataBaseModel.setNewsStoryListModel(stories);
 				objectInputStream.close();
 			} catch (ClassNotFoundException | IOException i) {
 				JOptionPane.showMessageDialog(selectionView, "File not found", "Invalid Selection",

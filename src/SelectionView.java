@@ -286,7 +286,7 @@ public class SelectionView extends JFrame implements ActionListener {
 
 		// If just NewsMaker data has been entered, enable the NewsMaker related
 		// components
-		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals("None")) {
+		if (!newsDataBaseModel.getNewsMakerListModel().get(0).equals(new NewsMakerModel("None"))) {
 			jmiEditNewsMaker.setEnabled(true);
 			jmiDeleteNewsMaker.setEnabled(true);
 			jmiDeleteNewsMakerList.setEnabled(true);
