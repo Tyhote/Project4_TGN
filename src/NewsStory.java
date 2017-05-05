@@ -146,7 +146,7 @@ abstract class NewsStory implements Comparable<NewsStory>, Serializable {
 		} else if (this instanceof OnlineNewsStory) {
 			OnlineNewsStory story = (OnlineNewsStory) this;
 			return NewsMedia.ONLINE.toString() + "; " + story.getDate().getMonth().getDisplayName(TextStyle.FULL, Locale.US)
-					+ " " + story.getDate().getDayOfMonth() + ", " + story.getDate().getYear() + "; " + story.getSource() + "; " + story.getLengthInWords() + " word equivalents;" + story.getTopic()
+					+ " " + story.getDate().getDayOfMonth() + ", " + story.getDate().getYear() + "; " + story.getSource() + "; " + story.getLengthInWords() + " word equivalents; " + story.getTopic()
 					+ "; " + story.getSubject() + "; " + story.getPartOfDay() + "; " + story.getNewsMaker1().getName() + "; " + story.getNewsMaker2().getName();
 			
 		} else {throw new IllegalArgumentException();}
