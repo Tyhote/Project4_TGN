@@ -222,6 +222,7 @@ public class NewsController {
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}
+		selectionView.actionPerformed(new ActionEvent(this, 0, "Loaded data"));
 	}
 
 	private void saveNewsData() {
@@ -302,6 +303,7 @@ public class NewsController {
 			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
 					JOptionPane.WARNING_MESSAGE);
 		}
+		selectionView.actionPerformed(new ActionEvent(this, 0, "Imported data"));
 
 	}
 
@@ -533,6 +535,7 @@ public class NewsController {
 				this.viewDialog.add(mediaTypeSelectionView);
 				this.viewDialog.setResizable(false);
 				this.viewDialog.pack();
+				this.viewDialog.setLocation(700, 300);
 				this.viewDialog.setVisible(true);
 
 				// If no media types were selected, go on to next news maker.
@@ -597,6 +600,7 @@ public class NewsController {
 				this.viewDialog.add(mediaTypeSelectionView);
 				this.viewDialog.setResizable(false);
 				this.viewDialog.pack();
+				this.viewDialog.setLocation(700, 300);
 				this.viewDialog.setVisible(true);
 
 				// If no media types were selected, go on to next news maker.

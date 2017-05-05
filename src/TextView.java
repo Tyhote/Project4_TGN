@@ -50,6 +50,7 @@ public class TextView implements ActionListener {
 
 		jfText = new JFrame();
 		jfText.setSize(500, 250);
+		jfText.setLocation(600, 250);
 		constructTitle();
 
 		constructNewsStoriesAndSummary();

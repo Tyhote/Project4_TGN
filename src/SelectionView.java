@@ -158,7 +158,7 @@ public class SelectionView extends JFrame implements ActionListener {
 		// Create new jlists and add Newsmakers to it
 		jlNewsMakerList = new JList<NewsMakerModel>(newsDataBaseModel.getNewsMakers());
 		jspNewsMakerList = new JScrollPane(jlNewsMakerList);
-		jpNewsMakerList.add(new JLabel("Newsmakers               "), BorderLayout.NORTH);
+		jpNewsMakerList.add(new JLabel("Newsmakers                               "), BorderLayout.NORTH);
 		jpNewsMakerList.add(jspNewsMakerList, BorderLayout.CENTER);
 
 		// Create new Jlist and add new stories to it
@@ -176,7 +176,8 @@ public class SelectionView extends JFrame implements ActionListener {
 
 		// Add components to frame, pack, and set visible
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500,500);
+		setSize(500, 500);
+		setLocation(700, 300);
 		
 		BorderLayout bl = new BorderLayout();
 		setLayout(bl);
@@ -339,9 +340,9 @@ public class SelectionView extends JFrame implements ActionListener {
 			jmiDeleteAllNewsStories.setEnabled(false);
 			jmiDeleteAllNewsStories.setToolTipText("Cannot delete news stories; no news stories present.");
 		}
-
-//		this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
-//		this.jlNewsStoryList.setModel(this.newsDataBaseModel.getNewsStories());
+		
+		setSize(1100, 700);
+		setLocation(400, 200);
 	}
 
 	/**
