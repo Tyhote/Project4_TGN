@@ -177,7 +177,6 @@ public class SelectionView extends JFrame implements ActionListener {
 	 *            Listener for file menu
 	 */
 	public void registerFileMenuListener(ActionListener fileMenuListener) {
-
 		jmiLoad.addActionListener(fileMenuListener);
 		jmiSave.addActionListener(fileMenuListener);
 		jmiImport.addActionListener(fileMenuListener);
@@ -191,7 +190,6 @@ public class SelectionView extends JFrame implements ActionListener {
 	 *            Listener for news maker menu
 	 */
 	public void registerNewsMakerMenuListener(ActionListener newsMakerMenuListener) {
-
 		jmiAddNewsMaker.addActionListener(newsMakerMenuListener);
 		jmiEditNewsMaker.addActionListener(newsMakerMenuListener);
 		jmiDeleteNewsMaker.addActionListener(newsMakerMenuListener);
@@ -205,7 +203,6 @@ public class SelectionView extends JFrame implements ActionListener {
 	 *            Listener for news story menu
 	 */
 	public void registerNewsStoryMenuListener(ActionListener newsStoryMenuListener) {
-
 		jmiAddNewsStory.addActionListener(newsStoryMenuListener);
 		jmiEditNewsStory.addActionListener(newsStoryMenuListener);
 		jmiSortNewsStories.addActionListener(newsStoryMenuListener);
@@ -220,7 +217,6 @@ public class SelectionView extends JFrame implements ActionListener {
 	 *            Listener for display menu
 	 */
 	public void registerDisplayMenuListener(ActionListener displayMenuListener) {
-
 		jmiPieChart.addActionListener(displayMenuListener);
 		jmiText.addActionListener(displayMenuListener);
 	}
@@ -232,7 +228,6 @@ public class SelectionView extends JFrame implements ActionListener {
 	 *            Data base passed from a higher method
 	 */
 	public void setNewsDataBaseModel(NewsDataBaseModel newsDataBaseModel) {
-
 		this.newsDataBaseModel = newsDataBaseModel;
 		this.newsDataBaseModel.addActionListener(this);
 		this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
@@ -244,7 +239,6 @@ public class SelectionView extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-		
 		this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
 		this.jlNewsStoryList.setModel(this.newsDataBaseModel.getNewsStories());
 	}
