@@ -56,7 +56,9 @@ class NewsStoryListModel implements Serializable {
 	}
 
 	public void removeListOfNewsStories(DefaultListModel<NewsStory> newsStories) {
-		newsStories.removeAllElements();
+		for(int i = 0; i < newsStories.size(); ++i){
+			remove(newsStories.getElementAt(i));
+		}
 	}
 
 	public void setNewsStories(NewsStoryListModel newsStoryListModel) {
