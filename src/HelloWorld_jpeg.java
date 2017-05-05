@@ -159,17 +159,20 @@ public class HelloWorld_jpeg {
 					one.addNewsStory(storyList.get(j));
 				} catch (IllegalArgumentException e) {
 					System.out.println(".");
+					//e.printStackTrace();
 				}
 				try {
 					two.addNewsStory(storyList.get(j));
 				} catch (IllegalArgumentException e) {
 					System.out.println(".");
+					//e.printStackTrace();
 				}
 			}
 			try {
 				makerList.add(two);
 			} catch (IllegalArgumentException e) {
 				System.out.println(".");
+				//e.printStackTrace();
 			}
 		}
 		letter10 = 'a';
@@ -177,6 +180,7 @@ public class HelloWorld_jpeg {
 		letter12 = 'a';
 		makerList.add(one);
 		model.setNewsMakerListModel(makerList);
+		model.setNewsStoryListModel(storyList);
 		
 		one.addNewsStory(new NewspaperStory(LocalDate.of(1, 1, 1), "TMZZZZZZZ", 12345, "GOOD STUFF AND MORE", "QUALITY THINGS HERE", 
 				one, one));
