@@ -64,6 +64,8 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		if (!(this.jlNewsStoryList.getModel().getSize() == 0) && !jtfName.equals("None"))
 		{
 			jbtRemoveFromStory.setEnabled(true);
+		}else{
+			jbtRemoveFromStory.setEnabled(false);
 		}
 		return;
 	}
