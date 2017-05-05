@@ -136,7 +136,25 @@ public class NewsController {
 	public class EditNewsMakerNameListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			addNewsMaker();
+			int[] indices = selectionView.getSelectedNewsMakers();
+			if (0 == indices.length) {
+				JOptionPane.showMessageDialog(selectionView, "No news makers selected.", "Invalid Selection",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				// If there are selected news stories, go through the
+				// process
+				// for each.
+				for (int index : indices) {
+					viewDialog = new JDialog();
+					viewDialog.setTitle("Edit " + newsDataBaseModel.getNewsMakerListModel().get(index).getName());
+					editNewsMakerView = new EditNewsMakerView(newsDataBaseModel.getNewsMakerListModel().get(index),
+							newsDataBaseModel);
+					viewDialog.add(editNewsMakerView);
+					viewDialog.pack();
+					viewDialog.setVisible(true);
+				}
+			}
+
 		}
 	}
 
@@ -353,12 +371,12 @@ public class NewsController {
 				if (n == 0) {
 					NewsMakerModel none = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel("None"));
 					NewsMakerModel aux = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel(name));
-					for(int i = 0; i < aux.getNewsStoryListModel().size(); i++){
+					for (int i = 0; i < aux.getNewsStoryListModel().size(); i++) {
 						NewsStory story = aux.getNewsStoryListModel().get(i);
-						if(story.getNewsMaker1().equals(aux)){
+						if (story.getNewsMaker1().equals(aux)) {
 							story.setNewsMaker1(none);
 						}
-						if(story.getNewsMaker2().equals(aux)){
+						if (story.getNewsMaker2().equals(aux)) {
 							story.setNewsMaker2(none);
 						}
 						none.addNewsStory(story);
@@ -374,22 +392,75 @@ public class NewsController {
 	}
 
 	private void editNewsMakers() {
-		int[] indices = selectionView.getSelectedNewsMakers();
-		for (int i : indices) {
-			newsDataBaseModel.getNewsMakerListModel().remove(newsDataBaseModel.getNewsMakerListModel().get(i));
-			newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
-		}
+		newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel);
+		newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
 	}
 
 	private void deleteNewsMakers() {
+		
+		//Get all indices for selected news makers
 		int[] indices = selectionView.getSelectedNewsMakers();
+		
+		//Set the none model
+		NewsMakerModel none = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel("None"));
+		
+		//Remove newsMakers from list
 		for (int i : indices) {
-			newsDataBaseModel.getNewsMakerListModel().remove(newsDataBaseModel.getNewsMakerListModel().get(i));
+			NewsMakerModel selectedMaker = newsDataBaseModel.getNewsMakerListModel().get(i);
+			
+			//Change the news makers in the stories to null
+			NewsStoryListModel stories = selectedMaker.getNewsStoryListModel();
+			NewsStory story = null;
+			for(int j = 0; j < stories.size(); j++){
+				story = stories.get(j);
+				if(story.getNewsMaker1().equals(selectedMaker)){
+					story.setNewsMaker1(none);
+					none.addNewsStory(story);
+				}
+				if(story.getNewsMaker2().equals(selectedMaker)){
+					story.setNewsMaker2(none);
+					none.addNewsStory(story);
+				}
+			}
+			newsDataBaseModel.getNewsMakerListModel().remove(selectedMaker);
+			newsDataBaseModel.sortNewsMakerListModel();
+			newsDataBaseModel.setNewsMakerListModel(newsDataBaseModel.getNewsMakerListModel());
 		}
+		
+		//Reset the database list model
+		NewsStoryListModel all = new NewsStoryListModel();
+		for(int i = 0; i < newsDataBaseModel.getNewsMakerListModel().size(); i++){
+			for(int j = 0; j < newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().size(); j++){
+				all.add(newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().get(j));
+			}
+		}
+		newsDataBaseModel.setNewsStoryListModel(all);
+		
 	}
 
-	private void deleteNewsMakerList() {
+	private void deleteNewsMakerList() {//TODO
+		
+		NewsMakerModel none = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel("None"));
+		NewsStory story = null;
+		//Set all stories to none
+		for (int i = 0; i < newsDataBaseModel.getNewsStoryListModel().size(); i++) {
+			story = newsDataBaseModel.getNewsStoryListModel().get(i);
+			if (story.getNewsMaker1() != none) {
+				story.setNewsMaker1(none);
+			}
+			if (story.getNewsMaker2() != none) {
+				story.setNewsMaker2(none);
+			}
+			
+			if (!none.getNewsStoryListModel().contains(story)){
+				none.getNewsStoryListModel().add(story);
+			}
+		}
+		NewsMakerListModel makerList = new NewsMakerListModel();
+		makerList.add(none);
 		newsDataBaseModel.removeAllNewsMakers();
+		newsDataBaseModel.setNewsMakerListModel(makerList);
+		newsDataBaseModel.setNewsStoryListModel(none.getNewsStoryListModel());
 	}
 
 	private void addNewsStory() {// TODO maybe a bug in the project
