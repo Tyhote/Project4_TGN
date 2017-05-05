@@ -427,8 +427,10 @@ public class NewsController {
 				}
 			}
 			makerList.remove(selectedMaker);
+			newsDataBaseModel.sortNewsMakerListModel();
 		}
 		//Reset the database list model
+		newsDataBaseModel.getNewsMakerListModel().get(none).setNewsStoryListModel(none.getNewsStoryListModel());
 		NewsStoryListModel all = new NewsStoryListModel();
 		NewsStoryListModel storyListModel = null;
 		for(int i = 0; i < makerList.size(); i++){
@@ -437,8 +439,8 @@ public class NewsController {
 				all.add(storyListModel.get(j));
 			}
 		}
+		
 		newsDataBaseModel.setNewsMakerListModel(makerList);
-		newsDataBaseModel.sortNewsMakerListModel();
 		newsDataBaseModel.setNewsStoryListModel(all);
 		
 	}
