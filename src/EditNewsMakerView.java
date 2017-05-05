@@ -47,6 +47,7 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		// Create remove from story button
 		jbtRemoveFromStory = new JButton("Remove from Story");
 		jbtRemoveFromStory.setEnabled(false);
+		enableRemovalButton();
 		
 		// Add panels to this
 		setLayout(new BorderLayout());

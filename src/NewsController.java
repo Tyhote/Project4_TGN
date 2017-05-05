@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -57,12 +58,24 @@ public class NewsController {
 				addNewsMaker();
 			}
 			if ("Edit NewsMaker".equals(actionEvent.getActionCommand())) {
-				viewDialog = new JDialog();
-				editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
-				viewDialog.add(editNewsMakerView);
-				viewDialog.pack();
-				viewDialog.setVisible(true);
-				// editNewsMakers();
+				int[] indices = selectionView.getSelectedNewsMakers();
+				if (0 == indices.length) {
+					JOptionPane.showMessageDialog(selectionView, "No news makers selected.", "Invalid Selection",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					// If there are selected news stories, go through the
+					// process
+					// for each.
+					for (int index : indices) {
+						NewsMakerModel selectedMaker = newsDataBaseModel.getNewsMakerListModel().get(index);
+						viewDialog = new JDialog();
+						viewDialog.setTitle("Edit News Maker");
+						editNewsMakerView = new EditNewsMakerView(selectedMaker, newsDataBaseModel);
+						viewDialog.add(editNewsMakerView);
+						viewDialog.pack();
+						viewDialog.setVisible(true);
+					}
+				}
 			}
 			if ("Delete NewsMaker".equals(actionEvent.getActionCommand())) {
 				deleteNewsMakers();
@@ -136,6 +149,7 @@ public class NewsController {
 	public class EditNewsMakerNameListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
+			
 			int[] indices = selectionView.getSelectedNewsMakers();
 			if (0 == indices.length) {
 				JOptionPane.showMessageDialog(selectionView, "No news makers selected.", "Invalid Selection",
@@ -162,7 +176,15 @@ public class NewsController {
 	public class RemoveNewsMakerFromNewStoriesListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-
+			int[] indices = editNewsMakerView.getSelectedNewsStoryIndices();
+			NewsMakerModel model = editNewsMakerView.newsMakerModel;
+			DefaultListModel<NewsStory> stories = new DefaultListModel<NewsStory>();
+			for (int i : indices) {
+				stories.addElement(model.getNewsStoryList().get(i));
+				newsDataBaseModel.getNewsStoryListModel().remove(stories.getElementAt(i));
+			}
+			newsDataBaseModel.
+			selectionView.setNewsDataBaseModel(newsDataBaseModel);
 		}
 	}
 
@@ -306,8 +328,11 @@ public class NewsController {
 		}
 		try {
 			Map<String, String> sourceMap = CodeFileProcessor.readCodeFile(sourceFile);
+			newsDataBaseModel.setNewsSourceMap(sourceMap);
 			Map<String, String> topicMap = CodeFileProcessor.readCodeFile(topicFile);
+			newsDataBaseModel.setNewsTopicMap(topicMap);
 			Map<String, String> subjectMap = CodeFileProcessor.readCodeFile(subjectFile);
+			newsDataBaseModel.setNewsSubjectMap(subjectMap);
 			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, sourceMap, topicMap, subjectMap);
 			selectionView.setNewsDataBaseModel(newsDataBaseModel);
 			selectionView.enableAllMenus();
@@ -442,7 +467,7 @@ public class NewsController {
 		
 		newsDataBaseModel.setNewsMakerListModel(makerList);
 		newsDataBaseModel.setNewsStoryListModel(all);
-		
+		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 	}
 
 	private void deleteNewsMakerList() {//TODO
@@ -470,6 +495,7 @@ public class NewsController {
 		makerList.add(none);
 		newsDataBaseModel.setNewsMakerListModel(makerList);
 		newsDataBaseModel.setNewsStoryListModel(none.getNewsStoryListModel());
+		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 	}
 
 	private void addNewsStory() {// TODO maybe a bug in the project
@@ -576,6 +602,7 @@ public class NewsController {
 				model.removeNewsStory(model.getNewsStoryListModel().get(j));
 			}
 		}
+		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 	}
 
 	private void deleteAllNewsStories() {
@@ -585,7 +612,8 @@ public class NewsController {
 				model.removeNewsStory(model.getNewsStoryListModel().get(j));
 			}
 		}
-		newsDataBaseModel.getNewsStoryListModel().removeListOfNewsStories(newsDataBaseModel.getNewsStories());
+		newsDataBaseModel.removeAllNewsStories();
+		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 	}
 
 	private void displayPieCharts() {
