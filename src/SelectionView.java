@@ -344,6 +344,8 @@ public class SelectionView extends JFrame implements ActionListener {
 		// If a lot of news makers/news stories have been added in via importing/loading, adjust the size of the GUI
 		if (actionEvent.getActionCommand().equals("Imported data") || actionEvent.getActionCommand().equals("Loaded data"))
 		{
+			this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
+			this.jlNewsStoryList.setModel(this.newsDataBaseModel.getNewsStories());
 			setSize(1100, 700);
 			setLocation(400, 200);
 		}
