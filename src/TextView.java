@@ -67,6 +67,8 @@ public class TextView implements ActionListener {
 		JPanel jpNewsStoryList = new JPanel();
 		JPanel jpSummaryLine = new JPanel();
 		jpNewsStoryList.add(jspNewsStoryList);
+		
+		
 		jpSummaryLine.add(jtaSummaryLine);
 		
 		JPanel bigPanel = new JPanel(new GridLayout(0, 1));
