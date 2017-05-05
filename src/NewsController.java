@@ -65,7 +65,7 @@ public class NewsController {
 				viewDialog.add(editNewsMakerView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
-				//addNewsMaker();
+				// addNewsMaker();
 			}
 			if ("Edit NewsMaker".equals(actionEvent.getActionCommand())) {
 				viewDialog = new JDialog();
@@ -73,7 +73,7 @@ public class NewsController {
 				viewDialog.add(editNewsMakerView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
-				//editNewsMakers();
+				// editNewsMakers();
 			}
 			if ("Delete NewsMaker".equals(actionEvent.getActionCommand())) {
 				deleteNewsMakers();
@@ -93,7 +93,6 @@ public class NewsController {
 				viewDialog.add(addEditNewsStoryView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
-			
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
 				viewDialog = new JDialog();
@@ -101,13 +100,31 @@ public class NewsController {
 				viewDialog.add(addEditNewsStoryView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
-		
+			}
+
+			// Get the indices of the news stories selected in the selection
+			// view.
+			int[] indices = selectionView.getSelectedNewsStories();
+			if (0 == indices.length) {
+				JOptionPane.showMessageDialog(selectionView, "No news stories selected.", "Invalid Selection",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				// If there are selected news stories, go through the process
+				// for each.
+				for (int index : indices) {
+					editedNewsStory = newsDataBaseModel.getNewsStoryListModel().get(index);
+					viewDialog = new JDialog();
+					addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
+					viewDialog.add(addEditNewsStoryView);
+					viewDialog.pack();
+					viewDialog.setVisible(true);
+				}
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
 			}
 			if ("Delete News Story".equals(actionEvent.getActionCommand())) {
-				deleteNewsStories();
+				deleteAllNewsStories();
 			}
 			if ("Delete All News Stories".equals(actionEvent.getActionCommand())) {
 				deleteAllNewsStories();
@@ -119,12 +136,11 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
-				displayPieCharts();
+
 			}
 			if ("Text".equals(actionEvent.getActionCommand())) {
 				displayTextViews();
 			}
-
 		}
 	}
 
@@ -174,6 +190,7 @@ public class NewsController {
 			}
 			viewDialog.dispose();
 		}
+
 	}
 
 	public void setNewsDataBaseModel(NewsDataBaseModel DBModel) {
@@ -187,7 +204,8 @@ public class NewsController {
 		selectionView.registerNewsMakerMenuListener(new NewsMakerMenuListener());
 		selectionView.registerNewsStoryMenuListener(new NewsStoryMenuListener());
 		selectionView.registerDisplayMenuListener(new DisplayMenuListener());
-		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), "", 0, "", "", new NewsMakerModel(""), new NewsMakerModel(""));
+		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), "", 0, "", "", new NewsMakerModel(""),
+				new NewsMakerModel(""));
 		selectedMediaTypes = new ArrayList<NewsMedia>();
 	}
 
@@ -266,10 +284,10 @@ public class NewsController {
 			Map<String, String> topicMap = CodeFileProcessor.readCodeFile(topicFile);
 			Map<String, String> subjectMap = CodeFileProcessor.readCodeFile(subjectFile);
 			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, sourceMap, topicMap, subjectMap);
-		} catch (IOException e){
+		} catch (IOException e) {
 			System.err.println("Illegal Input. Please try again.");
 			importNoozStories();
-		} catch(NullPointerException n){
+		} catch (NullPointerException n) {
 			System.err.println("Illegal Input. Please try again.");
 		}
 	}
@@ -323,7 +341,6 @@ public class NewsController {
 	private void deleteNewsMakerList() {
 		newsDataBaseModel.removeAllNewsMakers();
 	}
-
 
 	private void addNewsStory() {// TODO maybe a bug in the project
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
@@ -419,16 +436,6 @@ public class NewsController {
 		}
 
 		newsDataBaseModel.setNewsStoryListModelFromArray(stories);
-	}
-
-	private void deleteNewsStories() {
-		int[] indices = selectionView.getSelectedNewsMakers();
-		for (int i : indices) {
-			NewsMakerModel model = newsDataBaseModel.getNewsMakerListModel().get(i);
-			for (int j = 0; j < model.getNewsStoryListModel().size(); j++) {
-				model.removeNewsStory(model.getNewsStoryListModel().get(j));
-			}
-		}
 	}
 
 	private void deleteAllNewsStories() {
@@ -573,9 +580,8 @@ public class NewsController {
 
 					if (null == sortCriterion) {
 						continue;
-					}					
+					}
 				}
-					
 
 				for (SortCriterion sortCriterion : SortCriterion.values()) {
 					if (!sortCriteria.contains(sortCriterion)) {
