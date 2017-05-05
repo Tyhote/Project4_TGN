@@ -262,7 +262,7 @@ public class NewsController {
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}
-		selectionView.actionPerformed(new ActionEvent(this, 0, "Loaded data"));
+		selectionView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Loaded data"));
 	}
 
 	private void saveNewsData() {
@@ -346,7 +346,7 @@ public class NewsController {
 			JOptionPane.showMessageDialog(selectionView, "Invalid File Choices", "Invalid File",
 					JOptionPane.WARNING_MESSAGE);
 		}
-		selectionView.actionPerformed(new ActionEvent(this, 0, "Imported data"));
+		selectionView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Imported data"));
 
 	}
 
@@ -559,7 +559,7 @@ public class NewsController {
 			editedNewsStory = new OnlineNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
 					pod, maker1, maker2);
 		} else {
-			System.err.println("There was an error with the media portion of add news story");
+			System.err.println("There was an error with the media portion of edit news story");
 			System.exit(0);
 		}
 	}
