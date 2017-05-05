@@ -46,6 +46,7 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		
 		// Create remove from story button
 		jbtRemoveFromStory = new JButton("Remove from Story");
+		jbtRemoveFromStory.setEnabled(false);
 		
 		// Add panels to this
 		setLayout(new BorderLayout());
@@ -57,8 +58,16 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 	public int[] getSelectedNewsStoryIndices() {
 		return jlNewsStoryList.getSelectedIndices();
 	}
-
-
+	
+	private void enableRemovalButton() {
+		// Enables the removal button if there is at least one news story in the list and the news maker is not "None".
+		if (!(this.jlNewsStoryList.getModel().getSize() == 0) && !jtfName.equals("None"))
+		{
+			jbtRemoveFromStory.setEnabled(true);
+		}
+		return;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Modified News Story List")){
 			jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
@@ -77,8 +86,8 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 			newsMakerModel.removeNewsStory(story);
 		}
 		
-		
-		
 		jtfName = new JTextField(newsMakerModel.getName());
+		
+		enableRemovalButton();
 	}
 }
