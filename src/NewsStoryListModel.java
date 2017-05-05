@@ -47,8 +47,8 @@ class NewsStoryListModel implements Serializable {
 		if (!newsStories.contains(newsStory)) {
 			this.newsStories.addElement(newsStory);
 			return;
-		}
-		throw new IllegalArgumentException("Story already in list");
+		}return;
+		//throw new IllegalArgumentException("Story already in list");
 	}
 
 	public void remove(NewsStory newsStory) {

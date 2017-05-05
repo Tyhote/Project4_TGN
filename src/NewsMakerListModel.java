@@ -91,10 +91,11 @@ public class NewsMakerListModel implements Serializable {
 
 	public void add(NewsMakerModel newsMakerModel) {
 		// illegal arg if in list
-		if (newsMakerDefaultListModel.contains(newsMakerModel)) {
-			throw new IllegalArgumentException();
+		if (!newsMakerDefaultListModel.contains(newsMakerModel)) {
+			//throw new IllegalArgumentException();
+			newsMakerDefaultListModel.addElement(newsMakerModel);
 		}
-		newsMakerDefaultListModel.addElement(newsMakerModel);
+		
 	}
 
 	public void replace(NewsMakerModel newsMakerModel) {

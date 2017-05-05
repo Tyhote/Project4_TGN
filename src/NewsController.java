@@ -93,7 +93,7 @@ public class NewsController {
 				viewDialog.add(addEditNewsStoryView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
-				//addNewsStory();
+			
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
 				viewDialog = new JDialog();
@@ -101,7 +101,7 @@ public class NewsController {
 				viewDialog.add(addEditNewsStoryView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
-				//editNewsStories();
+		
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
@@ -132,9 +132,7 @@ public class NewsController {
 	public class EditNewsMakerNameListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
-				displayPieCharts();
-			}
+			addNewsMaker();
 		}
 	}
 
@@ -189,7 +187,7 @@ public class NewsController {
 		selectionView.registerNewsMakerMenuListener(new NewsMakerMenuListener());
 		selectionView.registerNewsStoryMenuListener(new NewsStoryMenuListener());
 		selectionView.registerDisplayMenuListener(new DisplayMenuListener());
-		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), null, 0, null, null, null, null);
+		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), "", 0, "", "", new NewsMakerModel(""), new NewsMakerModel(""));
 		selectedMediaTypes = new ArrayList<NewsMedia>();
 	}
 
@@ -254,6 +252,7 @@ public class NewsController {
 					} else if ("Subject File".equals(s)) {
 						subjectFile = fileName;
 					} else {
+						System.out.println("HEY THERE NOW");
 						return;
 					}
 
@@ -263,8 +262,10 @@ public class NewsController {
 			}
 		}
 		try {
-			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, CodeFileProcessor.readCodeFile(sourceFile),
-					CodeFileProcessor.readCodeFile(topicFile), CodeFileProcessor.readCodeFile(subjectFile));
+			Map<String, String> sourceMap = CodeFileProcessor.readCodeFile(sourceFile);
+			Map<String, String> topicMap = CodeFileProcessor.readCodeFile(topicFile);
+			Map<String, String> subjectMap = CodeFileProcessor.readCodeFile(subjectFile);
+			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, sourceMap, topicMap, subjectMap);
 		} catch (IOException e){
 			System.err.println("Illegal Input. Please try again.");
 			importNoozStories();
