@@ -234,7 +234,9 @@ public class SelectionView extends JFrame implements ActionListener {
 	public void setNewsDataBaseModel(NewsDataBaseModel newsDataBaseModel) {
 
 		this.newsDataBaseModel = newsDataBaseModel;
-		actionPerformed(new ActionEvent(this, 0, "Set the NewsDataBaseModel"));
+		this.newsDataBaseModel.addActionListener(this);
+		this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
+		this.jlNewsStoryList.setModel(this.newsDataBaseModel.getNewsStories());
 	}
 
 	/**
@@ -243,8 +245,8 @@ public class SelectionView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		
-		jlNewsMakerList = new JList<NewsMakerModel>(this.newsDataBaseModel.getNewsMakers());
-		jlNewsStoryList = new JList<NewsStory>(this.newsDataBaseModel.getNewsStories());
+		this.jlNewsMakerList.setModel(this.newsDataBaseModel.getNewsMakers());
+		this.jlNewsStoryList.setModel(this.newsDataBaseModel.getNewsStories());
 	}
 
 	/**
