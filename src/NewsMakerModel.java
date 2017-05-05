@@ -67,11 +67,12 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 	public boolean equals(Object o) {
 
 		NewsMakerModel m = (NewsMakerModel) o;
-		if (name.equals(m.getName())) {
-			return true;
-		} else {
-			return false;
+		if (!(this.getName() == null) && !(m.getName() == null)) {
+			if (name.equals(m.getName())) {
+				return true;
+			}
 		}
+		return false;
 	}
 
 	public int compareTo(NewsMakerModel newsMakerModel) {
