@@ -524,7 +524,7 @@ public class NewsController {
 			editedNewsStory = new OnlineNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
 					pod, maker1, maker2);
 		} else {
-			System.err.println("There was an error with the media portion of add news story");
+			System.err.println("There was an error with the media portion of edit news story");
 			System.exit(0);
 		}
 	}
