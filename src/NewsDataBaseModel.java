@@ -22,11 +22,14 @@ public class NewsDataBaseModel implements Serializable {
 		newsStoryListModel = new NewsStoryListModel();
 		newsMakerListModel = new NewsMakerListModel();
 		newsMakerListModel.add(none);
+		none.setNewsStoryListModel(new NewsStoryListModel());
+		newsMakerListModel.add(none);
 	}
 
 	public NewsDataBaseModel(NewsMakerListModel newsMakerListModel, NewsStoryListModel newsStoryListModel) {
 		this.newsStoryListModel = newsStoryListModel;
 		this.newsMakerListModel = newsMakerListModel;
+		newsMakerListModel.add(none);
 	}
 
 	public Map<String, String> getNewsSourceMap() {
