@@ -395,16 +395,46 @@ public class NewsController {
 	}
 
 	private void deleteNewsMakers() {
+		
+		//Get all indices for selected news makers
 		int[] indices = selectionView.getSelectedNewsMakers();
+		
+		//Set the none model
+		NewsMakerModel none = newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel("None"));
+		
 		//Remove newsMakers from list
 		for (int i : indices) {
-			newsDataBaseModel.getNewsMakerListModel().remove(newsDataBaseModel.getNewsMakerListModel().get(i));
+			NewsMakerModel selectedMaker = newsDataBaseModel.getNewsMakerListModel().get(i);
+			
+			//Change the news makers in the stories to null
+			NewsStoryListModel stories = selectedMaker.getNewsStoryListModel();
+			NewsStory story = null;
+			for(int j = 0; j < stories.size(); j++){
+				story = stories.get(j);
+				if(story.getNewsMaker1().equals(selectedMaker)){
+					story.setNewsMaker1(none);
+					none.addNewsStory(story);
+				}
+				if(story.getNewsMaker2().equals(selectedMaker)){
+					story.setNewsMaker2(none);
+					none.addNewsStory(story);
+				}
+			}
+			newsDataBaseModel.getNewsMakerListModel().remove(selectedMaker);
 		}
 		
+		//Reset the database list model
+		NewsStoryListModel all = new NewsStoryListModel();
+		for(int i = 0; i < newsDataBaseModel.getNewsMakerListModel().size(); i++){
+			for(int j = 0; j < newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().size(); j++){
+				all.add(newsDataBaseModel.getNewsMakerListModel().get(i).getNewsStoryListModel().get(j));
+			}
+		}
+		newsDataBaseModel.setNewsStoryListModel(all);
 		
 	}
 
-	private void deleteNewsMakerList() {
+	private void deleteNewsMakerList() {//TODO
 		
 		newsDataBaseModel.removeAllNewsMakers();
 		//Set all stories to none
