@@ -418,10 +418,12 @@ public class NewsController {
 				if(story.getNewsMaker1().equals(selectedMaker)){
 					story.setNewsMaker1(none);
 					none.addNewsStory(story);
+					selectedMaker.removeNewsStory(story);
 				}
 				if(story.getNewsMaker2().equals(selectedMaker)){
 					story.setNewsMaker2(none);
 					none.addNewsStory(story);
+					selectedMaker.removeNewsStory(story);
 				}
 			}
 			makerList.remove(selectedMaker);
