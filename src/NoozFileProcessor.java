@@ -55,6 +55,11 @@ class NoozFileProcessor {
 	private static void processLine(String line, Map<String, String> sourceMap, Map<String, String> topicMap,
 			Map<String, String> subjectMap) throws IOException {
 		
+		//TODO: REMOVE THESE PRINT LINE STATEMENTS
+		System.out.println(sourceMap);
+		System.out.println(topicMap);
+		System.out.println(subjectMap);
+		
 		/* The parts the line created by splitting the line at each comma. */
 		String[] parts = line.split(",");
 
