@@ -53,7 +53,7 @@ public class TextView implements ActionListener {
 
 		jfText = new JFrame();
 		jfText.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jfText.setSize(500, 500);
+		jfText.setSize(500, 250);
 		constructTitle();
 
 		constructNewsStoriesAndSummary();
@@ -71,9 +71,9 @@ public class TextView implements ActionListener {
 		
 		jpSummaryLine.add(jtaSummaryLine);
 		
-		JPanel bigPanel = new JPanel(new GridLayout(0, 1));
-		bigPanel.add(jpNewsStoryList);
-		bigPanel.add(jpSummaryLine);
+		JPanel bigPanel = new JPanel(new BorderLayout());
+		bigPanel.add(jspNewsStoryList, BorderLayout.CENTER);
+		bigPanel.add(jtaSummaryLine, BorderLayout.SOUTH);
 		
 		jfText.add(bigPanel);
 		
@@ -244,14 +244,17 @@ public class TextView implements ActionListener {
 
 		// Check to see if the action event is for text display
 		if (e.getActionCommand().equals("Text Display")) {
-
+			
+			constructTitle();
+			constructNewsStoriesAndSummary();
+			
 			// Create a new scroll pane for the text display and add
 			jspNewsStoryList = new JScrollPane();
 			jfText.add(jspNewsStoryList);
 
 			// Pack the text display
 			jfText.pack();
-
+			
 			// Set the frame to visible
 			jfText.setVisible(true);
 		}
