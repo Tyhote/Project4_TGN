@@ -17,6 +17,7 @@ class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 
 		actionListenerList = new ArrayList<ActionListener>();
 		newsStoryListModel = new NewsStoryListModel();
+		name = "None";
 	}
 
 	public NewsMakerModel(String name) {
