@@ -1,11 +1,20 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class NewsController {
@@ -96,6 +105,7 @@ public class NewsController {
 		}
 	}
 
+	//TODO
 	public class EditNewsMakerNameListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Pie Chart".equals(actionEvent.getActionCommand())) {
@@ -104,6 +114,7 @@ public class NewsController {
 		}
 	}
 
+	//TODO
 	public class RemoveNewsMakerFromNewStoriesListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
 		}
@@ -111,6 +122,10 @@ public class NewsController {
 
 	public class AddEditNewsStoryListener implements ActionListener {
 		public void actionPerformed(ActionEvent actionEvent) {
+			if ("Add/Edit News Story".equals(actionEvent.getActionCommand())) {
+				deleteNewsStories();
+				addNewsStory();
+			}
 		}
 	}
 
@@ -138,24 +153,63 @@ public class NewsController {
 	}
 
 	public void setNewsDataBaseModel(NewsDataBaseModel DBModel) {
-		
+		this.newsDataBaseModel = DBModel;
 
 	}
 
 	public void setSelectionView(SelectionView SView) {
-		
+		this.selectionView = SView;
 	}
 
 	private void loadNewsData() {
-
+		JFileChooser fileChooser = new JFileChooser(".");
+		int returnVal = fileChooser.showOpenDialog(selectionView);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			String fileName = null;
+			try{
+				fileName = fileChooser.getSelectedFile().getCanonicalPath();
+				FileInputStream fileInputStream = new FileInputStream(fileName);
+				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+				newsDataBaseModel.none = (NewsMakerModel) objectInputStream.readObject();
+				newsDataBaseModel.setNewsMakerListModel((NewsMakerListModel) objectInputStream.readObject());
+				objectInputStream.close();
+			}catch(ClassNotFoundException | IOException i) {System.err.println("Wrong file");}
+		}
 	}
 
 	private void saveNewsData() {
-
+		JFileChooser fileChooser = new JFileChooser(".");
+		int returnVal = fileChooser.showOpenDialog(selectionView);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			String fileName = null;
+			try{
+				fileName = fileChooser.getSelectedFile().getCanonicalPath();
+				FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+				objectOutputStream.writeObject(newsDataBaseModel.none);
+				objectOutputStream.writeObject(newsDataBaseModel.getNewsMakerListModel());
+				objectOutputStream.close();
+			}catch(IOException i) {System.err.println("Problem occurred in save news data");}
+		}
 	}
 
 	private void importNoozStories() {
-
+		
+		Map<String, String> sourceMap = null;
+		Map<String, String> topicMap = null;
+		Map<String, String> subjectMap = null;
+		
+		JFileChooser fileChooser = new JFileChooser(".");
+		int returnVal = fileChooser.showOpenDialog(selectionView);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			String fileName = null;
+			try {
+				fileName = fileChooser.getSelectedFile().getCanonicalPath();
+				viewDialog = new JDialog();//TODO
+			} catch (IOException e) {
+				System.err.println("Wrong file to read from");
+			}
+		}
 	}
 
 	private void exportNewsStories() {
