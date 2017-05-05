@@ -20,6 +20,7 @@ import java.util.TreeMap;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class NewsController {
@@ -34,11 +35,8 @@ public class NewsController {
 	private List<NewsMedia> selectedMediaTypes;
 
 	public NewsController() {
-		selectionView.registerFileMenuListener(new FileMenuListener());
-		selectionView.registerNewsMakerMenuListener(new NewsMakerMenuListener());
-		selectionView.registerNewsStoryMenuListener(new NewsStoryMenuListener());
-		selectionView.registerDisplayMenuListener(new DisplayMenuListener());
-		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), null, 0, null, null, null, null);
+		
+		editedNewsStory = new NewspaperStory(LocalDate.of(2000, 1, 1), "hey", 1, "hey", "hey", new NewsMakerModel("Jim"), new NewsMakerModel("Jim"));
 		selectedMediaTypes = new ArrayList<NewsMedia>();
 	}
 
@@ -46,6 +44,7 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Load".equals(actionEvent.getActionCommand())) {
+				System.out.println("Hello");
 				loadNewsData();
 			}
 			if ("Save".equals(actionEvent.getActionCommand())) {
@@ -64,11 +63,20 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add NewsMaker".equals(actionEvent.getActionCommand())) {
+				viewDialog = new JDialog();
 				editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
-				addNewsMaker();
+				viewDialog.add(editNewsMakerView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
+				//addNewsMaker();
 			}
 			if ("Edit NewsMaker".equals(actionEvent.getActionCommand())) {
-				editNewsMakers();
+				viewDialog = new JDialog();
+				editNewsMakerView = new EditNewsMakerView(new NewsMakerModel(""), newsDataBaseModel);
+				viewDialog.add(editNewsMakerView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
+				//editNewsMakers();
 			}
 			if ("Delete NewsMaker".equals(actionEvent.getActionCommand())) {
 				deleteNewsMakers();
@@ -83,12 +91,20 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add News Story".equals(actionEvent.getActionCommand())) {
+				viewDialog = new JDialog();
 				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-				addNewsStory();
+				viewDialog.add(addEditNewsStoryView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
+				//addNewsStory();
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
+				viewDialog = new JDialog();
 				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-				editNewsStories();
+				viewDialog.add(addEditNewsStoryView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
+				//editNewsStories();
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
@@ -172,6 +188,10 @@ public class NewsController {
 
 	public void setSelectionView(SelectionView SView) {
 		this.selectionView = SView;
+		selectionView.registerFileMenuListener(new FileMenuListener());
+		selectionView.registerNewsMakerMenuListener(new NewsMakerMenuListener());
+		selectionView.registerNewsStoryMenuListener(new NewsStoryMenuListener());
+		selectionView.registerDisplayMenuListener(new DisplayMenuListener());
 	}
 
 	private void loadNewsData() {
@@ -304,6 +324,7 @@ public class NewsController {
 
 
 	private void addNewsStory() {// TODO maybe a bug in the project
+		
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
 		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
 		int monthInt = month.toInt();
@@ -530,7 +551,7 @@ public class NewsController {
 						}
 						
 						// Get sort criterion using JOptionPane.
-						SortCriterion sortCriterion = sortCriteria.get(sortCriterionIndex);
+						SortCriterion sortCriterion = null;
 						sortCriterion = (SortCriterion) JOptionPane.showInputDialog(selectionView,
 								fancyWord + "criterion to sort news stories?", newsMakerName, JOptionPane.PLAIN_MESSAGE, null,
 								sortCriteriaOptions.toArray(), SortCriterion.SOURCE);
