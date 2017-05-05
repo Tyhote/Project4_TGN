@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.swing.JFrame;
-
 /**
  * This class creates a UI for piechart display with a model, list of media,
  * measure, and content.
@@ -46,7 +44,6 @@ public class PieChartView implements ActionListener {
 
 		// Create the actual pie chart.
 		try {
-			System.out.println(constructTitle());
 			pieChart = new PieChart(constructTitle(), constructWedges());
 		} catch (IOException e) {
 			System.err.println("Illegal Input found in pie chart");
