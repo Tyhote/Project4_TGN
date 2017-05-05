@@ -417,7 +417,7 @@ public class NewsController {
 				// Get content type using JOptionPane.
 				NewsContent selectedNewsContent = null;
 				selectedNewsContent = (NewsContent) JOptionPane.showInputDialog(selectionView,
-						"Graph news stories based on which content?", newsMakerName, JOptionPane.PLAIN_MESSAGE, null,
+						"Display news stories based on which content?", newsMakerName, JOptionPane.PLAIN_MESSAGE, null,
 						NewsContent.values(), NewsContent.TOPIC);
 				if (null == selectedNewsContent) {
 					continue;
@@ -444,6 +444,82 @@ public class NewsController {
 	}
 
 	private void displayTextViews() {
+		
+		// Get the indices of the news makers selected in the selection view.
+		int[] indices = selectionView.getSelectedNewsMakers();
+		
+		// If there are no selected news makers, alert the user and return.
+			if (0 == indices.length) {
+				JOptionPane.showMessageDialog(selectionView, "No newsmaker selected.", "Invalid Selection",
+						JOptionPane.WARNING_MESSAGE);
+			} else {
+				// If there are selected news makers, go through the process for
+				// each.
+				NewsMakerListModel newsMakerListModel = this.newsDataBaseModel.getNewsMakerListModel();
+				for (int index : indices) {
+					NewsMakerModel newsMakerModel = newsMakerListModel.get(index);
+					String newsMakerName = newsMakerModel.getName();
 
+					// Get media types using MediaTypeSelectionView.
+					this.selectedMediaTypes = null;
+					this.mediaTypeSelectionView = new MediaTypeSelectionView();
+					MediaTypeSelectionListener mediaTypeSelectionListener = new MediaTypeSelectionListener();
+					this.mediaTypeSelectionView.jbOkay.addActionListener(mediaTypeSelectionListener);
+					this.mediaTypeSelectionView.jbCancel.addActionListener(mediaTypeSelectionListener);
+
+					this.viewDialog = new JDialog(selectionView, newsMakerName, true);
+					this.viewDialog.add(mediaTypeSelectionView);
+					this.viewDialog.setResizable(false);
+					this.viewDialog.pack();
+					this.viewDialog.setVisible(true);
+
+					// If no media types were selected, go on to next news maker.
+					if (null == this.selectedMediaTypes) {
+						continue;
+					}
+					
+					List<SortCriterion> sortCriteria = new ArrayList<SortCriterion>();
+					List<SortCriterion> sortCriteriaOptions = Arrays.asList(SortCriterion.values());
+					
+					for (int sortCriterionIndex = 0; sortCriterionIndex <= 3; ++sortCriterionIndex)
+					{
+						String fancyWord = "";
+						switch (sortCriterionIndex) {
+						case 0: {fancyWord = "Primary "; break;}
+						case 1: {fancyWord = "Secondary "; break;}
+						case 2: {fancyWord = "Tertiary "; break;}
+						case 3: {fancyWord = "Quaternary "; break;}
+						}
+						
+						// Get sort criterion using JOptionPane.
+						SortCriterion sortCriterion = sortCriteria.get(sortCriterionIndex);
+						sortCriterion = (SortCriterion) JOptionPane.showInputDialog(selectionView,
+								fancyWord + "criterion to sort news stories?", newsMakerName, JOptionPane.PLAIN_MESSAGE, null,
+								sortCriteriaOptions.toArray(), SortCriterion.SOURCE);
+						
+						sortCriteriaOptions.remove(sortCriterion);
+						
+						if (null == sortCriterion) {
+							continue;
+						}
+					}
+					
+					for (SortCriterion sortCriterion : SortCriterion.values())
+					{
+						if (!sortCriteria.contains(sortCriterion))
+						{
+							sortCriteria.add(sortCriterion);
+							break;
+						}
+					}
+					
+					// Create the text view.
+					TextView textView = new TextView(newsMakerModel, selectedMediaTypes, sortCriteria);
+
+					// Make sure the text view listens for model changes so that it
+					// can update itself.
+					newsMakerModel.addActionListener(textView);
+				}
+			}
 	}
 }
