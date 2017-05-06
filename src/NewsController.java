@@ -572,6 +572,7 @@ public class NewsController {
 		viewDialog.setTitle("Add News Story");
 		addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
 		addEditNewsStoryView.registerAddEditNewsStoryListener(new AddEditNewsStoryListener());
+		addEditNewsStoryView.jbtAddEditNewsStory.setText("Add News Story");
 		viewDialog.add(addEditNewsStoryView);
 		viewDialog.pack();
 		viewDialog.setVisible(true);
