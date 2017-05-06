@@ -52,7 +52,9 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		
 		jtfName.setActionCommand("Edit Name");
 		jbtRemoveFromStory.setActionCommand("Remove Story");
-
+		this.newsDataBaseModel.addActionListener(this);
+		this.newsMakerModel.addActionListener(this);
+		
 		// Add panels to this
 		setLayout(new BorderLayout());
 		add(jplName, BorderLayout.NORTH);
@@ -82,13 +84,15 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 
 	public void registerEditNewsMakerNameListener(ActionListener EditNewsMakerNameListener) {
 		jtfName.addActionListener(EditNewsMakerNameListener);
-		jbtRemoveFromStory.addActionListener(EditNewsMakerNameListener);
+	}
+	
+	public void registerRemoveNewsMakerFromNewStoriesListener(ActionListener RemoveNewsMakerFromNewStoriesListener) {
+		jbtRemoveFromStory.addActionListener(RemoveNewsMakerFromNewStoriesListener);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Modified News Story List")) {
-			jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
-		}
+		jtfName = new JTextField(newsMakerModel.getName());
+		jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
 
 		int[] selectedStories = getSelectedNewsStoryIndices();
 		NewsStoryListModel stories = newsMakerModel.getNewsStoryListModel();

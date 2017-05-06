@@ -173,8 +173,10 @@ public class NewsController {
 			if ("Edit Name".equals(actionEvent.getActionCommand())) {
 				editNewsMakerView.newsMakerModel.setName(editNewsMakerView.jtfName.getText());
 				editNewsMakerView.setModel(editNewsMakerView.newsMakerModel);
+				editNewsMakers();
 			}
 		}
+			
 	}
 
 	// TODO
@@ -186,13 +188,18 @@ public class NewsController {
 			DefaultListModel<NewsStory> stories = new DefaultListModel<NewsStory>();
 			for (int i : indices) {
 				stories.addElement(model.getNewsStoryListModel().get(i));
-				model.removeNewsStory(stories.get(i));
+			}
+			for(int i = 0; i < stories.size(); i++){
+			model.removeNewsStory(stories.get(i));
 			}
 			newsDataBaseModel.removeNewsStories(stories);
 			newsDataBaseModel.getNewsMakerListModel().remove(model);
 			newsDataBaseModel.getNewsMakerListModel().add(model);
 			editNewsMakerView.setModel(newsDataBaseModel.getNewsMakerListModel().get(model));
 			selectionView.setNewsDataBaseModel(newsDataBaseModel);
+			editNewsMakerView.setModel(model);
+			editNewsMakerView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
+			
 		}
 	}
 
@@ -231,7 +238,7 @@ public class NewsController {
 
 	public void setNewsDataBaseModel(NewsDataBaseModel DBModel) {
 		this.newsDataBaseModel = DBModel;
-
+		
 	}
 
 	public void setSelectionView(SelectionView SView) {
@@ -436,11 +443,13 @@ public class NewsController {
 			}
 		}
 		newsDataBaseModel.sortNewsMakerListModel();
+		selectionView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
 	}
 
 	private void editNewsMakers() {
 		newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel);
 		newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
+		editNewsMakerView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	private void deleteNewsMakers() {
