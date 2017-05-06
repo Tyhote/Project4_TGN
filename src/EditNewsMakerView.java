@@ -94,7 +94,7 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		jtfName = new JTextField(newsMakerModel.getName());
-		jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
+		jlNewsStoryList = new JList<String>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
 		enableRemovalButton();
 	}
 }
