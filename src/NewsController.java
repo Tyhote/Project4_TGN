@@ -454,8 +454,6 @@ public class NewsController {
 	private void editNewsMakers() {
 		newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel)
 				.setName(editNewsMakerView.jtfName.getText());
-		NewsStoryListModel stories = newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel)
-				.getNewsStoryListModel();
 		for (int i = 0; i < newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel)
 				.getNewsStoryListModel().size(); i++) {
 			if (newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel).getNewsStoryListModel()
