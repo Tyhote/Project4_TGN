@@ -165,36 +165,32 @@ public class NewsController {
 	public class RemoveNewsMakerFromNewStoriesListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
+		    System.out.println("Hello");
 			int[] indices = editNewsMakerView.getSelectedNewsStoryIndices();
-			NewsStoryListModel stories = editNewsMakerView.newsMakerModel.getNewsStoryListModel();
+			DefaultListModel<NewsStory> stories = editNewsMakerView.newsMakerModel.getNewsStoryListModel().getNewsStories();
 			NewsMakerModel model = editNewsMakerView.newsMakerModel;
 			for (int i : indices) {
 				NewsStory story = stories.get(i);
-				if (story.getNewsMaker1().equals(model)) {
-					story.setNewsMaker1(newsDataBaseModel.none);
+				NewsStory aux = stories.get(i);
+				if (aux.getNewsMaker1().getName().equals(model.getName())) {
+					aux.setNewsMaker1(newsDataBaseModel.none);
+					newsDataBaseModel.none.addNewsStory(story);
+					newsDataBaseModel.getNewsStoryListModel().remove(story);
+					newsDataBaseModel.getNewsStoryListModel().add(aux);
 				}
-				if (story.getNewsMaker2().equals(model)) {
-					story.setNewsMaker2(newsDataBaseModel.none);
+				if (aux.getNewsMaker2().getName().equals(model.getName())) {
+					aux.setNewsMaker2(newsDataBaseModel.none);
+					newsDataBaseModel.none.addNewsStory(story);
+					newsDataBaseModel.getNewsStoryListModel().remove(story);
+                    newsDataBaseModel.getNewsStoryListModel().add(aux);
 				}
-				model.removeNewsStory(story);
+				model.removeNewsStory(aux);
 			}
-			
-//			DefaultListModel<NewsStory> stories = new DefaultListModel<NewsStory>();
-//			for (int i : indices) {
-//				stories.addElement(model.getNewsStoryListModel().get(i));
-//			}
-//			for (int i = 0; i < stories.size(); i++) {
-//				model.removeNewsStory(stories.get(i));
-//			}
-//			newsDataBaseModel.removeNewsStories(stories);
-//			newsDataBaseModel.getNewsMakerListModel().remove(model);
-//			newsDataBaseModel.getNewsMakerListModel().add(model);
-//			editNewsMakerView.setModel(newsDataBaseModel.getNewsMakerListModel().get(model));
-//			selectionView.setNewsDataBaseModel(newsDataBaseModel);
-//			editNewsMakerView.setModel(model);
-			editNewsMakerView
-					.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
-
+			newsDataBaseModel.getNewsMakerListModel().replace(model);
+			editNewsMakerView.newsMakerModel = model;
+			newsDataBaseModel.sortNewsMakerListModel();
+			editNewsMakerView.actionPerformed(new ActionEvent(editNewsMakerView.jbtRemoveFromStory, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
+			selectionView.actionPerformed(new ActionEvent(editNewsMakerView.jbtRemoveFromStory, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 		}
 	}
 
