@@ -95,22 +95,6 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		jtfName = new JTextField(newsMakerModel.getName());
 		jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
-
-		int[] selectedStories = getSelectedNewsStoryIndices();
-		NewsStoryListModel stories = newsMakerModel.getNewsStoryListModel();
-		for (int i : selectedStories) {
-			NewsStory story = stories.get(i);
-			if (story.getNewsMaker1().equals(newsMakerModel)) {
-				story.setNewsMaker1(newsDataBaseModel.none);
-			}
-			if (story.getNewsMaker2().equals(newsMakerModel)) {
-				story.setNewsMaker2(newsDataBaseModel.none);
-			}
-			newsMakerModel.removeNewsStory(story);
-		}
-
-		jtfName = new JTextField(newsMakerModel.getName());
-
 		enableRemovalButton();
 	}
 }
