@@ -557,7 +557,13 @@ public class NewsController {
 		String source = addEditNewsStoryView.jcbNewsStorySource.getSelectedItem().toString();
 		String topic = addEditNewsStoryView.jcbNewsStoryTopic.getSelectedItem().toString();
 		String subject = addEditNewsStoryView.jcbNewsStorySubject.getSelectedItem().toString();
-		int length = Integer.parseInt(addEditNewsStoryView.jftfNewsStoryLength.getText());
+		String toParse = addEditNewsStoryView.jftfNewsStoryLength.getText();
+		String[] toParseArr = toParse.split(",");
+		toParse = "";
+		for(String string : toParseArr){
+			toParse += string;
+		}
+		int length = Integer.parseInt(toParse);
 		NewsMakerModel maker1 = new NewsMakerModel(
 				addEditNewsStoryView.jcbNewsStoryNewsMaker1.getSelectedItem().toString());
 		NewsMakerModel maker2 = new NewsMakerModel(
