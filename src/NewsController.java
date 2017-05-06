@@ -72,8 +72,8 @@ public class NewsController {
 						viewDialog = new JDialog();
 						viewDialog.setTitle("Edit News Maker");
 						editNewsMakerView = new EditNewsMakerView(selectedMaker, newsDataBaseModel);
-						editNewsMakerView
-								.registerRemoveNewsMakerFromNewStoriesListener(new RemoveNewsMakerFromNewStoriesListener());
+						editNewsMakerView.registerRemoveNewsMakerFromNewStoriesListener(
+								new RemoveNewsMakerFromNewStoriesListener());
 						editNewsMakerView.registerEditNewsMakerNameListener(new EditNewsMakerNameListener());
 						viewDialog.add(editNewsMakerView);
 						viewDialog.pack();
@@ -200,20 +200,21 @@ public class NewsController {
 				}
 				model.removeNewsStory(story);
 			}
-			
-//			DefaultListModel<NewsStory> stories = new DefaultListModel<NewsStory>();
-//			for (int i : indices) {
-//				stories.addElement(model.getNewsStoryListModel().get(i));
-//			}
-//			for (int i = 0; i < stories.size(); i++) {
-//				model.removeNewsStory(stories.get(i));
-//			}
-//			newsDataBaseModel.removeNewsStories(stories);
-//			newsDataBaseModel.getNewsMakerListModel().remove(model);
-//			newsDataBaseModel.getNewsMakerListModel().add(model);
-//			editNewsMakerView.setModel(newsDataBaseModel.getNewsMakerListModel().get(model));
-//			selectionView.setNewsDataBaseModel(newsDataBaseModel);
-//			editNewsMakerView.setModel(model);
+
+			// DefaultListModel<NewsStory> stories = new
+			// DefaultListModel<NewsStory>();
+			// for (int i : indices) {
+			// stories.addElement(model.getNewsStoryListModel().get(i));
+			// }
+			// for (int i = 0; i < stories.size(); i++) {
+			// model.removeNewsStory(stories.get(i));
+			// }
+			// newsDataBaseModel.removeNewsStories(stories);
+			// newsDataBaseModel.getNewsMakerListModel().remove(model);
+			// newsDataBaseModel.getNewsMakerListModel().add(model);
+			// editNewsMakerView.setModel(newsDataBaseModel.getNewsMakerListModel().get(model));
+			// selectionView.setNewsDataBaseModel(newsDataBaseModel);
+			// editNewsMakerView.setModel(model);
 			editNewsMakerView
 					.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 
@@ -451,8 +452,12 @@ public class NewsController {
 						}
 						none.addNewsStory(story);
 					}
-					newsDataBaseModel.getNewsMakerListModel()
+					try{
+						newsDataBaseModel.getNewsMakerListModel()
 							.remove(newsDataBaseModel.getNewsMakerListModel().get(new NewsMakerModel(name)));
+					}catch(IllegalArgumentException e){
+						System.err.println("Cannot add \"None,\" that name is reserved.");
+					}
 					newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(name));
 				} else {
 					return;
@@ -572,7 +577,7 @@ public class NewsController {
 		String toParse = addEditNewsStoryView.jftfNewsStoryLength.getText();
 		String[] toParseArr = toParse.split(",");
 		toParse = "";
-		for(String string : toParseArr){
+		for (String string : toParseArr) {
 			toParse += string;
 		}
 		int length = Integer.parseInt(toParse);
