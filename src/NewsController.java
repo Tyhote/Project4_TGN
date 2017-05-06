@@ -149,26 +149,30 @@ public class NewsController {
 	public class EditNewsMakerNameListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			
-			int[] indices = selectionView.getSelectedNewsMakers();
-			if (0 == indices.length) {
-				JOptionPane.showMessageDialog(selectionView, "No news makers selected.", "Invalid Selection",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
-				// If there are selected news stories, go through the
-				// process
-				// for each.
-				for (int index : indices) {
-					viewDialog = new JDialog();
-					viewDialog.setTitle("Edit " + newsDataBaseModel.getNewsMakerListModel().get(index).getName());
-					editNewsMakerView = new EditNewsMakerView(newsDataBaseModel.getNewsMakerListModel().get(index),
-							newsDataBaseModel);
-					viewDialog.add(editNewsMakerView);
-					viewDialog.pack();
-					viewDialog.setVisible(true);
+			if ("Remove Story".equals(actionEvent.getActionCommand())) {
+				int[] indices = selectionView.getSelectedNewsMakers();
+				if (0 == indices.length) {
+					JOptionPane.showMessageDialog(selectionView, "No news makers selected.", "Invalid Selection",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					// If there are selected news stories, go through the
+					// process
+					// for each.
+					for (int index : indices) {
+						viewDialog = new JDialog();
+						viewDialog.setTitle("Edit " + newsDataBaseModel.getNewsMakerListModel().get(index).getName());
+						editNewsMakerView = new EditNewsMakerView(newsDataBaseModel.getNewsMakerListModel().get(index),
+								newsDataBaseModel);
+						viewDialog.add(editNewsMakerView);
+						viewDialog.pack();
+						viewDialog.setVisible(true);
+					}
 				}
 			}
-
+			if ("Edit Name".equals(actionEvent.getActionCommand())) {
+				editNewsMakerView.newsMakerModel.setName(editNewsMakerView.jtfName.getText());
+				editNewsMakerView.setModel(editNewsMakerView.newsMakerModel);
+			}
 		}
 	}
 
@@ -180,10 +184,13 @@ public class NewsController {
 			NewsMakerModel model = editNewsMakerView.newsMakerModel;
 			DefaultListModel<NewsStory> stories = new DefaultListModel<NewsStory>();
 			for (int i : indices) {
-				stories.addElement(model.getNewsStoryList().get(i));
-				newsDataBaseModel.getNewsStoryListModel().remove(stories.getElementAt(i));
+				stories.addElement(model.getNewsStoryListModel().get(i));
+				model.removeNewsStory(stories.get(i));
 			}
-			newsDataBaseModel.
+			newsDataBaseModel.removeNewsStories(stories);
+			newsDataBaseModel.getNewsMakerListModel().remove(model);
+			newsDataBaseModel.getNewsMakerListModel().add(model);
+			editNewsMakerView.setModel(newsDataBaseModel.getNewsMakerListModel().get(model));
 			selectionView.setNewsDataBaseModel(newsDataBaseModel);
 		}
 	}
@@ -414,6 +421,7 @@ public class NewsController {
 				}
 			}
 		}
+		newsDataBaseModel.sortNewsMakerListModel();
 	}
 
 	private void editNewsMakers() {
@@ -422,30 +430,30 @@ public class NewsController {
 	}
 
 	private void deleteNewsMakers() {
-		
-		//Get all indices for selected news makers
+
+		// Get all indices for selected news makers
 		int[] indices = selectionView.getSelectedNewsMakers();
-		
-		//Set the none model
+
+		// Set the none model
 		NewsMakerListModel makerList = newsDataBaseModel.getNewsMakerListModel();
 		NewsMakerModel none = makerList.get(new NewsMakerModel("None"));
 		NewsStoryListModel stories = null;
-		
-		//Remove newsMakers from list
+
+		// Remove newsMakers from list
 		for (int i : indices) {
 			NewsMakerModel selectedMaker = makerList.get(i);
-			
-			//Change the news makers in the stories to null
+
+			// Change the news makers in the stories to null
 			stories = selectedMaker.getNewsStoryListModel();
 			NewsStory story = null;
-			for(int j = 0; j < stories.size(); j++){
+			for (int j = 0; j < stories.size(); j++) {
 				story = stories.get(j);
-				if(story.getNewsMaker1().equals(selectedMaker)){
+				if (story.getNewsMaker1().equals(selectedMaker)) {
 					story.setNewsMaker1(none);
 					none.addNewsStory(story);
 					selectedMaker.removeNewsStory(story);
 				}
-				if(story.getNewsMaker2().equals(selectedMaker)){
+				if (story.getNewsMaker2().equals(selectedMaker)) {
 					story.setNewsMaker2(none);
 					none.addNewsStory(story);
 					selectedMaker.removeNewsStory(story);
@@ -454,30 +462,30 @@ public class NewsController {
 			makerList.remove(selectedMaker);
 			newsDataBaseModel.sortNewsMakerListModel();
 		}
-		//Reset the database list model
+		// Reset the database list model
 		newsDataBaseModel.getNewsMakerListModel().get(none).setNewsStoryListModel(none.getNewsStoryListModel());
 		NewsStoryListModel all = new NewsStoryListModel();
 		NewsStoryListModel storyListModel = null;
-		for(int i = 0; i < makerList.size(); i++){
+		for (int i = 0; i < makerList.size(); i++) {
 			storyListModel = makerList.get(i).getNewsStoryListModel();
-			for(int j = 0; j < storyListModel.size(); j++){
+			for (int j = 0; j < storyListModel.size(); j++) {
 				all.add(storyListModel.get(j));
 			}
 		}
-		
+
 		newsDataBaseModel.setNewsMakerListModel(makerList);
 		newsDataBaseModel.setNewsStoryListModel(all);
 		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 	}
 
-	private void deleteNewsMakerList() {//TODO
-		
+	private void deleteNewsMakerList() {// TODO
+
 		NewsMakerListModel makerList = newsDataBaseModel.getNewsMakerListModel();
 		NewsStoryListModel storyList = newsDataBaseModel.getNewsStoryListModel();
 		NewsMakerModel none = makerList.get(new NewsMakerModel("None"));
 		NewsStoryListModel noneList = none.getNewsStoryListModel();
 		NewsStory story = null;
-		//Set all stories to none
+		// Set all stories to none
 		for (int i = 0; i < storyList.size(); i++) {
 			story = storyList.get(i);
 			if (story.getNewsMaker1() != none) {
@@ -486,8 +494,8 @@ public class NewsController {
 			if (story.getNewsMaker2() != none) {
 				story.setNewsMaker2(none);
 			}
-			
-			if (!noneList.contains(story)){
+
+			if (!noneList.contains(story)) {
 				noneList.add(story);
 			}
 		}
@@ -718,10 +726,10 @@ public class NewsController {
 
 				List<SortCriterion> sortCriteria = new ArrayList<SortCriterion>();
 				List<SortCriterion> sortCriteriaOptions = new ArrayList<SortCriterion>();
-				
-				// Add all of the SortCriterion options to the sortCriteriaOptions
-				for (SortCriterion sc : SortCriterion.values())
-				{
+
+				// Add all of the SortCriterion options to the
+				// sortCriteriaOptions
+				for (SortCriterion sc : SortCriterion.values()) {
 					sortCriteriaOptions.add(sc);
 				}
 
@@ -751,7 +759,7 @@ public class NewsController {
 					sortCriterion = (SortCriterion) JOptionPane.showInputDialog(selectionView,
 							fancyWord + "criterion to sort news stories?", newsMakerName, JOptionPane.PLAIN_MESSAGE,
 							null, sortCriteriaOptions.toArray(), SortCriterion.SOURCE);
-					
+
 					sortCriteriaOptions.remove(sortCriterion);
 
 					if (null == sortCriterion) {

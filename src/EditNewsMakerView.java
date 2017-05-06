@@ -29,13 +29,14 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		this.newsMakerModel = newsMakerModel;
 		this.newsMakerModel.addActionListener(this);
 		this.newsDataBaseModel = newsDataBaseModel;
-		
-		// Making JList, adding it to JScrollPane, then adding that to a newly initialized JPanel
+
+		// Making JList, adding it to JScrollPane, then adding that to a newly
+		// initialized JPanel
 		jlNewsStoryList = new JList<String>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
 		jspNewsStoryList = new JScrollPane(jlNewsStoryList);
 		jpNewsStoryList = new JPanel();
 		jpNewsStoryList.add(jspNewsStoryList);
-		
+
 		// Making label and field for the News Maker name and adding to panel
 		jlbName = new JLabel("Name: ");
 		jtfName = new JTextField(newsMakerModel.getName());
@@ -43,12 +44,15 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		jplName.add(jlbName, BorderLayout.WEST);
 		jplName.add(jtfName, BorderLayout.CENTER);
 		newsDataBaseModel.sortNewsMakerListModel();
-		
+
 		// Create remove from story button
 		jbtRemoveFromStory = new JButton("Remove from Story");
 		jbtRemoveFromStory.setEnabled(false);
 		enableRemovalButton();
 		
+		jtfName.setActionCommand("Edit Name");
+		jbtRemoveFromStory.setActionCommand("Remove Story");
+
 		// Add panels to this
 		setLayout(new BorderLayout());
 		add(jplName, BorderLayout.NORTH);
@@ -59,38 +63,48 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 	public int[] getSelectedNewsStoryIndices() {
 		return jlNewsStoryList.getSelectedIndices();
 	}
-	
+
 	private void enableRemovalButton() {
-		// Enables the removal button if there is at least one news story in the list and the news maker is not "None".
-		if (!(this.jlNewsStoryList.getModel().getSize() == 0) && !jtfName.equals("None"))
-		{
+		// Enables the removal button if there is at least one news story in the
+		// list and the news maker is not "None".
+		if (!(this.jlNewsStoryList.getModel().getSize() == 0) && !jtfName.equals("None")) {
 			jbtRemoveFromStory.setEnabled(true);
-		}else{
+		} else {
 			jbtRemoveFromStory.setEnabled(false);
 		}
 		return;
 	}
-	
+
+	public void setModel(NewsMakerModel maker) {
+		jtfName = new JTextField(newsMakerModel.getName());
+		jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
+	}
+
+	public void registerEditNewsMakerNameListener(ActionListener EditNewsMakerNameListener) {
+		jtfName.addActionListener(EditNewsMakerNameListener);
+		jbtRemoveFromStory.addActionListener(EditNewsMakerNameListener);
+	}
+
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("Modified News Story List")){
+		if (e.getActionCommand().equals("Modified News Story List")) {
 			jlNewsStoryList = new JList<>(newsMakerModel.getNewsStoryListModel().getStoriesForJList());
 		}
-		
+
 		int[] selectedStories = getSelectedNewsStoryIndices();
 		NewsStoryListModel stories = newsMakerModel.getNewsStoryListModel();
-		for(int i : selectedStories){
+		for (int i : selectedStories) {
 			NewsStory story = stories.get(i);
-			if(story.getNewsMaker1().equals(newsMakerModel)){
+			if (story.getNewsMaker1().equals(newsMakerModel)) {
 				story.setNewsMaker1(newsDataBaseModel.none);
 			}
-			if(story.getNewsMaker2().equals(newsMakerModel)){
+			if (story.getNewsMaker2().equals(newsMakerModel)) {
 				story.setNewsMaker2(newsDataBaseModel.none);
 			}
 			newsMakerModel.removeNewsStory(story);
 		}
-		
+
 		jtfName = new JTextField(newsMakerModel.getName());
-		
+
 		enableRemovalButton();
 	}
 }
