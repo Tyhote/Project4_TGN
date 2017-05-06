@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -253,11 +254,11 @@ public class NewsController {
 				fileName = fileChooser.getSelectedFile().getCanonicalPath();
 				FileInputStream fileInputStream = new FileInputStream(fileName);
 				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-				Map<String, String> codeMap = (Map<String, String>) objectInputStream.readObject();
+				Map<String, String> codeMap = (HashMap) objectInputStream.readObject();
 				newsDataBaseModel.setNewsSourceMap(codeMap);
-				codeMap = (Map<String, String>) objectInputStream.readObject();
+				codeMap = (HashMap) objectInputStream.readObject();
 				newsDataBaseModel.setNewsTopicMap(codeMap);
-				codeMap = (Map<String, String>) objectInputStream.readObject();
+				codeMap = (HashMap) objectInputStream.readObject();
 				newsDataBaseModel.setNewsSubjectMap(codeMap);
 				newsDataBaseModel.none = (NewsMakerModel) objectInputStream.readObject();
 				newsDataBaseModel.setNewsMakerListModel((NewsMakerListModel) objectInputStream.readObject());
@@ -269,6 +270,7 @@ public class NewsController {
 					}
 				}
 				newsDataBaseModel.setNewsStoryListModel(stories);
+				selectionView.setNewsDataBaseModel(newsDataBaseModel);
 				objectInputStream.close();
 			} catch (ClassNotFoundException | IOException i) {
 				JOptionPane.showMessageDialog(selectionView, "File not found", "Invalid Selection",
@@ -344,12 +346,15 @@ public class NewsController {
 		}
 		try {
 			Map<String, String> sourceMap = CodeFileProcessor.readCodeFile(sourceFile);
-			newsDataBaseModel.setNewsSourceMap(sourceMap);
+			
 			Map<String, String> topicMap = CodeFileProcessor.readCodeFile(topicFile);
-			newsDataBaseModel.setNewsTopicMap(topicMap);
+			
 			Map<String, String> subjectMap = CodeFileProcessor.readCodeFile(subjectFile);
-			newsDataBaseModel.setNewsSubjectMap(subjectMap);
+			
 			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, sourceMap, topicMap, subjectMap);
+			newsDataBaseModel.setNewsSourceMap(sourceMap);
+			newsDataBaseModel.setNewsTopicMap(topicMap);
+			newsDataBaseModel.setNewsSubjectMap(subjectMap);
 			selectionView.setNewsDataBaseModel(newsDataBaseModel);
 			selectionView.enableAllMenus();
 		} catch (IOException e) {
