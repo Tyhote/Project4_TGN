@@ -1,5 +1,10 @@
 import java.util.Comparator;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class LengthComparator implements Comparator<NewsStory> {
 
 	public static final LengthComparator LENGTH_COMPARATOR = new LengthComparator();

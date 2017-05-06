@@ -13,6 +13,11 @@ import javax.swing.JList;
 
 import org.junit.Test;
 
+/**
+ * 
+ * 
+ *
+ */
 public class EditNewsMakerViewTest {
 	// 1
 	@Test

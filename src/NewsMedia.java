@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public enum NewsMedia {
 
 	NEWSPAPER, ONLINE, TV;

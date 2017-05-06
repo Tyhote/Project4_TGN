@@ -4,6 +4,11 @@ import java.util.Collections;
 
 import javax.swing.DefaultListModel;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class NewsMakerListModel implements Serializable {
 
 	private static final long serialVersionUID = -7876369843726837770L;

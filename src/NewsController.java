@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 
 /**
  * 
- * @author Clayton Glenn, Tristan Dow, Nick Fox
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
  *
  */
 public class NewsController {

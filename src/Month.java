@@ -1,4 +1,9 @@
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public enum Month {
 
 	JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER;

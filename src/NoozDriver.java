@@ -1,4 +1,9 @@
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class NoozDriver {
 
 	static private NewsDataBaseModel newsDataBaseModel;

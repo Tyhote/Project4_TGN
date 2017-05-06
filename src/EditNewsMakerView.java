@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class EditNewsMakerView extends JPanel implements ActionListener {
 
 	/**

@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class CodeFileProcessor {
 	private static Map<String, String> codeMap;
 
