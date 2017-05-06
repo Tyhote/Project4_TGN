@@ -72,7 +72,8 @@ public class NewsController {
 						viewDialog = new JDialog();
 						viewDialog.setTitle("Edit News Maker");
 						editNewsMakerView = new EditNewsMakerView(selectedMaker, newsDataBaseModel);
-						editNewsMakerView.registerRemoveNewsMakerFromNewStoriesListener(new EditNewsMakerNameListener());
+						editNewsMakerView
+								.registerRemoveNewsMakerFromNewStoriesListener(new EditNewsMakerNameListener());
 						editNewsMakerView.registerEditNewsMakerNameListener(new EditNewsMakerNameListener());
 						viewDialog.add(editNewsMakerView);
 						viewDialog.pack();
@@ -96,6 +97,7 @@ public class NewsController {
 				viewDialog = new JDialog();
 				viewDialog.setTitle("Add News Story");
 				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
+				addEditNewsStoryView.registerAddEditNewsStoryListener(new AddEditNewsStoryListener());
 				viewDialog.add(addEditNewsStoryView);
 				viewDialog.pack();
 				viewDialog.setVisible(true);
@@ -178,7 +180,7 @@ public class NewsController {
 				editNewsMakers();
 			}
 		}
-			
+
 	}
 
 	// TODO
@@ -191,8 +193,8 @@ public class NewsController {
 			for (int i : indices) {
 				stories.addElement(model.getNewsStoryListModel().get(i));
 			}
-			for(int i = 0; i < stories.size(); i++){
-			model.removeNewsStory(stories.get(i));
+			for (int i = 0; i < stories.size(); i++) {
+				model.removeNewsStory(stories.get(i));
 			}
 			newsDataBaseModel.removeNewsStories(stories);
 			newsDataBaseModel.getNewsMakerListModel().remove(model);
@@ -200,8 +202,9 @@ public class NewsController {
 			editNewsMakerView.setModel(newsDataBaseModel.getNewsMakerListModel().get(model));
 			selectionView.setNewsDataBaseModel(newsDataBaseModel);
 			editNewsMakerView.setModel(model);
-			editNewsMakerView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
-			
+			editNewsMakerView
+					.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
+
 		}
 	}
 
@@ -240,7 +243,7 @@ public class NewsController {
 
 	public void setNewsDataBaseModel(NewsDataBaseModel DBModel) {
 		this.newsDataBaseModel = DBModel;
-		
+
 	}
 
 	public void setSelectionView(SelectionView SView) {
@@ -355,11 +358,11 @@ public class NewsController {
 		}
 		try {
 			Map<String, String> sourceMap = CodeFileProcessor.readCodeFile(sourceFile);
-			
+
 			Map<String, String> topicMap = CodeFileProcessor.readCodeFile(topicFile);
-			
+
 			Map<String, String> subjectMap = CodeFileProcessor.readCodeFile(subjectFile);
-			
+
 			newsDataBaseModel = NoozFileProcessor.readNoozFile(dataFile, sourceMap, topicMap, subjectMap);
 			newsDataBaseModel.setNewsSourceMap(sourceMap);
 			newsDataBaseModel.setNewsTopicMap(topicMap);
@@ -449,9 +452,25 @@ public class NewsController {
 	}
 
 	private void editNewsMakers() {
-		newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel);
-		newsDataBaseModel.addNewsMakerModel(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
-		editNewsMakerView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
+		newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel)
+				.setName(editNewsMakerView.jtfName.getText());
+		NewsStoryListModel stories = newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel)
+				.getNewsStoryListModel();
+		for (int i = 0; i < newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel)
+				.getNewsStoryListModel().size(); i++) {
+			if (newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel).getNewsStoryListModel()
+					.get(i).getNewsMaker1().equals(editNewsMakerView.newsMakerModel)) {
+				newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel).getNewsStoryListModel()
+						.get(i).setNewsMaker1(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
+			}
+			if (newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel).getNewsStoryListModel()
+					.get(i).getNewsMaker2().equals(editNewsMakerView.newsMakerModel)) {
+				newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel).getNewsStoryListModel()
+						.get(i).setNewsMaker2(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
+			}
+		}
+		editNewsMakerView
+				.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	private void deleteNewsMakers() {
