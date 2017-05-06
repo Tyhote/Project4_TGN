@@ -37,6 +37,7 @@ public class NewsDataBaseModel implements Serializable {
 	}
 
 	public String[] getNewsSources() {
+		//return newsSourceMap.values().toArray(new String[0]);
 		ArrayList<String> sourceList = new ArrayList<String>(newsSourceMap.values());
 		String[] result = new String[sourceList.size()];
 		for(int i = 0; i < result.length; ++i){
