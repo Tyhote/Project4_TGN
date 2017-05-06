@@ -168,7 +168,6 @@ public class NewsController {
 	public class RemoveNewsMakerFromNewStoriesListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-		    System.out.println("Hello");
 			int[] indices = editNewsMakerView.getSelectedNewsStoryIndices();
 			DefaultListModel<NewsStory> stories = editNewsMakerView.newsMakerModel.getNewsStoryListModel().getNewsStories();
 			NewsMakerModel model = editNewsMakerView.newsMakerModel;
