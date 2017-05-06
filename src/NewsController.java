@@ -253,6 +253,12 @@ public class NewsController {
 				fileName = fileChooser.getSelectedFile().getCanonicalPath();
 				FileInputStream fileInputStream = new FileInputStream(fileName);
 				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+				Map<String, String> codeMap = (Map<String, String>) objectInputStream.readObject();
+				newsDataBaseModel.setNewsSourceMap(codeMap);
+				codeMap = (Map<String, String>) objectInputStream.readObject();
+				newsDataBaseModel.setNewsTopicMap(codeMap);
+				codeMap = (Map<String, String>) objectInputStream.readObject();
+				newsDataBaseModel.setNewsSubjectMap(codeMap);
 				newsDataBaseModel.none = (NewsMakerModel) objectInputStream.readObject();
 				newsDataBaseModel.setNewsMakerListModel((NewsMakerListModel) objectInputStream.readObject());
 				NewsStoryListModel stories = new NewsStoryListModel();
@@ -281,6 +287,9 @@ public class NewsController {
 				fileName = fileChooser.getSelectedFile().getCanonicalPath();
 				FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 				ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+				objectOutputStream.writeObject(newsDataBaseModel.getNewsSourceMap());
+				objectOutputStream.writeObject(newsDataBaseModel.getNewsTopicMap());
+				objectOutputStream.writeObject(newsDataBaseModel.getNewsSubjectMap());
 				objectOutputStream.writeObject(newsDataBaseModel.none);
 				objectOutputStream.writeObject(newsDataBaseModel.getNewsMakerListModel());
 				objectOutputStream.close();
