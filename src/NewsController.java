@@ -93,37 +93,10 @@ public class NewsController {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			if ("Add News Story".equals(actionEvent.getActionCommand())) {
-				viewDialog = new JDialog();
-				viewDialog.setTitle("Add News Story");
-				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-				addEditNewsStoryView.registerAddEditNewsStoryListener(new AddEditNewsStoryListener());
-				viewDialog.add(addEditNewsStoryView);
-				viewDialog.pack();
-				viewDialog.setVisible(true);
+				addNewsStory();
 			}
 			if ("Edit News Story".equals(actionEvent.getActionCommand())) {
-
-				// Get the indices of the news stories selected in the selection
-				// view.
-				int[] indices = selectionView.getSelectedNewsStories();
-				if (0 == indices.length) {
-					JOptionPane.showMessageDialog(selectionView, "No news stories selected.", "Invalid Selection",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					// If there are selected news stories, go through the
-					// process
-					// for each.
-					for (int index : indices) {
-						editedNewsStory = newsDataBaseModel.getNewsStoryListModel().get(index);
-						viewDialog = new JDialog();
-						viewDialog.setTitle("Edit News Story");
-						addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
-						viewDialog.add(addEditNewsStoryView);
-						viewDialog.pack();
-						viewDialog.setVisible(true);
-					}
-				}
-
+				editNewsStories();
 			}
 			if ("Sort News Stories".equals(actionEvent.getActionCommand())) {
 				sortNewsStories();
@@ -201,8 +174,59 @@ public class NewsController {
 	public class AddEditNewsStoryListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			if ("Add/Edit News Story".equals(actionEvent.getActionCommand())) {
-				addNewsStory();
+			int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
+			Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
+			int monthInt = month.toInt();
+			int year = (int) addEditNewsStoryView.jcbNewsStoryYear.getSelectedItem();
+
+			String source = addEditNewsStoryView.jcbNewsStorySource.getSelectedItem().toString();
+			String topic = addEditNewsStoryView.jcbNewsStoryTopic.getSelectedItem().toString();
+			String subject = addEditNewsStoryView.jcbNewsStorySubject.getSelectedItem().toString();
+			String toParse = addEditNewsStoryView.jftfNewsStoryLength.getText();
+			String[] toParseArr = toParse.split(",");
+			toParse = "";
+			for(String string : toParseArr){
+				toParse += string;
+			}
+			int length = Integer.parseInt(toParse);
+			
+			NewsMakerModel maker1 = new NewsMakerModel(
+					addEditNewsStoryView.jcbNewsStoryNewsMaker1.getSelectedItem().toString());
+			NewsMakerModel maker2 = new NewsMakerModel(
+					addEditNewsStoryView.jcbNewsStoryNewsMaker2.getSelectedItem().toString());			
+			
+			// If the newsDataBaseModel already has these fools, don't make new ones!
+			if (newsDataBaseModel.containsNewsMakerModel(maker1)) {
+				maker1 = newsDataBaseModel.getNewsMakerListModel().get(maker1);
+			} else {
+				newsDataBaseModel.addNewsMakerModel(maker1);
+			}
+			if (newsDataBaseModel.containsNewsMakerModel(maker2)) {
+				maker2 = newsDataBaseModel.getNewsMakerListModel().get(maker2);
+			} else {
+				newsDataBaseModel.addNewsMakerModel(maker2);
+			}
+			
+			NewsMedia media = (NewsMedia) addEditNewsStoryView.jcbNewsStoryType.getSelectedItem();
+
+			if (media == NewsMedia.NEWSPAPER) {
+				editedNewsStory = new NewspaperStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
+						maker1, maker2);
+			} else if (media == NewsMedia.TV) {
+				PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
+				editedNewsStory = new TVNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject, pod,
+						maker1, maker2);
+			} else if (media == NewsMedia.ONLINE) {
+				PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
+				editedNewsStory = new OnlineNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
+						pod, maker1, maker2);
+			} else {
+				System.err.println("There was an error with the media portion of add/edit news story");
+				System.exit(0);
+			}
+			
+			if (actionEvent.getActionCommand().equals("Add News Story")) {
+				newsDataBaseModel.addNewsStory(editedNewsStory);
 			}
 		}
 	}
@@ -538,74 +562,35 @@ public class NewsController {
 	}
 
 	private void addNewsStory() {// TODO maybe a bug in the project
-		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
-		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
-		int monthInt = month.toInt();
-		int year = (int) addEditNewsStoryView.jcbNewsStoryYear.getSelectedItem();
-
-		String source = addEditNewsStoryView.jcbNewsStorySource.getSelectedItem().toString();
-		String topic = addEditNewsStoryView.jcbNewsStoryTopic.getSelectedItem().toString();
-		String subject = addEditNewsStoryView.jcbNewsStorySubject.getSelectedItem().toString();
-		String toParse = addEditNewsStoryView.jftfNewsStoryLength.getText();
-		String[] toParseArr = toParse.split(",");
-		toParse = "";
-		for(String string : toParseArr){
-			toParse += string;
-		}
-		int length = Integer.parseInt(toParse);
-		NewsMakerModel maker1 = new NewsMakerModel(
-				addEditNewsStoryView.jcbNewsStoryNewsMaker1.getSelectedItem().toString());
-		NewsMakerModel maker2 = new NewsMakerModel(
-				addEditNewsStoryView.jcbNewsStoryNewsMaker2.getSelectedItem().toString());
-		NewsMedia media = (NewsMedia) addEditNewsStoryView.jcbNewsStoryType.getSelectedItem();
-
-		if (media == NewsMedia.NEWSPAPER) {
-			editedNewsStory = new NewspaperStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
-					maker1, maker2);
-		} else if (media == NewsMedia.TV) {
-			PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
-			editedNewsStory = new TVNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject, pod,
-					maker1, maker2);
-		} else if (media == NewsMedia.ONLINE) {
-			PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
-			editedNewsStory = new OnlineNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
-					pod, maker1, maker2);
-		} else {
-			System.err.println("There was an error with the media portion of add news story");
-			System.exit(0);
-		}
+		viewDialog = new JDialog();
+		viewDialog.setTitle("Add News Story");
+		addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
+		addEditNewsStoryView.registerAddEditNewsStoryListener(new AddEditNewsStoryListener());
+		viewDialog.add(addEditNewsStoryView);
+		viewDialog.pack();
+		viewDialog.setVisible(true);
 	}
 
 	private void editNewsStories() {// TODO
-		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
-		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
-		int monthInt = month.toInt();
-		int year = (int) addEditNewsStoryView.jcbNewsStoryYear.getSelectedItem();
-
-		String source = addEditNewsStoryView.jcbNewsStorySource.getSelectedItem().toString();
-		String topic = addEditNewsStoryView.jcbNewsStoryTopic.getSelectedItem().toString();
-		String subject = addEditNewsStoryView.jcbNewsStorySubject.getSelectedItem().toString();
-		int length = Integer.parseInt(addEditNewsStoryView.jftfNewsStoryLength.getText());
-		NewsMakerModel maker1 = new NewsMakerModel(
-				addEditNewsStoryView.jcbNewsStoryNewsMaker1.getSelectedItem().toString());
-		NewsMakerModel maker2 = new NewsMakerModel(
-				addEditNewsStoryView.jcbNewsStoryNewsMaker2.getSelectedItem().toString());
-		NewsMedia media = (NewsMedia) addEditNewsStoryView.jcbNewsStoryType.getSelectedItem();
-
-		if (media == NewsMedia.NEWSPAPER) {
-			editedNewsStory = new NewspaperStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
-					maker1, maker2);
-		} else if (media == NewsMedia.TV) {
-			PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
-			editedNewsStory = new TVNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject, pod,
-					maker1, maker2);
-		} else if (media == NewsMedia.ONLINE) {
-			PartOfDay pod = (PartOfDay) addEditNewsStoryView.jcbNewsStoryPartOfDay.getSelectedItem();
-			editedNewsStory = new OnlineNewsStory(LocalDate.of(year, monthInt, day), source, length, topic, subject,
-					pod, maker1, maker2);
+		// Get the indices of the news stories selected in the selection
+		// view.
+		int[] indices = selectionView.getSelectedNewsStories();
+		if (0 == indices.length) {
+			JOptionPane.showMessageDialog(selectionView, "No news stories selected.", "Invalid Selection",
+					JOptionPane.WARNING_MESSAGE);
 		} else {
-			System.err.println("There was an error with the media portion of edit news story");
-			System.exit(0);
+			// If there are selected news stories, go through the
+			// process
+			// for each.
+			for (int index : indices) {
+				editedNewsStory = newsDataBaseModel.getNewsStoryListModel().get(index);
+				viewDialog = new JDialog();
+				viewDialog.setTitle("Edit News Story");
+				addEditNewsStoryView = new AddEditNewsStoryView(newsDataBaseModel, editedNewsStory);
+				viewDialog.add(addEditNewsStoryView);
+				viewDialog.pack();
+				viewDialog.setVisible(true);
+			}
 		}
 	}
 

@@ -1,6 +1,8 @@
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -65,11 +67,22 @@ public class AddEditNewsStoryView extends JPanel {
 
 	private JPanel jplNewsStoryWhen = new JPanel();
 
-	JButton jbtAddEditNewsStory = new JButton("Edit News Story");
+	JButton jbtAddEditNewsStory;
 	private JPanel jplAddEditNewsStory = new JPanel();
 
 	public AddEditNewsStoryView(NewsDataBaseModel newsDataBaseModel, NewsStory newsStory) {
-
+		
+		// Add or Edit news story
+		boolean addNotEdit = newsStory.equals(new NewspaperStory(LocalDate.of(2000, 1, 1), "", 0, "", "", new NewsMakerModel(""),
+				new NewsMakerModel("")));
+		
+		if (addNotEdit) {
+			jbtAddEditNewsStory = new JButton("Add News Story");
+		} else {
+			jbtAddEditNewsStory = new JButton("Edit News Story");
+		}
+		
+		
 		// Assign the arguments to the proper fields
 		this.newsDataBaseModel = newsDataBaseModel;
 		this.newsStory = newsStory;
@@ -113,7 +126,8 @@ public class AddEditNewsStoryView extends JPanel {
 		// Finish initializing the rest of the JComboBoxes using the arrays
 		// passed by newsDataBaseModel's methods
 		// and setting the selected values to the corresponding fields from the
-		// newsStory
+		// newsStory. The NewsMaker JComboBoxes should be editable in case
+		// the user wants to add their own.
 		jcbNewsStorySource = new JComboBox<String>(this.newsDataBaseModel.getNewsSources());
 		jcbNewsStorySource.setSelectedItem(newsStory.getSource());
 		
@@ -125,9 +139,11 @@ public class AddEditNewsStoryView extends JPanel {
 		
 		jcbNewsStoryNewsMaker1 = new JComboBox<String>(this.newsDataBaseModel.getNewsMakerNames());
 		jcbNewsStoryNewsMaker1.setSelectedItem(newsStory.getNewsMaker1().getName());
+		jcbNewsStoryNewsMaker1.setEditable(true);
 		
 		jcbNewsStoryNewsMaker2 = new JComboBox<String>(this.newsDataBaseModel.getNewsMakerNames());
 		jcbNewsStoryNewsMaker2.setSelectedItem(newsStory.getNewsMaker2().getName());
+		jcbNewsStoryNewsMaker2.setEditable(true);
 		
 		// Set values and selected items for the rest of the newsStory's info
 		jftfNewsStoryLength.setValue(newsStory.getLength());
@@ -196,7 +212,12 @@ public class AddEditNewsStoryView extends JPanel {
 		jplAddEditNewsStory.add(jbtAddEditNewsStory);
 		
 		// Set the action command for the Add/Edit News Story button
-		jbtAddEditNewsStory.setActionCommand("Add/Edit News Story");
+		if (addNotEdit)	{
+			jbtAddEditNewsStory.setActionCommand("Add News Story");
+		} else {
+			jbtAddEditNewsStory.setActionCommand("Edit News Story");
+		}
+		
 		
 		// Set the layout to a GridLayout with 1 column and add the panels to
 		// this AddEditNewsStoryView
