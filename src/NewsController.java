@@ -72,6 +72,8 @@ public class NewsController {
 						viewDialog = new JDialog();
 						viewDialog.setTitle("Edit News Maker");
 						editNewsMakerView = new EditNewsMakerView(selectedMaker, newsDataBaseModel);
+						editNewsMakerView.registerRemoveNewsMakerFromNewStoriesListener(new EditNewsMakerNameListener());
+						editNewsMakerView.registerEditNewsMakerNameListener(new EditNewsMakerNameListener());
 						viewDialog.add(editNewsMakerView);
 						viewDialog.pack();
 						viewDialog.setVisible(true);

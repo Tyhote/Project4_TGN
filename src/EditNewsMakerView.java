@@ -40,6 +40,7 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 		// Making label and field for the News Maker name and adding to panel
 		jlbName = new JLabel("Name: ");
 		jtfName = new JTextField(newsMakerModel.getName());
+		jtfName.addActionListener(this);
 		jplName = new JPanel(new BorderLayout());
 		jplName.add(jlbName, BorderLayout.WEST);
 		jplName.add(jtfName, BorderLayout.CENTER);
@@ -47,6 +48,7 @@ public class EditNewsMakerView extends JPanel implements ActionListener {
 
 		// Create remove from story button
 		jbtRemoveFromStory = new JButton("Remove from Story");
+		jbtRemoveFromStory.addActionListener(this);
 		jbtRemoveFromStory.setEnabled(false);
 		enableRemovalButton();
 		
