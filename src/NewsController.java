@@ -20,6 +20,11 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * 
+ * @author Clayton Glenn, Tristan Dow, Nick Fox
+ *
+ */
 public class NewsController {
 
 	private NewsDataBaseModel newsDataBaseModel;
@@ -149,7 +154,6 @@ public class NewsController {
 		}
 	}
 
-	// TODO
 	public class EditNewsMakerNameListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
@@ -161,7 +165,6 @@ public class NewsController {
 
 	}
 
-	// TODO
 	public class RemoveNewsMakerFromNewStoriesListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
@@ -505,7 +508,7 @@ public class NewsController {
 		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 	}
 
-	private void deleteNewsMakerList() {// TODO
+	private void deleteNewsMakerList() {
 
 		NewsMakerListModel makerList = newsDataBaseModel.getNewsMakerListModel();
 		NewsStoryListModel storyList = newsDataBaseModel.getNewsStoryListModel();
@@ -533,7 +536,7 @@ public class NewsController {
 		selectionView.setNewsDataBaseModel(newsDataBaseModel);
 	}
 
-	private void addNewsStory() {// TODO maybe a bug in the project
+	private void addNewsStory() {
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
 		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
 		int monthInt = month.toInt();
@@ -572,7 +575,7 @@ public class NewsController {
 		}
 	}
 
-	private void editNewsStories() {// TODO
+	private void editNewsStories() {
 		int day = (int) addEditNewsStoryView.jcbNewsStoryDay.getSelectedItem();
 		Month month = (Month) addEditNewsStoryView.jcbNewsStoryMonth.getSelectedItem();
 		int monthInt = month.toInt();
