@@ -1,5 +1,10 @@
 import java.time.LocalDate;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class NewspaperStory extends NewsStory {
 
 	private static final long serialVersionUID = 1L;

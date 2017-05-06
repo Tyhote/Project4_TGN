@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 
 /**
  * 
- * @author Clayton Glenn, Tristan Dow, Nick Fox
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
  *
  */
 public class NewsController {
@@ -283,10 +283,13 @@ public class NewsController {
 				fileName = fileChooser.getSelectedFile().getCanonicalPath();
 				FileInputStream fileInputStream = new FileInputStream(fileName);
 				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+				//Unchecked Warning
 				Map<String, String> codeMap = (HashMap) objectInputStream.readObject();
 				newsDataBaseModel.setNewsSourceMap(codeMap);
+				//Unchecked Warning
 				codeMap = (HashMap) objectInputStream.readObject();
 				newsDataBaseModel.setNewsTopicMap(codeMap);
+				//Unchecked Warning
 				codeMap = (HashMap) objectInputStream.readObject();
 				newsDataBaseModel.setNewsSubjectMap(codeMap);
 				newsDataBaseModel.none = (NewsMakerModel) objectInputStream.readObject();

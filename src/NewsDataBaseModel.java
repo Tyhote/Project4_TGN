@@ -7,6 +7,11 @@ import java.util.Map;
 
 import javax.swing.DefaultListModel;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class NewsDataBaseModel implements Serializable {
 
 	private static final long serialVersionUID = 6305823792028405117L;

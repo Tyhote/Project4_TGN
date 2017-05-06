@@ -3,6 +3,11 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 abstract class NewsStory implements Comparable<NewsStory>, Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,4 +1,9 @@
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public enum NewsContent {
 
 	SOURCE, TOPIC, SUBJECT;

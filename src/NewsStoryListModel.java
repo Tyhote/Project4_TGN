@@ -2,6 +2,11 @@ import java.io.Serializable;
 
 import javax.swing.DefaultListModel;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 class NewsStoryListModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;

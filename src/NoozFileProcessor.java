@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Map;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 class NoozFileProcessor {
 
 	private static NewsMakerListModel newsMakers = new NewsMakerListModel();

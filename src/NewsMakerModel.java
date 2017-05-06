@@ -3,6 +3,11 @@ import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 class NewsMakerModel implements Comparable<NewsMakerModel>, Serializable {
 
 	/**

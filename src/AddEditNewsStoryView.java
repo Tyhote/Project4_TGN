@@ -9,6 +9,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Clayton Glenn, Nick Fox, Tristan Dow
+ *
+ */
 public class AddEditNewsStoryView extends JPanel {
 	/**
 	 * 
