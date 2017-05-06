@@ -72,9 +72,8 @@ public class NewsController {
 						viewDialog = new JDialog();
 						viewDialog.setTitle("Edit News Maker");
 						editNewsMakerView = new EditNewsMakerView(selectedMaker, newsDataBaseModel);
-						editNewsMakerView
-								.registerRemoveNewsMakerFromNewStoriesListener(new RemoveNewsMakerFromNewStoriesListener());
-						editNewsMakerView.registerEditNewsMakerNameListener(new EditNewsMakerNameListener());
+						editNewsMakerView.jbtRemoveFromStory.addActionListener(new RemoveNewsMakerFromNewStoriesListener());
+						editNewsMakerView.jtfName.addActionListener(new EditNewsMakerNameListener());
 						viewDialog.add(editNewsMakerView);
 						viewDialog.pack();
 						viewDialog.setVisible(true);
@@ -154,31 +153,10 @@ public class NewsController {
 	public class EditNewsMakerNameListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			if ("Remove Story".equals(actionEvent.getActionCommand())) {
-				int[] indices = selectionView.getSelectedNewsMakers();
-				if (0 == indices.length) {
-					JOptionPane.showMessageDialog(selectionView, "No news makers selected.", "Invalid Selection",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					// If there are selected news stories, go through the
-					// process
-					// for each.
-					for (int index : indices) {
-						viewDialog = new JDialog();
-						viewDialog.setTitle("Edit " + newsDataBaseModel.getNewsMakerListModel().get(index).getName());
-						editNewsMakerView = new EditNewsMakerView(newsDataBaseModel.getNewsMakerListModel().get(index),
-								newsDataBaseModel);
-						viewDialog.add(editNewsMakerView);
-						viewDialog.pack();
-						viewDialog.setVisible(true);
-					}
-				}
-			}
-			if ("Edit Name".equals(actionEvent.getActionCommand())) {
-				editNewsMakerView.newsMakerModel.setName(editNewsMakerView.jtfName.getText());
-				editNewsMakerView.setModel(editNewsMakerView.newsMakerModel);
-				editNewsMakers();
-			}
+			newsDataBaseModel.getNewsMakerListModel().get(editNewsMakerView.newsMakerModel)
+			.setName(editNewsMakerView.jtfName.getText());
+			editNewsMakers();
+			selectionView.actionPerformed(new ActionEvent(editNewsMakerView.jtfName, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 		}
 
 	}
@@ -479,8 +457,7 @@ public class NewsController {
 						.get(i).setNewsMaker2(new NewsMakerModel(editNewsMakerView.jtfName.getText()));
 			}
 		}
-		editNewsMakerView
-				.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
+		selectionView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Modified News Story List"));
 	}
 
 	private void deleteNewsMakers() {
